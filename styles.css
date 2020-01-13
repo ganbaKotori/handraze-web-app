@@ -2,3 +2,90 @@
   background-color: tomato;
   color: white;
   padding: 10px;
+  margin: 2%;
+}
+
+.side {
+  position: relative
+}
+.body {
+  /*padding-left: 5%;
+  padding-right: 5%;*/  
+  margin-left:  5%;
+  margin-right: 10%;
+  font-size: 120%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative
+  /*background-color: white ;*/
+
+}
+
+body {
+  background-color: beige;
+  margin: 0;
+}
+
+.background {
+  color: blue;
+  padding: 0%
+}
+
+
+
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: purple;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+.logo {
+  width: 20%;
+    height: auto;
+}
+
+.sidenav {
+  height: 100%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 15%; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+  
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
