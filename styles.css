@@ -1,9 +1,18 @@
+
+
 .title {
-  background-color: tomato;
+  background: rgb(255,99,71);
+  background: linear-gradient(90deg, rgba(255,99,71,1) 0%, rgba(255,99,71,1) 35%, rgba(0,249,255,0) 100%);
   color: white;
-  padding: 10px;
-  margin: 2%;
+  /*padding-top: 1%;
+  padding-bottom: 1%;*/
+  padding-left: 2%;
 }
+
+.segment {
+  margin-left: 2%;
+}
+
 
 .side {
   position: relative
@@ -13,7 +22,7 @@
   padding-right: 5%;*/  
   margin-left:  5%;
   margin-right: 10%;
-  font-size: 120%;
+  font-size: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   position: relative
   /*background-color: white ;*/
@@ -30,7 +39,16 @@ body {
   padding: 0%
 }
 
-
+.box {
+  height: 25%;
+  width: 50%;
+  margin: 2%;
+  padding: 4%;
+  background:#2f2861;
+  text-align: center;
+  color: #fff;
+  /*float: left;*/
+}
 
 li a {
   display: block;
@@ -54,6 +72,10 @@ li a:hover:not(.active) {
     height: auto;
 }
 
+.developer-table{
+  width: 75%;
+}
+
 .sidenav {
   height: 100%;
   width: 15%;
@@ -64,6 +86,8 @@ li a:hover:not(.active) {
   background-color: #111;
   overflow-x: hidden;
   padding-top: 20px;
+  font-family: 'Hind', sans-serif;
+  font-family: 'Hind Vadodara', sans-serif;
 }
 
 .sidenav a {
@@ -78,10 +102,14 @@ li a:hover:not(.active) {
   color: #f1f1f1;
 }
 
+
 .main {
   margin-left: 15%; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
+  font-size: 140%;
+  font-family: 'Hind', sans-serif;
+  font-family: 'Hind Vadodara', sans-serif;
   
 }
 
