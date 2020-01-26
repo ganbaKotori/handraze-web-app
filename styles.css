@@ -1,8 +1,11 @@
-
-
 .title {
-  background: rgb(255,99,71);
-  background: linear-gradient(90deg, rgba(255,99,71,1) 0%, rgba(255,99,71,1) 35%, rgba(0,249,255,0) 100%);
+  background: rgb(255, 99, 71);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 99, 71, 1) 0%,
+    rgba(255, 99, 71, 1) 35%,
+    rgba(0, 249, 255, 0) 100%
+  );
   color: white;
   /*padding-top: 1%;
   padding-bottom: 1%;*/
@@ -11,22 +14,22 @@
 
 .segment {
   margin-left: 2%;
+  margin-right: 30%;
+  font-size: 80%;
 }
 
-
 .side {
-  position: relative
+  position: relative;
 }
 .body {
   /*padding-left: 5%;
-  padding-right: 5%;*/  
-  margin-left:  5%;
+  padding-right: 5%;*/
+  margin-left: 5%;
   margin-right: 10%;
   font-size: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  position: relative
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
   /*background-color: white ;*/
-
 }
 
 body {
@@ -36,7 +39,7 @@ body {
 
 .background {
   color: blue;
-  padding: 0%
+  padding: 0%;
 }
 
 .box {
@@ -44,7 +47,7 @@ body {
   width: 50%;
   margin: 2%;
   padding: 4%;
-  background:#2f2861;
+  background: #2f2861;
   text-align: center;
   color: #fff;
   /*float: left;*/
@@ -69,16 +72,16 @@ li a:hover:not(.active) {
 
 .logo {
   width: 20%;
-    height: auto;
+  height: auto;
 }
 
-.developer-table{
+.developer-table {
   width: 75%;
 }
 
 .sidenav {
   height: 100%;
-  width: 15%;
+  width: 20%;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -86,14 +89,18 @@ li a:hover:not(.active) {
   background-color: #111;
   overflow-x: hidden;
   padding-top: 20px;
-  font-family: 'Hind', sans-serif;
-  font-family: 'Hind Vadodara', sans-serif;
+  font-family: "Hind", sans-serif;
+  font-family: "Hind Vadodara", sans-serif;
+}
+
+.code {
+  font-family: "Courier New", Courier, monospace;
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 6px 8px 20px 16px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 100%;
   color: #818181;
   display: block;
 }
@@ -102,18 +109,20 @@ li a:hover:not(.active) {
   color: #f1f1f1;
 }
 
-
 .main {
-  margin-left: 15%; /* Same as the width of the sidenav */
+  margin-left: 20%; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
   font-size: 140%;
-  font-family: 'Hind', sans-serif;
-  font-family: 'Hind Vadodara', sans-serif;
-  
+  font-family: "Hind", sans-serif;
+  font-family: "Hind Vadodara", sans-serif;
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }

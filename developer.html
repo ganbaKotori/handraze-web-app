@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Hind|Hind+Vadodara&display=swap"
+      rel="stylesheet"
+    />
+    <title>Developer's Guide</title>
+  </head>
+  <body>
+    <div class="sidenav">
+      <a class="active" href="index.html">Home</a>
+      <a href="#repository">Setup the handraze-web-app repository on GitBash</a>
+      <a href="#branches">Working with Branches</a>
+    </div>
+
+    <div class="main">
+      <br />
+      <h3 id="repository" class="title">
+        Setup the handraze-web-app repository on GitBash
+      </h3>
+      <div class="segment">
+        <p>
+          The handraze-web-app repository contains the branches MASTER, DEV,
+          DOCUMENTS, GH-PAGES, and PROTOTYPE.
+        </p>
+        <p>
+          To get started, open a folder where you want to clone the repository.
+          I have a folder named github in my documents folder that contains all
+          of my repositories. Navigate to the destination of the folder on
+          gitBash and then enter the command:
+        </p>
+        <p class="code">
+          git clone https://github.com/ganbaKotori/handraze-web-app.git
+        </p>
+        <p>
+          To switch to the DEV branch enter the command:
+        </p>
+        <p class="code">
+          git fetch
+        </p>
+        <p>Followed by</p>
+        <p class="code">git checkout dev</p>
+        <p>
+          This applies to the branches in the repo. When you are pushing your
+          work, MAKE SURE YOU ARE THE CORRECT BRANCH!
+        </p>
+        <h3 id="branches" class="title">
+          Working with Branches
+        </h3>
+        <p>
+          When working on a new feature for Handraze, you need to create a new
+          branch with the <b>dev</b> branch as the parent.
+          <br />
+          To accomplish this, make sure you "git checkout" the dev branch.
+          <br />
+          Follow this with the command:
+        </p>
+        <p class="code">git checkout -b feature_branch</p>
+        <p>
+          feature_branch can be any name related to the feature you are
+          developing. This new branch is based off the dev branch. This means
+          that all the files from the dev branch are in this new branch.
+          <br />
+          Once you're done with development in the feature branch, commit and
+          push the branch to github.
+        </p>
+        <p class="code">git add .</p>
+        <p class="code">
+          git commit -m "enter your message here(don't remove these quotation
+          marks)"
+        </p>
+        <p class="code">git push</p>
+        <p>
+          Do these 3 git commands above within your feature branch and it should
+          show up on gitHub
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
