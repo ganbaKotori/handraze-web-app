@@ -1,15 +1,34 @@
-.title {
-  background: rgb(255, 99, 71);
-  background: linear-gradient(
-    90deg,
-    rgba(255, 99, 71, 1) 0%,
-    rgba(255, 99, 71, 1) 35%,
-    rgba(0, 249, 255, 0) 100%
-  );
-  color: white;
-  /*padding-top: 1%;
-  padding-bottom: 1%;*/
-  padding-left: 2%;
+.box {
+  height: 25%;
+  width: 70%;
+  margin: 2%;
+  padding: 1%;
+  background: hsla(247, 42%, 27%, 0.527);
+  text-align: center;
+  color: #fff;
+  /*float: left;*/
+}
+
+.box a {
+  color: #fff;
+}
+
+.box img {
+  height: 100%;
+  width: auto;
+  float: left;
+  border-radius: 50%;
+}
+
+.box span {
+  padding-top: 20%;
+  text-align: right;
+  margin-top: 30%;
+  font-size: 80%;
+}
+
+.code {
+  font-family: "Courier New", Courier, monospace;
 }
 
 .segment {
@@ -33,7 +52,8 @@
 }
 
 body {
-  background-color: beige;
+  background-color: rgb(255, 255, 255);
+  background-image: url("./img/background.png");
   margin: 0;
 }
 
@@ -42,15 +62,9 @@ body {
   padding: 0%;
 }
 
-.box {
-  height: 25%;
-  width: 50%;
-  margin: 2%;
-  padding: 4%;
-  background: #2f2861;
+.developer-name {
+  font-size: 140%;
   text-align: center;
-  color: #fff;
-  /*float: left;*/
 }
 
 li a {
@@ -71,12 +85,15 @@ li a:hover:not(.active) {
 }
 
 .logo {
-  width: 20%;
+  width: 40%;
   height: auto;
+  overflow: hidden;
+  margin-top: -2%;
+  margin-bottom: -5%;
 }
 
-.developer-table {
-  width: 75%;
+.logo img {
+  margin: -10px 0px 0px -180px;
 }
 
 .sidenav {
@@ -86,27 +103,31 @@ li a:hover:not(.active) {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background: rgb(77, 77, 77);
+  background: linear-gradient(
+    90deg,
+    rgba(77, 77, 77, 1) 92%,
+    rgba(69, 69, 69, 1) 94%,
+    rgba(57, 57, 57, 1) 97%,
+    rgba(47, 47, 47, 1) 100%
+  );
   overflow-x: hidden;
   padding-top: 20px;
   font-family: "Hind", sans-serif;
   font-family: "Hind Vadodara", sans-serif;
 }
 
-.code {
-  font-family: "Courier New", Courier, monospace;
-}
-
 .sidenav a {
   padding: 6px 8px 20px 16px;
   text-decoration: none;
   font-size: 100%;
-  color: #818181;
+  color: #f1f1f1;
   display: block;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #fff;
+  font-weight: bold;
 }
 
 .main {
@@ -118,6 +139,23 @@ li a:hover:not(.active) {
   font-family: "Hind Vadodara", sans-serif;
 }
 
+.title {
+  background: rgb(255, 154, 71);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 154, 71, 1) 0%,
+    rgba(255, 142, 81, 1) 32%,
+    rgba(255, 117, 61, 1) 50%,
+    rgba(255, 99, 71, 1) 68%,
+    rgba(255, 86, 71, 1) 82%,
+    rgba(255, 90, 90, 1) 96%
+  );
+  color: white;
+  /*padding-top: 1%;
+  padding-bottom: 1%;*/
+  padding-left: 2%;
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {
     padding-top: 15px;
@@ -125,4 +163,48 @@ li a:hover:not(.active) {
   .sidenav a {
     font-size: 18px;
   }
+}
+/*--------------------------------------*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+  margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
 }
