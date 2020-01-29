@@ -1,1 +1,0 @@
-instructor model folder
