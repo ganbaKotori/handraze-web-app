@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const studentSchema = new Schema({
 	year:{
 		type: string,
 		required: true
@@ -15,4 +15,8 @@ const userSchema = new Schema({
 }, {
   timestamps: true,
 });
+
+const Student = mongoose.model('Student', studentSchema);
+
+module.exports = Student;
 
