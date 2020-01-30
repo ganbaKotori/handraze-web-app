@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const studentSchema = new Schema({
+	user: {
+		type: Schema.Types.ObjectID,
+		required: true,
+		ref: 'User'
+	},
 	year:{
 		type: string,
 		required: true
