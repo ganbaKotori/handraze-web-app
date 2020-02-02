@@ -8,9 +8,6 @@ const courseSchema = new Schema({
 		required: true,
 		ref: 'Question'
 	},
-	topic:{
-		type: string
-	}
 	code:{
 		type: string,
 		required: true
@@ -28,10 +25,12 @@ const courseSchema = new Schema({
 		type: date,
 		default: Date.now
 	},
-	weekDay:{
-		type: string,
+	weekDay:[
+		dayType: {
+		type: String,
 		required: true
-	},
+		}
+	],
 	classDuration:{
 		type: int,
 		required: true
@@ -52,4 +51,3 @@ const courseSchema = new Schema({
 const Course = mongoose.model('Course', courseSchema);
 
 module.exports = Course;
-
