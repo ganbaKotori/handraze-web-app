@@ -1,60 +1,91 @@
-const router = require('express').Router();
-let User = require('../models/user.model');
+const express = require('express');
+const router = express.Router();
+const User = require('../models/user.model');
 
-router.route('/').get((req, res) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
+// Get all users
+router.get('/', async (req, res) => {
+  try{
+    const users = await User.find();
+    res.json(users);
+  } catch {
+    res.status(500).json({message: err.message});
+  }
 });
 
-router.route('/login').post((req, res, next) => {
-  User.authenticate(req.body.logemail. req.body.logpassword, function(error, user) {
-    if(error || !user) {
-      var err = new Error('Wrong email or password.');
-      err.status = 401;
-      return next(err);
-    } else {
-      req.session.userID = user._id;
-      res.status(200).json('Login successful');
+// Get a user
+router.get('/:id', getUser, (req, res) => {
+  res.json(res.user);
+});
+
+// Create a user
+router.post('/', async (req, res) => {
+  const user = new User({
+    email: req.body.email,
+    username: req.body.username,
+    u_password: req.body.u_password,
+    lastName: req.body.lastName,
+    firstName: req.body.firstName
+  })
+  try{
+    const newUser = await user.save();
+    res.status(201).json(newUser); // good - send new users info
+  } catch (err) {
+    res.status(400).json({message: err.message}); // user input error
+  }
+});
+
+// Update a user
+// Patch updates one thing, put updates everything
+router.patch('/:id', getUser, async (req, res) => {
+  if(req.body.email != null) {
+    res.user.email = req.body.email;
+  }
+  if(req.body.username != null) {
+    res.user.username = req.body.username;
+  }
+  if(req.body.u_password != null) {
+    res.user.password = req.body.u_password;
+  }
+  if(req.body.lastName != null) {
+    res.user.lastName = req.body.lastName;
+  }
+  if(req.body.firstName != null) {
+    res.user.firstName = req.body.firstName;
+  }
+
+  try {
+    const upatedUser = await res.user.save(); // give updated version
+    res.json(upatedUser); // good - sends users updated info
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+});
+
+// Delete a user
+router.delete('/:id', getUser, async (req, res) => {
+  try{
+    await res.user.remove();
+    res.json({message: "Successfully deleted user!"}) // good
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+});
+
+//------------------------------------------------------------------------------
+
+async function getUser(req, res, next) {
+  let user
+  try {
+    user = await User.findById(req.params.id);
+    if(user == null) {
+      return res.status(404).json({message: 'Cannot find user.'})
     }
-  });
-});
+  } catch (err) {
+    return res.status(500).json({message: err.message});
+  }
 
-router.route('/addUser').post((req, res) => {
-  const firstName  = req.body.firstName;
-  const lastName   = req.body.lastName;
-  const email      = req.body.email;
-  const password   = req.body.password;
-
-  const newUser = new User({firstName, lastName, email, password});
-
-  newUser.save()
-    .then(() => res.json('User added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/:id;').get((req, res) => {
-  User.findById(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/:id').get((req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then(() => res.json('User deleted!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/update/:id').post((req, res) => {
-  User.findById(re.params.id)
-    .then(user => {
-      user.email = req.body.email;
-
-      user.save()
-        .then(() => res.json('User updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+  res.user = user;
+  next();
+}
 
 module.exports = router;
