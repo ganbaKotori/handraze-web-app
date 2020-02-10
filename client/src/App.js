@@ -7,6 +7,7 @@ import Landing from "./components/layout/Landing";
 import CreateAccount from "./components/layout/CreateAccount";
 import ProfileCreation from "./components/layout/ProfileCreation";
 import InstructorProfileCreation from "./components/layout/InstructorProfileCreation";
+import Popup from "./components/layout/PopUpTest";
 import LoggedOut from "./components/layout/LoggedOut";
 import "./App.css";
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={CreateAccount} />
           <Route exact path="/createprofile" component={ProfileCreation} />
+          <Route exact path="/createcourse" component={Popup} />
           <Route
             exact
             path="/createinstructor"
