@@ -25,10 +25,6 @@ module.exports = function validateRegisterInput(data) {
         errors.institution = "Institution is required";
     }
 
-    if (!years.includes(data.year)) {
-        errors.year = "Incorrect year";
-    }
-
     return {
         errors,
         isValid: isEmpty(errors)
