@@ -14,7 +14,7 @@ const EnrollCourse = () => {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <label for="exampleFormControlInput1">Enrollment Code</label>
+                        <label for="text">Enrollment Code</label>
 
                         <input type="text" class="form-control" id="text" placeholder="123456aF" />
 
