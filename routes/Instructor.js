@@ -1,25 +1,33 @@
-const router = require('express').Router();
-let InstructorProfile = require('../models/instructor.profile.model');
+const router = require("express").Router();
+let InstructorProfile = require("../models/instructor.model");
 let User = require("../models/user.model");
 
-router.route('/').get((req, res) => {
+// @route   GET api/instructors
+// @desc    Retrieve all instructors
+// @access  Public
+router.route("/").get((req, res) => {
   InstructorProfile.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then(instructors => res.json(instructors))
+    .catch(err => res.status(400).json("Error: " + err));
 });
 
+// @route   POST api/instructors
+// @desc    Create instructor profile
+// @access  Public
+router.route("/").post((req, res) => {
+  const profileFields = {};
 
-router.route('/add').post((req, res) => {
-  const profilefields = {};
+  profileFields.department = req.body.department;
+  profileFields.user = req.body.id;
 
-  profilefields.department = req.body.department;
+  const newInstructorProfile = new InstructorProfile(profileFields);
 
-  const newInstructorProfile = new InstructorProfile(profilefields);
-
-  newStudentProfile.save()
-    .then(() => res.json('Instructor profile added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+  newInstructorProfile
+    .save()
+    .then(() => res.json("Instructor profile added!"))
+    .catch(err => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;
-console.log('request was made: ' + request.url);
+
+//console.log("request was made: " + req.url);

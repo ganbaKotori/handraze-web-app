@@ -1,26 +1,33 @@
-const router = require('express').Router();
-let StudentProfile = require('../models/student.profile.model');
+const router = require("express").Router();
+let StudentProfile = require("../models/student.model");
 let User = require("../models/user.model");
 
-router.route('/').get((req, res) => {
+// @route   GET api/students
+// @desc    Retrieve all students
+// @access  Public
+router.route("/").get((req, res) => {
   StudentProfile.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then(students => res.json(students))
+    .catch(err => res.status(400).json("Error: " + err));
 });
 
+// @route   POST api/students
+// @desc    Create a student profile
+// @access  Public
+router.route("/").post((req, res) => {
+  const profileFields = {};
 
-router.route('/add').post((req, res) => {
-  const profilefields = {};
+  profileFields.year = req.body.year;
+  profileFields.institution = req.body.institution;
+  profileFields.user = req.body.id;
 
-  profilefields.year = req.body.year;
-  profilefields.institution = req.body.institution;
+  const newStudentProfile = new StudentProfile(profileFields);
 
-  const newStudentProfile = new StudentProfile(profilefields);
-
-  newStudentProfile.save()
-    .then(() => res.json('Student profile added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+  newStudentProfile
+    .save()
+    .then(() => res.json("Student profile added!"))
+    .catch(err => res.status(400).json("Error: " + err));
 });
 
-module.exports = router; 
-console.log('request was made: ' + request.url);
+module.exports = router;
+//console.log("request was made: " + request.url);

@@ -2,12 +2,18 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const usersRouter = require("./routes/User");
+const instructorRouter = require("./routes/instructor");
+const studentRouter = require("./routes/student");
+const courseRouter = require("./routes/Course");
 var bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/api/users", usersRouter);
+app.use("/api/instructors", instructorRouter);
+app.use("/api/students", studentRouter);
+app.use("/api/courses", courseRouter);
 
 const port = 3000; // go to http://localhost:3000
 
