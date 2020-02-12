@@ -31,7 +31,7 @@ const courseSchema = new Schema(
       maxlength: 50,
       required: true
     },
-    courseDate: {
+    classStart: {
       type: Date,
       default: Date.now
     },

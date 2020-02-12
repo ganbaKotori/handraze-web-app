@@ -2,54 +2,67 @@ const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
 module.exports = function validateRegisterInput(data) {
-    let errors = {};
+  let errors = {};
 
-    data.classTitle = !isEmpty(data.classTitle) ? data.classTitle : "";
-    data.classDescription = !isEmpty(data.classDescription) ? data.classDescription : "";
-    data.courseStart = !isEmpty(data.courseStart) ? data.courseStart : "";
-    data.weekDay = !isEmpty(data.weekDay) ? data.weekDay : "";
-    data.classDuration = !isEmpty(data.classDuration) ? data.classDuration : "";
-    data.location = !isEmpty(data.location) ? data.location : "";
-    data.sectionNumber = !isEmpty(data.sectionNumber) ? data.sectionNumber : "";
-    var dayOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  data.title = !isEmpty(data.title) ? data.title : "";
+  data.description = !isEmpty(data.description) ? data.description : "";
+  data.classStart = !isEmpty(data.classStart) ? data.classStart : "";
+  //data.dayOfWeek = !isEmpty(data.dayOfWeek) ? data.dayOfWeek : "";
+  data.classDuration = !isEmpty(data.classDuration) ? data.classDuration : "";
+  data.location = !isEmpty(data.location) ? data.location : "";
+  data.sectionNumber = !isEmpty(data.sectionNumber) ? data.sectionNumber : "";
+  var week = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
 
-    if (!Validator.isLength(data.classTitle, { min: 10, max: 30 })) {
-        errors.classTitle = "Class title must be between 10 and 30 characters";
-    }
+  if (!Validator.isLength(data.title, { min: 10, max: 30 })) {
+    errors.classTitle = "Class title must be between 10 and 30 characters";
+  }
 
-    if (Validator.isEmpty(data.classDescription)) {
-        errors.classDescription = "Class descripton is required";
-    }
+  if (Validator.isEmpty(data.description)) {
+    errors.classDescription = "Class descripton is required";
+  }
 
-    if (Validator.isEmpty(data.courseStart)) {
-        errors.courseStart = "Course start is required";
-    }
+  if (Validator.isEmpty(data.classStart)) {
+    errors.classStart = "Class start is required";
+  }
 
-    if (Validator.isEmpty(data.weekDay)) {
-        if (!dayOfWeek.includes(data.weekDay)) {
-            errors.weekDay = "Incorrect day of the week";
-        }
+  if (!data.dayOfWeek.some(r => week.indexOf(r) >= 0)) {
+    errors.weekDay = "Incorrect day of the week";
+  }
 
-        errors.weekDay = "Day of the week is required";
-    }
+  //if (Validator.isEmpty(data.dayOfWeek)) {
+  //  errors.weekDay = "Day of the week is required";
+  //}
 
-    if (Validator.isEmpty(data.classDuration)) {
-        errors.classDuration = "Class Duration is required";
-    }
+  if (isNaN(data.classDuration)) {
+    errors.classDuration = "Class duration must be a number";
+  }
 
-    if (Validator.isEmpty(data.location)) {
-        errors.location = "Location is required";
-    }
+  if (Validator.isEmpty(data.classDuration)) {
+    errors.classDuration = "Class Duration is required";
+  }
 
-    if (Validator.isEmpty(data.sectionNumber)) {
-        if (!isNaN(data.sectionNumber)) {
-            errors.sectionNumber = "Section number must be a number";
-        }
-        errors.sectionNumber = "Section number is required";
-    }
+  if (Validator.isEmpty(data.location)) {
+    errors.location = "Location is required";
+  }
 
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    };
+  if (isNaN(data.sectionNumber)) {
+    errors.sectionNumber = "Section number must be a number";
+  }
+
+  if (Validator.isEmpty(data.sectionNumber)) {
+    errors.sectionNumber = "Section number is required";
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
 };

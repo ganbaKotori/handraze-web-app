@@ -2,6 +2,9 @@ const router = require("express").Router();
 let InstructorProfile = require("../models/instructor.model");
 let User = require("../models/user.model");
 
+//Load Input Validation
+const validateRegisterInput = require("../validation/instructor-validation");
+
 // @route   GET api/instructors
 // @desc    Retrieve all instructors
 // @access  Public
@@ -15,6 +18,12 @@ router.route("/").get((req, res) => {
 // @desc    Create instructor profile
 // @access  Public
 router.route("/").post((req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const profileFields = {};
 
   profileFields.department = req.body.department;

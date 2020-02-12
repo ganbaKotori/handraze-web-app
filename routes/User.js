@@ -2,20 +2,29 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user.model");
 
+//Load Input Validation
+const validateRegisterInput = require("../validation/user-validation");
+
 // @route   POST api/user/
 // @desc    Register user
 // @access  Public
 router.route("/").post((req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const username = req.body.username;
-  const u_password = req.body.password;
+  const userName = req.body.userName;
+  const password = req.body.password;
 
   const newUser = new User({
     email,
-    username,
-    u_password,
+    userName,
+    password,
     lastName,
     firstName
   });
