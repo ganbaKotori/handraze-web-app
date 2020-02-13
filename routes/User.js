@@ -55,8 +55,8 @@ router.route("/register").post(async (req, res) => {
 
     const newUser = new User({
       email,
-      username,
-      u_password,
+      userName,
+      password,
       lastName,
       firstName
     });

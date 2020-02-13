@@ -26,7 +26,3 @@ const studentSchema = new Schema(
 const Student = mongoose.model("Student", studentSchema);
 
 module.exports = Student;
-<<<<<<< HEAD
-
-=======
->>>>>>> e97896099d4f35cd989ac62e9f3cf476df43e55a
