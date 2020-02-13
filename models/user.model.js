@@ -11,14 +11,14 @@ const userSchema = new Schema(
       required: true,
       trim: true
     },
-    username: {
+    userName: {
       type: String,
       required: true,
       unique: true,
       trim: true,
       minlength: 3
     },
-    u_password: {
+    password: {
       type: String,
       required: true,
       minlength: 6
@@ -40,7 +40,7 @@ const userSchema = new Schema(
 );
 
 //authenticate input against database
-userSchema.statics.authenticate = function(email, u_password, callback) {
+userSchema.statics.authenticate = function(email, password, callback) {
   User.findOne({ email: email }).exec(function(err, user) {
     if (err) {
       return callback(err);
@@ -49,7 +49,7 @@ userSchema.statics.authenticate = function(email, u_password, callback) {
       err.status = 401;
       return callback(err);
     }
-    bcrypt.compare(u_password, user.u_password, function(err, result) {
+    bcrypt.compare(password, user.password, function(err, result) {
       if (result === true) {
         return callback(null, user);
       } else {
@@ -62,11 +62,11 @@ userSchema.statics.authenticate = function(email, u_password, callback) {
 userSchema.pre("save", function(next) {
   var user = this;
   var salt = bcrypt.genSaltSync(10);
-  bcrypt.hash(user.u_password, salt, null, function(err, hash) {
+  bcrypt.hash(user.password, salt, null, function(err, hash) {
     if (err) {
       return next(err);
     }
-    user.u_password = hash;
+    user.password = hash;
     next();
   });
 });

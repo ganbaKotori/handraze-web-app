@@ -5,8 +5,46 @@ const config = require('config');
 
 const User = require("../models/user.model");
 
+<<<<<<< HEAD
 // @route   POST API/Users/
 // @desc    Get list of users
+=======
+//Load Input Validation
+const validateRegisterInput = require("../validation/user-validation");
+
+// @route   POST api/user/
+// @desc    Register user
+// @access  Public
+router.route("/").post((req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const userName = req.body.userName;
+  const password = req.body.password;
+
+  const newUser = new User({
+    email,
+    userName,
+    password,
+    lastName,
+    firstName
+  });
+
+  newUser
+    .save()
+    .then(() => res.json("User added!"))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
+// @route   GET api/user/
+// @desc    Retrieve all users
+>>>>>>> instuctor-route-modification
 // @access  Public
 router.route("/").get((req, res) => {
   User.find()
@@ -14,8 +52,13 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+<<<<<<< HEAD
 // @route   POST API/Users/Login
 // @desc    Login as a user
+=======
+// @route   POST api/user/login
+// @desc    Register user
+>>>>>>> instuctor-route-modification
 // @access  Public
 router.route("/login").post((req, res, next) => {
   User.authenticate(req.body.logemail, req.body.logpassword, function(
@@ -33,6 +76,7 @@ router.route("/login").post((req, res, next) => {
   });
 });
 
+<<<<<<< HEAD
 // @route   POST API/Users/Register
 // @desc    Register user
 // @access  Public
@@ -84,6 +128,9 @@ router.route("/register").post(async (req, res) => {
 });
 
 // @route   GET API/Users/:id
+=======
+// @route   GET API/User/:id
+>>>>>>> instuctor-route-modification
 // @desc    find user
 // @access  Public
 router.get("/:id", (req, res) => {
