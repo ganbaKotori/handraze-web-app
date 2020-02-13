@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/ganbaKotori/handraze-web-app#readme",
   "dependencies": {
+<<<<<<< HEAD
     "@sendgrid/mail": "^6.5.2",
+=======
+>>>>>>> e97896099d4f35cd989ac62e9f3cf476df43e55a
     "bcrypt": "^3.0.8",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
@@ -26,6 +29,11 @@
     "git": "^0.1.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11",
+<<<<<<< HEAD
     "nodejs": "0.0.0"
+=======
+    "nodejs": "0.0.0",
+    "validator": "^12.2.0"
+>>>>>>> e97896099d4f35cd989ac62e9f3cf476df43e55a
   }
 }

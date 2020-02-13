@@ -19,7 +19,7 @@ const App = () => (
       <section className="container">
         <Switch>
           <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={CreateAccount} />
+          <Route exact path="/register" component={CreateAccount} />w32
           <Route exact path="/createprofile" component={ProfileCreation} />
           <Route exact path="/createcourse" component={Popup} />
           <Route

@@ -15,8 +15,8 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// @route   POST API/Users/Login
-// @desc    Login as a user
+// @route   POST api/user/login
+// @desc    Register user
 // @access  Public
 router.route("/login").post((req, res, next) => {
   User.authenticate(req.body.logemail, req.body.logpassword, function(
@@ -41,16 +41,16 @@ router.route("/register").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const username = req.body.username;
-  const u_password = req.body.password;
+  const userName = req.body.userName;
+  const password = req.body.password;
 
   try {
     let user = await User.findOne({ email });
 
-    if(user){
+    if (user) {
       return res
         .status(400)
-        .json({errors: [{message: 'User already exists!'}] });
+        .json({ errors: [{ message: "User already exists!" }] });
     }
 
     const newUser = new User({
@@ -100,7 +100,7 @@ router.get("/:id", (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     await User.findOneAndDelete({ _id: req.params.id });
-    res.json({message: "User deleted!" });
+    res.json({ message: "User deleted!" });
   } catch (err) {
     res.status(500).send("Server Error");
   }
@@ -116,7 +116,7 @@ router.post("/update/:id", (req, res) => {
 
       user
         .save()
-        .then(() => res.json({message: "User updated!" }))
+        .then(() => res.json({ message: "User updated!" }))
         .catch(err => res.status(400).json("Error: " + err));
     })
     .catch(err => res.status(400).json("Error: " + err));
