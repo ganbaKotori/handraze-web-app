@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const { sendWelcomeEmail } = require('../emails/account');
 
 const User = require("../models/user.model");
 
-// @route   POST API/Users/
+// @route   GET API/Users/
 // @desc    Get list of users
 // @access  Public
 router.route("/").get((req, res) => {
@@ -61,6 +62,7 @@ router.route("/register").post(async (req, res) => {
     });
 
     await newUser.save();
+    sendWelcomeEmail(newUser.email, newUser.firstName);
 
     //----- JWT -----
     const payload = {
