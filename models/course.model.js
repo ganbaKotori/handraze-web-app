@@ -1,53 +1,62 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const courseSchema = new Schema({
-	question: {
-		type: Schema.Types.ObjectID,
-		required: true,
-		ref: 'Question'
-	},
-	code:{
-		type: string,
-		required: true
-	},
-	classTitle:{
-		type: string,
-		required: true
-	},
-	classDescription:{
-		type: string,
-		maxlength: 50,
-		required: true
-	},
-	courseDate:{
-		type: date,
-		default: Date.now
-	},
-	weekDay:[
-		dayType: {
-		type: String,
-		required: true
-		}
-	],
-	classDuration:{
-		type: int,
-		required: true
-	},
-	c_location:{
-		type: string,
-		required: true
-	},
-	sectionNum:{
-		type: int,
-		required: true
-	}
-		
-}, {
-  timestamps: true,
-});
+const courseSchema = new Schema(
+  {
+    question: [
+      {
+        type: Schema.Types.ObjectID,
+        required: false,
+        ref: "Question"
+      }
+    ],
+    students: [
+      {
+        type: Schema.Types.ObjectID,
+        required: false,
+        ref: "Student"
+      }
+    ],
+    code: {
+      type: String,
+      required: false
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      maxlength: 50,
+      required: true
+    },
+    classStart: {
+      type: Date,
+      default: Date.now
+    },
+    dayOfWeek: [
+      {
+        type: String,
+        required: true
+      }
+    ],
+    classDuration: {
+      type: String,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    },
+    sectionNumber: {
+      type: String,
+      required: true
+    }
+  },
+  {
+    timestamps: true
+  }
+);
 
-const Course = mongoose.model('Course', courseSchema);
-
-module.exports = Course;
+const Course = mongoose.model("Course", courseSchema);
