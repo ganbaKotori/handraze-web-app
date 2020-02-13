@@ -4,26 +4,35 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
   {
-    question: {
-      type: Schema.Types.ObjectID,
-      required: true,
-      ref: "Question"
-    },
+    question: [
+      {
+        type: Schema.Types.ObjectID,
+        required: false,
+        ref: "Question"
+      }
+    ],
+    students: [
+      {
+        type: Schema.Types.ObjectID,
+        required: false,
+        ref: "Student"
+      }
+    ],
     code: {
-      type: string,
-      required: true
+      type: String,
+      required: false
     },
     title: {
-      type: string,
+      type: String,
       required: true
     },
     description: {
-      type: string,
+      type: String,
       maxlength: 50,
       required: true
     },
-    courseDate: {
-      type: date,
+    classStart: {
+      type: Date,
       default: Date.now
     },
     dayOfWeek: [
@@ -33,15 +42,15 @@ const courseSchema = new Schema(
       }
     ],
     classDuration: {
-      type: int,
+      type: String,
       required: true
     },
     location: {
-      type: string,
+      type: String,
       required: true
     },
     sectionNumber: {
-      type: int,
+      type: String,
       required: true
     }
   },

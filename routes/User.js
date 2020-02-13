@@ -1,14 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const config = require('config');
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const User = require("../models/user.model");
 
-<<<<<<< HEAD
-// @route   POST API/Users/
-// @desc    Get list of users
-=======
 //Load Input Validation
 const validateRegisterInput = require("../validation/user-validation");
 
@@ -16,11 +12,11 @@ const validateRegisterInput = require("../validation/user-validation");
 // @desc    Register user
 // @access  Public
 router.route("/").post((req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body);
+  //const { errors, isValid } = validateRegisterInput(req.body);
 
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
+  //if (!isValid) {
+  //  return res.status(400).json(errors);
+  //}
 
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
@@ -44,7 +40,6 @@ router.route("/").post((req, res) => {
 
 // @route   GET api/user/
 // @desc    Retrieve all users
->>>>>>> instuctor-route-modification
 // @access  Public
 router.route("/").get((req, res) => {
   User.find()
@@ -52,13 +47,8 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-<<<<<<< HEAD
-// @route   POST API/Users/Login
-// @desc    Login as a user
-=======
 // @route   POST api/user/login
 // @desc    Register user
->>>>>>> instuctor-route-modification
 // @access  Public
 router.route("/login").post((req, res, next) => {
   User.authenticate(req.body.logemail, req.body.logpassword, function(
@@ -76,7 +66,6 @@ router.route("/login").post((req, res, next) => {
   });
 });
 
-<<<<<<< HEAD
 // @route   POST API/Users/Register
 // @desc    Register user
 // @access  Public
@@ -84,22 +73,22 @@ router.route("/register").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const username = req.body.username;
-  const u_password = req.body.password;
+  const userName = req.body.userName;
+  const password = req.body.password;
 
   try {
     let user = await User.findOne({ email });
 
-    if(user){
+    if (user) {
       return res
         .status(400)
-        .json({errors: [{message: 'User already exists!'}] });
+        .json({ errors: [{ message: "User already exists!" }] });
     }
 
     const newUser = new User({
       email,
-      username,
-      u_password,
+      userName,
+      password,
       lastName,
       firstName
     });
@@ -110,27 +99,25 @@ router.route("/register").post(async (req, res) => {
     const payload = {
       user: {
         id: newUser._id
-    }}
+      }
+    };
 
     jwt.sign(
       payload,
-      config.get('JWT_SECRET'),
-      {expiresIn: 360000}, // optional but recommended
+      config.get("JWT_SECRET"),
+      { expiresIn: 360000 }, // optional but recommended
       (err, token) => {
-        if(err) throw err;
-        res.json({token});
+        if (err) throw err;
+        res.json({ token });
       }
-    )
-  } catch(err) {
+    );
+  } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).send("Server error");
   }
 });
 
 // @route   GET API/Users/:id
-=======
-// @route   GET API/User/:id
->>>>>>> instuctor-route-modification
 // @desc    find user
 // @access  Public
 router.get("/:id", (req, res) => {
@@ -145,7 +132,7 @@ router.get("/:id", (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     await User.findOneAndDelete({ _id: req.params.id });
-    res.json({message: "User deleted!" });
+    res.json({ message: "User deleted!" });
   } catch (err) {
     res.status(500).send("Server Error");
   }
@@ -161,7 +148,7 @@ router.post("/update/:id", (req, res) => {
 
       user
         .save()
-        .then(() => res.json({message: "User updated!" }))
+        .then(() => res.json({ message: "User updated!" }))
         .catch(err => res.status(400).json("Error: " + err));
     })
     .catch(err => res.status(400).json("Error: " + err));

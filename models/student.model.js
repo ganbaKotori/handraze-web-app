@@ -10,11 +10,11 @@ const studentSchema = new Schema(
       ref: "User"
     },
     year: {
-      type: string,
+      type: String,
       required: true
     },
     institution: {
-      type: string,
+      type: String,
       required: true
     }
   },
