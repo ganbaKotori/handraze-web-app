@@ -7,6 +7,8 @@ import Landing from "./components/layout/Landing";
 import CreateAccount from "./components/layout/CreateAccount";
 import ProfileCreation from "./components/layout/ProfileCreation";
 import InstructorProfileCreation from "./components/layout/InstructorProfileCreation";
+import CourseHome from "./components/layout/CourseHome";
+import CourseDashboard from "./components/layout/CourseDashboard";
 import Popup from "./components/layout/PopUpTest";
 import LoggedOut from "./components/layout/LoggedOut";
 import "./App.css";
@@ -15,7 +17,7 @@ const App = () => (
   <Router>
     <Fragment>
       <Navbar />
-      <Route exact path="/" component={Landing} />
+      <Route exact path="/" component={CourseDashboard} />
       <section className="container">
         <Switch>
           <Route exact path="/login" component={Login} />

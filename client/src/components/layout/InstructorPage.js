@@ -59,7 +59,7 @@ const InstructorPage = () => {
             </div>
         </div>
         <div class="col-6 col-md-4">
-            <h3> News Feed</h3>
+            <h3> Peer Notes</h3>
             <div class="newsfeed">
             <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start ">

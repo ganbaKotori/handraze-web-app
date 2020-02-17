@@ -181,6 +181,29 @@ img {
 .prof-profile{
   padding-top:5%;
 }
+.activity-board{
+  max-height: 45vh;
+  overflow: scroll;
+}
+.notes-board{
+  max-height: 30vh;
+  overflow: scroll;
+}
+.top-part{
+  height: 40vh;
+}
+.dashboard{
+  height: 100vh;
+}
+.lectures{
+  margin:10px;
+  size:auto;
+}
+.btn-margin{
+
+  margin-top:10px;
+  padding:25px;
+}
 .car{
   margin-top:25%;
 }
