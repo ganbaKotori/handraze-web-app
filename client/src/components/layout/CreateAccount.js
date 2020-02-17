@@ -1,55 +1,129 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
+import axios from "axios";
+import { setAlert } from "../../actions/alert";
+import { connect } from "react-redux";
+import { register } from "../../actions/auth";
+import PropTypes from "prop-types";
 
-const CreateAccount = () => {
+const CreateAccount = ({ setAlert, register }) => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    userName: ""
+  });
+
+  const { firstName, lastName, email, password, userName } = formData;
+
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async e => {
+    e.preventDefault();
+    if (password == "") {
+      setAlert("There is no password submitted!", "danger");
+    } else {
+      register({ email, userName, password, lastName, firstName });
+    }
+  };
+
   return (
-    <div class="container">
-      <h2> Create Account </h2>
-      <p>
-        {" "}
-        Enter your information below to make an account and get started with
-        Handraze.
-      </p>
-      <form>
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            placeholder="Password"
-          />
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="confirmPassword"
-            placeholder="Password"
-          />
-        </div>
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="tosCheck" />
-          <label class="form-check-label" for="tosCheck">
-            Agree to T.O.S / Privacy Policy
-          </label>
-        </div>
-        <button type="submit" class="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    </div>
+    <Fragment>
+      <div className="container">
+        <h2> Create Account </h2>
+        <p>
+          {" "}
+          Enter your information below to make an account and get started with
+          Handraze.
+        </p>
+        <form className="form" onSubmit={e => onSubmit(e)}>
+          <div className="form-group">
+            <label for="email">First Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="firstName"
+              aria-describedby="emailHelp"
+              name="firstName"
+              value={firstName}
+              onChange={e => onChange(e)}
+              placeholder="Enter first name"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label for="email">Last Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="lastName"
+              aria-describedby="emailHelp"
+              name="lastName"
+              value={lastName}
+              onChange={e => onChange(e)}
+              placeholder="Enter last name"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label for="email">Username</label>
+            <input
+              type="text"
+              className="form-control"
+              id="userName"
+              aria-describedby="emailHelp"
+              name="userName"
+              value={userName}
+              onChange={e => onChange(e)}
+              placeholder="Enter username"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              name="email"
+              value={email}
+              onChange={e => onChange(e)}
+              placeholder="Enter email"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={e => onChange(e)}
+            />
+          </div>
+          <div className="form-check">
+            <input type="checkbox" className="form-check-input" id="tosCheck" />
+            <label className="form-check-label" for="tosCheck">
+              Agree to T.O.S / Privacy Policy
+            </label>
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+    </Fragment>
   );
 };
 
-export default CreateAccount;
+CreateAccount.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
+};
+
+export default connect(null, { setAlert, register })(CreateAccount);

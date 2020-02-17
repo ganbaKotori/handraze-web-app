@@ -4,13 +4,13 @@
 body {
   padding-top: 100px;
 }
-.profpic{
+.profpic {
   height: auto;
-  width:auto;
+  width: auto;
   float: right;
 }
 .modal {
-  display:block;
+  display: block;
 }
 .App-logo {
   height: 40vmin;
@@ -82,7 +82,6 @@ ul {
 img {
   width: 100%;
 }
-
 
 /* Text Styles*/
 .x-large {
@@ -178,14 +177,14 @@ img {
   transition: opacity 0.2s ease-in;
   outline: none;
 }
-.prof-profile{
-  padding-top:5%;
+.prof-profile {
+  padding-top: 5%;
 }
-.car{
-  margin-top:25%;
+.car {
+  margin-top: 25%;
 }
-.courses{
-  background-color:#eee;
+.courses {
+  background-color: #eee;
   padding: 2%;
 }
 .alert {
@@ -661,13 +660,13 @@ button {
 .inner {
   position: absolute;
   width: 50%;
-  left: 55%;
-  right: 55%;
-  top: 55%;
-  bottom: 55%;
+  left: 5%;
+  right: 5%;
+  top: 5%;
+  bottom: 5%;
   margin: 10%;
   border-radius: 20px;
-  background: black;
+  background: white;
   font-size: 250%;
 }
 
