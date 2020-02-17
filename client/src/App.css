@@ -661,14 +661,25 @@ button {
 .inner {
   position: absolute;
   width: 50%;
-  left: 55%;
-  right: 55%;
-  top: 55%;
-  bottom: 55%;
+  left: 18%;
+  right: 5%;
+  top: 5%;
+  bottom: 3%;
   margin: 10%;
+  padding: 10%;
   border-radius: 20px;
-  background: black;
-  font-size: 250%;
+  background: #AA75FF;
+  font-size: 180%;
+}
+
+.inner button {
+  width: 35%;
+  height: 40%;
+  left: 5%;
+  right: 5%;
+  top: 5%;
+  bottom: 5%;
+
 }
 
 /* Note: Clear float after the columns */
