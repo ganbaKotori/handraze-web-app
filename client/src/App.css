@@ -14,13 +14,6 @@ body {
 }
 .App-logo {
   height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -35,6 +28,9 @@ body {
 }
 
 .App-link {
+<<<<<<< HEAD
+  color: #09d3ac;
+=======
   color: #61dafb;
 }
 
@@ -622,6 +618,7 @@ button {
   .post button {
     padding: 0.3rem 0.4rem;
   }
+>>>>>>> dev
 }
 
 /*START OF NON-BOOTSTRAP CSS------------------------------------*/

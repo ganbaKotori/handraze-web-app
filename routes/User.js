@@ -122,4 +122,46 @@ router.post("/update/:id", (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+// Update a user
+// Patch updates one thing, put updates everything
+router.patch('/:id', getUser, async (req, res) => {
+  if(req.body.email != null) {
+    res.user.email = req.body.email;
+  }
+  if(req.body.username != null) {
+    res.user.username = req.body.username;
+  }
+  if(req.body.u_password != null) {
+    res.user.password = req.body.u_password;
+  }
+  if(req.body.lastName != null) {
+    res.user.lastName = req.body.lastName;
+  }
+  if(req.body.firstName != null) {
+    res.user.firstName = req.body.firstName;
+  }
+
+  try {
+    const upatedUser = await res.user.save(); // give updated version
+    res.json(upatedUser); // good - sends users updated info
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+});
+
+async function getUser(req, res, next) {
+  let user
+  try {
+    user = await User.findById(req.params.id);
+    if(user == null) {
+      return res.status(404).json({message: 'Cannot find user.'})
+    }
+  } catch (err) {
+    return res.status(500).json({message: err.message});
+  }
+
+  res.user = user;
+  next();
+}
+
 module.exports = router;

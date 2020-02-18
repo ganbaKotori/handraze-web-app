@@ -14,6 +14,24 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+// Get one Instructor
+router.get("/:id", getInstructor, (req, res) => {
+  res.json(res.instructor);
+});
+
+//TODO: Add PATCH for instructor, not sure how to patch both User and Instructor in one request
+// router.patch('/:id', getInstructor, async (req, res) => { ... }
+
+// Delete Instructor by isntructor id
+router.delete("/delete/:id", getInstructor, async (req, res) => {
+  try {
+    await res.instructor.remove();
+    res.json({ message: "Successfully deleted instructor!" }); // good
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // @route   POST api/instructors
 // @desc    Create instructor profile
 // @access  Public
@@ -37,6 +55,21 @@ router.route("/").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-module.exports = router;
+//------------------------------------------------------------------------------
 
-//console.log("request was made: " + req.url);
+async function getInstructor(req, res, next) {
+  let instructor;
+  try {
+    instructor = await Instructor.findById(req.params.id);
+    if (instructor == null) {
+      return res.status(404).json({ message: "Cannot find instructor." });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+
+  res.instructor = instructor;
+  next();
+}
+
+module.exports = router;

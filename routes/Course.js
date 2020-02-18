@@ -5,6 +5,11 @@ let Student = require("../models/student.model");
 //Load Input Validation
 const validateCourseInput = require("../validation/course-validation");
 
+// Get a course
+router.get('/:id', getCourse, (req, res) => {
+  res.json(res.course);
+});
+
 // @route   POST api/courses
 // @desc    Create a course
 // @access  Public
@@ -62,6 +67,23 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+
+// Update a course
+// Patch updates one thing, put updates everything
+// router.patch('/:id', getCourse, async (req, res) => { ... }
+
+
+// Delete a course
+router.delete('/delete/:id', getCourse, async (req, res) => {
+  try{
+    await res.course.remove();
+    res.json({message: "Successfully deleted course!"}) // good
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+});
+
+
 // @route   POST api/courses/student
 // @desc    Add a student to a course
 // @access  Public
@@ -81,5 +103,20 @@ router.post("/student", (req, res) => {
     });
   });
 });
+
+async function getCourse(req, res, next) {
+  let course
+  try {
+    course = await Course.findById(req.params.id);
+    if(course == null) {
+      return res.status(404).json({message: 'Cannot find course.'})
+    }
+  } catch (err) {
+    return res.status(500).json({message: err.message});
+  }
+
+  res.course = course;
+  next();
+}
 
 module.exports = router;
