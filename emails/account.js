@@ -1,17 +1,17 @@
-const sgMail = require('@sendgrid/mail');
-const sendgridAPIKey = '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';
+const sgMail = require("@sendgrid/mail");
+require("dotenv").config(); // gets environmental variables in .env
 
-sgMail.setApiKey(sendgridAPIKey);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendWelcomeEmail = (email, name) => {
   sgMail.send({
     to: email,
-    from: 'tester@handraze.com',
-    subject: 'Welcome to Handraze',
+    from: "tester@handraze.com",
+    subject: "Welcome to Handraze",
     text: `Welcome to the app, ${name}.`
-  })
-}
+  });
+};
 
 module.exports = {
   sendWelcomeEmail
-}
+};

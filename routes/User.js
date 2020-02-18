@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const { sendWelcomeEmail } = require('../emails/account');
+
+require('dotenv').config();
 
 const User = require("../models/user.model");
 
@@ -72,7 +73,7 @@ router.route("/register").post(async (req, res) => {
 
     jwt.sign(
       payload,
-      config.get('JWT_SECRET'),
+      process.env.JWT_SECRET,
       {expiresIn: 360000}, // optional but recommended
       (err, token) => {
         if(err) throw err;

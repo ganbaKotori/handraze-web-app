@@ -4,6 +4,7 @@ const app = express();
 const usersRouter = require("./routes/User");
 const authRouter = require("./routes/auth");
 require("dotenv").config();
+const fileRouter = require("./routes/FileUpload");
 
 const instructorRouter = require("./routes/instructor");
 const studentRouter = require("./routes/student");
@@ -24,7 +25,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/api/users", usersRouter);
-app.use("/api/auth", authRouter);
 app.use("/api/instructors", instructorRouter);
 app.use("/api/students", studentRouter);
 app.use("/api/courses", courseRouter);
@@ -32,6 +32,8 @@ app.use("/api/question", questionRouter);
 app.use("/api/lecture", lqRouter);
 app.use("/api/discussion", dqRouter);
 app.use("/api/answer", answerRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/upload", fileRouter);
 
 app.use(express.json());
 
