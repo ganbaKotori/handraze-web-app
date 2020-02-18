@@ -4,8 +4,9 @@ import { setAlert } from "../../actions/alert";
 import { connect } from "react-redux";
 import { register } from "../../actions/auth";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
-const CreateAccount = ({ setAlert, register }) => {
+const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,6 +28,10 @@ const CreateAccount = ({ setAlert, register }) => {
       register({ email, userName, password, lastName, firstName });
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/createprofile" />;
+  }
 
   return (
     <Fragment>
@@ -123,7 +128,12 @@ const CreateAccount = ({ setAlert, register }) => {
 
 CreateAccount.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 };
 
-export default connect(null, { setAlert, register })(CreateAccount);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, register })(CreateAccount);

@@ -1,7 +1,11 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../../actions/auth";
+import { Link, Redirect } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -14,19 +18,25 @@ const Login = () => {
 
   const onSubmit = async e => {
     e.preventDefault();
+    login(email, password);
     console.log("Success");
   };
+
+  //Redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to="/createprofile" />;
+  }
   return (
     <Fragment>
-      <div class="container">
+      <div className="container">
         <h2> Welcome back</h2>
         <p> Enter your account information below to sign into your profile.</p>
-        <form>
-          <div class="form-group">
+        <form className="form" onSubmit={e => onSubmit(e)}>
+          <div className="form-group">
             <label for="email">Email address</label>
             <input
               type="email"
-              class="form-control"
+              className="form-control"
               id="email"
               aria-describedby="emailHelp"
               placeholder="Enter email"
@@ -35,11 +45,11 @@ const Login = () => {
               onChange={e => onChange(e)}
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label for="password">Password</label>
             <input
               type="password"
-              class="form-control"
+              className="form-control"
               id="password"
               placeholder="Password"
               name="password"
@@ -48,13 +58,13 @@ const Login = () => {
             />
           </div>
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="tosCheck" />
-            <label class="form-check-label" for="tosCheck">
+          <div className="form-check">
+            <input type="checkbox" className="form-check-input" id="tosCheck" />
+            <label className="form-check-label" for="tosCheck">
               Remember me
             </label>
           </div>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Submit
           </button>
         </form>
@@ -63,4 +73,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);
