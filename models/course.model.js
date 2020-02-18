@@ -1,52 +1,64 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const courseSchema = new Schema({
-	//question: {
-		//type: Schema.Types.ObjectID,
-		//required: true,
-		//ref: 'Question'
-	//},
-	code:{
-		type: String,
-		required: true
-	},
-	classTitle:{
-		type: String,
-		required: true
-	},
-	classDescription:{
-		type: String,
-		maxlength: 50,
-		required: true
-	},
-	courseDate:{
-		type: Date,
-		default: Date.now
-	},
-	weekDay:{
-		type: String,
-		enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-		required: true
-	},
-	classDuration:{
-		type: Number,
-		required: true
-	},
-	c_location:{
-		type: String,
-		required: true
-	},
-	sectionNum:{
-		type: Number,
-		required: true
-	}
+const courseSchema = new Schema(
+  {
+    question: [
+      {
+        type: Schema.Types.ObjectID,
+        required: false,
+        ref: "Question"
+      }
+    ],
+    students: [
+      {
+        type: Schema.Types.ObjectID,
+        required: false,
+        ref: "Student"
+      }
+    ],
+    code: {
+      type: String,
+      required: false
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      maxlength: 50,
+      required: true
+    },
+    classStart: {
+      type: Date,
+      default: Date.now
+    },
+    dayOfWeek: [
+      {
+        type: String,
+        required: true
+      }
+    ],
+    classDuration: {
+      type: String,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    },
+    sectionNumber: {
+      type: String,
+      required: true
+    }
+  },
+  {
+    timestamps: true
+  }
+);
 
-}, {
-  timestamps: true,
-});
-
-const Course = mongoose.model('Course', courseSchema);
+const Course = mongoose.model("Course", courseSchema);
 
 module.exports = Course;

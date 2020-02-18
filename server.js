@@ -1,36 +1,57 @@
-require('dotenv').config();
-
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
-const port = 3000;
+const usersRouter = require("./routes/User");
+const authRouter = require("./routes/auth");
+require("dotenv").config();
+
+const instructorRouter = require("./routes/instructor");
+const studentRouter = require("./routes/student");
+
+// define routes here
+const userRouter = require("./routes/User"); // localhost:3000/user
+const studentProfile = require("./routes/Student");
+const instructorProfile = require("./routes/Instructor");
+const courseRouter = require("./routes/Course");
+const questionRouter = require("./routes/Question");
+const lqRouter = require("./routes/LectureQuestion");
+const dqRouter = require("./routes/DiscussionQuestion");
+const answerRouter = require("./routes/Answer");
+
+var bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use("/api/users", usersRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/instructors", instructorRouter);
+app.use("/api/students", studentRouter);
+app.use("/api/courses", courseRouter);
+app.use("/api/question", questionRouter);
+app.use("/api/lecture", lqRouter);
+app.use("/api/discussion", dqRouter);
+app.use("/api/answer", answerRouter);
 
 app.use(express.json());
 
-mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useCreateIndex: true , useUnifiedTopology: true});
-const db = mongoose.connection;
-db.on('error', (error) => console.error(error));
-db.once('open', () => console.log("MongoDB database connection established successfully"));
+const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+});
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("MongoDB database connection established successfully");
+});
 
-// define routes here
-const userRouter = require('./routes/User'); // localhost:3000/user
-const studentProfile = require('./routes/Student');
-const instructorProfile = require('./routes/Instructor')
-const courseRouter = require('./routes/Course');
-const questionRouter = require('./routes/Question');
-const lqRouter = require('./routes/LectureQuestion');
-const dqRouter = require('./routes/DiscussionQuestion');
-const answerRouter = require('./routes/Answer');
-
-app.use('/user', userRouter);
-app.use('/student', studentProfile);
-app.use('/instructor', instructorProfile);
-app.use('/course', courseRouter);
-app.use('/question', questionRouter);
-app.use('/lecture', lqRouter);
-app.use('/discussion', dqRouter);
-app.use('/answer', answerRouter);
-
-var server = app.listen(port, function() { // go to http://localhost:3000
+app.get("/", (req, res) => {
+  //req = requirement ; res = response
+  res.send("Handraze Backend Server");
+});
+port = 3000;
+var server = app.listen(port, function() {
+  // go to http://localhost:3000
   console.log(`Handraze Express Server listening on port ${port}`);
 });

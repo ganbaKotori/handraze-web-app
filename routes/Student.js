@@ -1,45 +1,46 @@
-const express = require('express');
-const router = express.Router();
-const Student = require('../models/student.model');
-const User = require('../models/user.model');
+const router = require("express").Router();
+let StudentProfile = require("../models/student.model");
+let User = require("../models/user.model");
 
-// Get all students
-router.get('/', async (req, res) => {
-  try {
-    const students = await Student.find();
-    res.json(students);
-  } catch {
-    res.status(500).json({message: err.message});
+//Load Input Validation
+const validateStudentInput = require("../validation/student-validation");
+
+// @route   GET api/students
+// @desc    Retrieve all students
+// @access  Public
+router.route("/").get((req, res) => {
+  StudentProfile.find()
+    .then(students => res.json(students))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
+// @route   POST api/students
+// @desc    Create a student profile
+// @access  Public
+router.route("/").post((req, res) => {
+  const { errors, isValid } = validateStudentInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
   }
+  const profileFields = {};
+
+  profileFields.year = req.body.year;
+  profileFields.institution = req.body.institution;
+  profileFields.user = req.body.id;
+
+  const newStudentProfile = new StudentProfile(profileFields);
+
+  newStudentProfile
+    .save()
+    .then(() => res.json("Student profile added!"))
+    .catch(err => res.status(400).json("Error: " + err));
 });
 
 // Get a student
 router.get('/:id', getStudent, (req, res) => {
   res.json(res.student); // good - responds with user's info
 });
-
-// TODO: Have GET display User and Student info togetuer
-// Ater you do a POST request for a new student and the do a GET request to view
-// it, it doesn't show the params for User. It just lists another id, year,
-// and institution.
-
-// Add Student
-router.post('/add', async (req, res) => {
-  const student = new Student({
-    user: req.body.user, // in POST - "user": "/user/[username]"
-    year: req.body.year,
-    institution: req.body.institution
-  })
-  try{
-    const newStudent = await student.save();
-    res.status(201).json(newStudent); // good - send new users info
-  } catch (err) {
-    res.status(400).json({message: err.message}); // user input error
-  }
-});
-
-//TODO: Add PATCH for student, not sure how to patch both User and Student in one request
-// router.patch('/:id', getStudent, async (req, res) => { ... }
 
 // Delete Student by student id
 router.delete('/delete/:id', getStudent, async (req, res) => {
@@ -50,8 +51,6 @@ router.delete('/delete/:id', getStudent, async (req, res) => {
     res.status(500).json({message: err.message})
   }
 });
-
-//------------------------------------------------------------------------------
 
 async function getStudent(req, res, next) {
   let student
@@ -69,3 +68,4 @@ async function getStudent(req, res, next) {
 }
 
 module.exports = router;
+//console.log("request was made: " + request.url);
