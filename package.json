@@ -27,5 +27,8 @@
     "mongoose": "^5.8.11",
     "nodejs": "0.0.0",
     "validator": "^12.2.0"
+  },
+  "devDependencies": {
+    "http-proxy-middleware": "^0.21.0"
   }
 }

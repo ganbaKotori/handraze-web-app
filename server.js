@@ -2,13 +2,22 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const usersRouter = require("./routes/User");
-const authRouter = require("./routes/auth")
+const authRouter = require("./routes/auth");
 
 const instructorRouter = require("./routes/instructor");
 const studentRouter = require("./routes/student");
 const courseRouter = require("./routes/Course");
 
 var bodyParser = require("body-parser");
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:5000"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,7 +31,11 @@ app.use("/api/courses", courseRouter);
 const port = 3000; // go to http://localhost:3000
 
 const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+});
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");

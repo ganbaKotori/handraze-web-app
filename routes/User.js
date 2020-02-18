@@ -11,31 +11,57 @@ const validateRegisterInput = require("../validation/user-validation");
 // @route   POST api/user/
 // @desc    Register user
 // @access  Public
-router.route("/").post((req, res) => {
-  //const { errors, isValid } = validateRegisterInput(req.body);
-
-  //if (!isValid) {
-  //  return res.status(400).json(errors);
-  //}
-
+router.route("/").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
   const userName = req.body.userName;
   const password = req.body.password;
+  try {
+    let user = await User.findOne({ email });
 
-  const newUser = new User({
-    email,
-    userName,
-    password,
-    lastName,
-    firstName
-  });
+    if (user) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "User with email already exists!" }] });
+    }
 
-  newUser
-    .save()
-    .then(() => res.json("User added!"))
-    .catch(err => res.status(400).json("Error: " + err));
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const newUser = new User({
+      email,
+      userName,
+      password,
+      lastName,
+      firstName
+    });
+
+    await newUser.save();
+
+    //----- JWT -----
+    const payload = {
+      user: {
+        id: newUser._id
+      }
+    };
+
+    jwt.sign(
+      payload,
+      config.get("JWT_SECRET"),
+      { expiresIn: 360000 }, // optional but recommended
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err.message);
+  }
 });
 
 // @route   GET api/user/
@@ -127,7 +153,7 @@ router.get("/:id", (req, res) => {
 });
 
 // @route   DELETE API/Users/Delete
-// @desc    find user
+// @desc    find and delete user
 // @access  Public
 router.delete("/:id", async (req, res) => {
   try {
