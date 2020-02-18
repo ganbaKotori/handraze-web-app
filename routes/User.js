@@ -1,45 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const config = require("config");
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const { sendWelcomeEmail } = require('../emails/account');
 
 const User = require("../models/user.model");
 
-//Load Input Validation
-const validateRegisterInput = require("../validation/user-validation");
-
-// @route   POST api/user/
-// @desc    Register user
-// @access  Public
-router.route("/").post((req, res) => {
-  //const { errors, isValid } = validateRegisterInput(req.body);
-
-  //if (!isValid) {
-  //  return res.status(400).json(errors);
-  //}
-
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const userName = req.body.userName;
-  const password = req.body.password;
-
-  const newUser = new User({
-    email,
-    userName,
-    password,
-    lastName,
-    firstName
-  });
-
-  newUser
-    .save()
-    .then(() => res.json("User added!"))
-    .catch(err => res.status(400).json("Error: " + err));
-});
-
-// @route   GET api/user/
-// @desc    Retrieve all users
+// @route   GET API/Users/
+// @desc    Get list of users
 // @access  Public
 router.route("/").get((req, res) => {
   User.find()
@@ -94,26 +62,26 @@ router.route("/register").post(async (req, res) => {
     });
 
     await newUser.save();
+    sendWelcomeEmail(newUser.email, newUser.firstName);
 
     //----- JWT -----
     const payload = {
       user: {
         id: newUser._id
-      }
-    };
+    }}
 
     jwt.sign(
       payload,
-      config.get("JWT_SECRET"),
-      { expiresIn: 360000 }, // optional but recommended
+      config.get('JWT_SECRET'),
+      {expiresIn: 360000}, // optional but recommended
       (err, token) => {
-        if (err) throw err;
-        res.json({ token });
+        if(err) throw err;
+        res.json({token});
       }
-    );
-  } catch (err) {
+    )
+  } catch(err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send('Server error');
   }
 });
 

@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
+
 app.use("/api/instructors", instructorRouter);
 app.use("/api/students", studentRouter);
 app.use("/api/courses", courseRouter);
