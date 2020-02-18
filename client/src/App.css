@@ -4,13 +4,13 @@
 body {
   padding-top: 100px;
 }
-.profpic{
+.profpic {
   height: auto;
-  width:auto;
+  width: auto;
   float: right;
 }
 .modal {
-  display:block;
+  display: block;
 }
 .App-logo {
   height: 40vmin;
@@ -28,9 +28,6 @@ body {
 }
 
 .App-link {
-<<<<<<< HEAD
-  color: #09d3ac;
-=======
   color: #61dafb;
 }
 
@@ -78,7 +75,6 @@ ul {
 img {
   width: 100%;
 }
-
 
 /* Text Styles*/
 .x-large {
@@ -174,14 +170,14 @@ img {
   transition: opacity 0.2s ease-in;
   outline: none;
 }
-.prof-profile{
-  padding-top:5%;
+.prof-profile {
+  padding-top: 5%;
 }
-.car{
-  margin-top:25%;
+.car {
+  margin-top: 25%;
 }
-.courses{
-  background-color:#eee;
+.courses {
+  background-color: #eee;
   padding: 2%;
 }
 .alert {
@@ -618,7 +614,6 @@ button {
   .post button {
     padding: 0.3rem 0.4rem;
   }
->>>>>>> dev
 }
 
 /*START OF NON-BOOTSTRAP CSS------------------------------------*/
@@ -665,7 +660,7 @@ button {
   margin: 10%;
   padding: 10%;
   border-radius: 20px;
-  background: #AA75FF;
+  background: #aa75ff;
   font-size: 180%;
 }
 
@@ -676,7 +671,6 @@ button {
   right: 5%;
   top: 5%;
   bottom: 5%;
-
 }
 
 /* Note: Clear float after the columns */
