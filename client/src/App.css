@@ -349,7 +349,7 @@ button {
   width: 100%;
   top: 0;
   border-bottom: solid 1px var(--primary-color);
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .navbar ul {
@@ -637,6 +637,25 @@ button {
 .column {
   float: left;
   width: 50%;
+}
+
+.flexcontainer {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 320px) {
+  .flexcontainer {
+    display: block;
+  }
+}
+
+.logo {
+  height: auto;
+  width: 12%;
+}
+
+.navbarText {
+  float: left;
 }
 
 .popup {
