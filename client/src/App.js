@@ -2,12 +2,15 @@ import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 import Login from "./components/layout/Login";
 import Landing from "./components/layout/Landing";
+import Courses from "./components/layout/Courses";
 import CreateAccount from "./components/layout/CreateAccount";
 import ProfileCreation from "./components/layout/ProfileCreation";
 import InstructorProfileCreation from "./components/layout/InstructorProfileCreation";
 import Popup from "./components/layout/PopUpTest";
+import Photo from "./components/layout/Photo";
 import LoggedOut from "./components/layout/LoggedOut";
 import "./App.css";
 //Redux
@@ -35,9 +38,10 @@ const App = () => {
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={CreateAccount} />
-              w32
+              <Route exact path="/courses" component={Courses} />
               <Route exact path="/createprofile" component={ProfileCreation} />
               <Route exact path="/createcourse" component={Popup} />
+              <Route exact path="/photo" component={Photo} />
               <Route
                 exact
                 path="/createinstructor"
@@ -45,6 +49,7 @@ const App = () => {
               />
             </Switch>
           </section>
+          <Footer />
         </Fragment>
       </Router>
     </Provider>
