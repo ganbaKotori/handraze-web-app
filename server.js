@@ -1,5 +1,3 @@
-import morgan from "morgan";
-
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -20,7 +18,6 @@ const questionRouter = require("./routes/Question");
 const lqRouter = require("./routes/LectureQuestion");
 const dqRouter = require("./routes/DiscussionQuestion");
 const answerRouter = require("./routes/Answer");
-const photoRouter = require("./routes/photo-uploader");
 
 var bodyParser = require("body-parser");
 
@@ -33,15 +30,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-crypto.pseudoRandomBytes(16, function(err, raw) {
-  if (err) return callback(err);
-
-  callback(null, raw.toString("hex") + path.extname(file.originalname));
-});
-//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("dev"));
 
 app.use("/api/users", usersRouter);
 app.use("/api/instructors", instructorRouter);
@@ -53,7 +43,6 @@ app.use("/api/discussion", dqRouter);
 app.use("/api/answer", answerRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/upload", fileRouter);
-app.use("/api/photo", photoRouter);
 
 app.use(express.json());
 
@@ -71,20 +60,6 @@ connection.once("open", () => {
 app.get("/", (req, res) => {
   //req = requirement ; res = response
   res.send("Handraze Backend Server");
-});
-
-app.post("/photos", upload.single("avatar"), (req, res) => {
-  if (!req.file) {
-    console.log("No file received");
-    return res.send({
-      success: false
-    });
-  } else {
-    console.log("file received");
-    return res.send({
-      success: true
-    });
-  }
 });
 port = 3000;
 var server = app.listen(port, function() {
