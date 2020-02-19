@@ -37,5 +37,35 @@ router.route("/").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+// Get a student
+router.get('/:id', getStudent, (req, res) => {
+  res.json(res.student); // good - responds with user's info
+});
+
+// Delete Student by student id
+router.delete('/delete/:id', getStudent, async (req, res) => {
+  try{
+    await res.student.remove();
+    res.json({message: "Successfully deleted student!"}) // good
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+});
+
+async function getStudent(req, res, next) {
+  let student
+  try {
+    student = await Student.findById(req.params.id);
+    if(student == null) {
+      return res.status(404).json({message: 'Cannot find student.'})
+    }
+  } catch (err) {
+    return res.status(500).json({message: err.message});
+  }
+
+  res.student = student;
+  next();
+}
+
 module.exports = router;
 //console.log("request was made: " + request.url);

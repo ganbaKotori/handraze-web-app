@@ -14,13 +14,6 @@ body {
 }
 .App-logo {
   height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -660,14 +653,24 @@ button {
 .inner {
   position: absolute;
   width: 50%;
+  left: 18%;
+  right: 5%;
+  top: 5%;
+  bottom: 3%;
+  margin: 10%;
+  padding: 10%;
+  border-radius: 20px;
+  background: #aa75ff;
+  font-size: 180%;
+}
+
+.inner button {
+  width: 35%;
+  height: 40%;
   left: 5%;
   right: 5%;
   top: 5%;
   bottom: 5%;
-  margin: 10%;
-  border-radius: 20px;
-  background: white;
-  font-size: 250%;
 }
 
 /* Note: Clear float after the columns */

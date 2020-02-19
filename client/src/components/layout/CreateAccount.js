@@ -29,9 +29,9 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
     }
   };
 
-  if (isAuthenticated) {
+  /*if (isAuthenticated) {
     return <Redirect to="/createprofile" />;
-  }
+  }*/
 
   return (
     <Fragment>

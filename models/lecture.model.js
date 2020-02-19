@@ -10,7 +10,7 @@ const lectureSchema = new Schema(
       ref: "Question"
     },
     dateLecture: {
-      type: date,
+      type: Date,
       default: Date.now
     },
     liveAnswer: {
