@@ -5,6 +5,7 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Login from "./components/layout/Login";
 import Landing from "./components/layout/Landing";
+import Lecture from "./components/layout/Lecture";
 import Courses from "./components/layout/Courses";
 import CreateAccount from "./components/layout/CreateAccount";
 import ProfileCreation from "./components/layout/ProfileCreation";
@@ -34,8 +35,10 @@ const App = () => {
         <Fragment>
           <Navbar />
           <Route exact path="/" component={Landing} />
-          <section className="container">
-            <Switch>
+
+          <Switch>
+            <Route exact path="/lecture" component={Lecture} />
+            <section className="container">
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={CreateAccount} />
               <Route exact path="/courses" component={Courses} />
@@ -47,8 +50,9 @@ const App = () => {
                 path="/createinstructor"
                 component={InstructorProfileCreation}
               />
-            </Switch>
-          </section>
+            </section>
+          </Switch>
+
           <Footer />
         </Fragment>
       </Router>

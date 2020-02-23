@@ -389,6 +389,12 @@ button {
   text-align: center;
 }
 
+.pdf {
+  width: 50%;
+  margin-left: 5%;
+  margin-top: 3%;
+}
+
 /* Profiles Page */
 .profile {
   display: grid;
