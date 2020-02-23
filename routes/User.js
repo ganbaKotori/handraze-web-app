@@ -16,7 +16,6 @@ router.route("/").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const userName = req.body.userName;
   const password = req.body.password;
   try {
     let user = await User.findOne({ email });
@@ -35,7 +34,6 @@ router.route("/").post(async (req, res) => {
 
     const newUser = new User({
       email,
-      userName,
       password,
       lastName,
       firstName
@@ -100,7 +98,6 @@ router.route("/register").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const userName = req.body.userName;
   const password = req.body.password;
 
   try {
@@ -114,7 +111,6 @@ router.route("/register").post(async (req, res) => {
 
     const newUser = new User({
       email,
-      userName,
       password,
       lastName,
       firstName
