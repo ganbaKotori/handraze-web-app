@@ -5,8 +5,8 @@ const { sendWelcomeEmail } = require("../emails/account");
 require("dotenv").config();
 
 const User = require("../models/user.model");
-let studentProfile = require("../models/student.model");
-let InstructorProfile = require("../models/instructor.model");
+const Student = require("../models/student.model");
+const Instructor = require("../models/instructor.model");
 
 //Load Input Validation
 const validateRegisterInput = require("../validation/user-validation");
@@ -119,7 +119,7 @@ router.route("/register").post(async (req, res) => {
     });
 
     await newUser.save();
-    sendWelcomeEmail(newUser.email, newUser.firstName);
+    //sendWelcomeEmail(newUser.email, newUser.firstName);
 
     //----- JWT -----
     const payload = {
@@ -155,42 +155,52 @@ router.get("/:id", (req, res) => {
 // @route   DELETE API/Users/Delete
 // @desc    find and delete user
 // @access  Public
-router.delete("/:id", async (req, res) => {
+router.delete("/", async (req, res) => {
   try {
-    await User.findOneAndDelete({ _id: req.params.id });
+    Student.count({ user: req.body.id }, async function(err, count) {
+      if (count > 0) {
+        console.log("Student found!");
+        await Student.deleteOne({ user: req.body.id })
+          .then(user => console.log("Student profile deleted!"))
+          .catch(err => console.log("Student not found!: " + err));
+      }
+    });
+    Instructor.count({ user: req.body.id }, async function(err, count) {
+      if (count > 0) {
+        console.log("Instrcutor found!");
+        await Instructor.deleteOne({ user: req.body.id })
+          .then(user => console.log("Instructor profile deleted!"))
+          .catch(err => console.log("Instructor not found!: " + err));
+      }
+    });
+    await User.findOneAndDelete({ _id: req.body.id });
     res.json({ message: "User deleted!" });
   } catch (err) {
-    res.status(500).send("Server Error");
+    res.status(500).send("Error: " + err);
   }
 });
 
+/* TODO: I dont know what to do with this
 //Delete student when user is deleted
 router.post("/student", (req, res) => {
-    Course.findOne({ _id: req.body.cid }).then(course => {
-        Student.count({ _id: req.body.id }, function (err, count) {
-            if (count > 0) {
-                Student.deleteOne({ user: req.params.id}, function (err) { });
-            } else {
-                console.log("Student not found!");
-                res.status(400).json("Error: " + err);
-            }
-        });
-    });
+  Course.findOne({ _id: req.body.cid }).then(course => {
+    
+  });
 });
-
+*/
 
 //Delete instructor when user is deleted
 router.post("/instructor", (req, res) => {
-    Course.findOne({ _id: req.body.cid }).then(course => {
-        Instructor.count({ _id: req.body.id }, function (err, count) {
-            if (count > 0) {
-                Instructor.deleteOne({ user: req.params.id }, function (err) { });
-            } else {
-                console.log("Instructor not found!");
-                res.status(400).json("Error: " + err);
-            }
-        });
+  Course.findOne({ _id: req.body.cid }).then(course => {
+    Instructor.count({ _id: req.body.id }, function(err, count) {
+      if (count > 0) {
+        Instructor.deleteOne({ user: req.params.id }, function(err) {});
+      } else {
+        console.log("Instructor not found!");
+        res.status(400).json("Error: " + err);
+      }
     });
+  });
 });
 
 // @route   POST API/Users/Update
