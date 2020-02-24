@@ -39,7 +39,7 @@ class Lecture extends Component {
     return (
       <div className="pdf">
         <button onClick={this.test}>Generate PDF</button>
-        <div id="test">This is a test</div>
+        <div id="test">Fuck Garza</div>
         <br />
         <PDF />
       </div>
