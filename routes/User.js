@@ -5,6 +5,8 @@ const { sendWelcomeEmail } = require("../emails/account");
 require("dotenv").config();
 
 const User = require("../models/user.model");
+let studentProfile = require("../models/student.model");
+let InstructorProfile = require("../models/instructor.model");
 
 //Load Input Validation
 const validateRegisterInput = require("../validation/user-validation");
@@ -160,6 +162,35 @@ router.delete("/:id", async (req, res) => {
   } catch (err) {
     res.status(500).send("Server Error");
   }
+});
+
+//Delete student when user is deleted
+router.post("/student", (req, res) => {
+    Course.findOne({ _id: req.body.cid }).then(course => {
+        Student.count({ _id: req.body.id }, function (err, count) {
+            if (count > 0) {
+                Student.deleteOne({ user: req.params.id}, function (err) { });
+            } else {
+                console.log("Student not found!");
+                res.status(400).json("Error: " + err);
+            }
+        });
+    });
+});
+
+
+//Delete instructor when user is deleted
+router.post("/instructor", (req, res) => {
+    Course.findOne({ _id: req.body.cid }).then(course => {
+        Instructor.count({ _id: req.body.id }, function (err, count) {
+            if (count > 0) {
+                Instructor.deleteOne({ user: req.params.id }, function (err) { });
+            } else {
+                console.log("Instructor not found!");
+                res.status(400).json("Error: " + err);
+            }
+        });
+    });
 });
 
 // @route   POST API/Users/Update
