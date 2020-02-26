@@ -3,7 +3,7 @@ let StudentProfile = require("../models/student.model");
 let User = require("../models/user.model");
 
 //Load Input Validation
-const validateStudentInput = require("../validation/student-validation");
+//const validateStudentInput = require("../validation/student-validation");
 
 // @route   GET api/students
 // @desc    Retrieve all students
@@ -38,29 +38,29 @@ router.route("/").post((req, res) => {
 });
 
 // Get a student
-router.get('/:id', getStudent, (req, res) => {
+router.get("/:id", getStudent, (req, res) => {
   res.json(res.student); // good - responds with user's info
 });
 
 // Delete Student by student id
-router.delete('/delete/:id', getStudent, async (req, res) => {
-  try{
+router.delete("/delete/:id", getStudent, async (req, res) => {
+  try {
     await res.student.remove();
-    res.json({message: "Successfully deleted student!"}) // good
+    res.json({ message: "Successfully deleted student!" }); // good
   } catch (err) {
-    res.status(500).json({message: err.message})
+    res.status(500).json({ message: err.message });
   }
 });
 
 async function getStudent(req, res, next) {
-  let student
+  let student;
   try {
     student = await Student.findById(req.params.id);
-    if(student == null) {
-      return res.status(404).json({message: 'Cannot find student.'})
+    if (student == null) {
+      return res.status(404).json({ message: "Cannot find student." });
     }
   } catch (err) {
-    return res.status(500).json({message: err.message});
+    return res.status(500).json({ message: err.message });
   }
 
   res.student = student;
