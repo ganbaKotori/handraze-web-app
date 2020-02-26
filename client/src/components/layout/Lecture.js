@@ -40,7 +40,7 @@ class Lecture extends Component {
       <div>
         <button onClick={this.test}>Generate PDF</button>
         <div id="test">
-          <h1>Fuck Garza</h1>
+          <h1>Introduction to David Garza 101: Wackology</h1>
         </div>
         <div className="lecture">
           <div className="pdf-viewer">
