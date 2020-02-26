@@ -37,11 +37,16 @@ class Lecture extends Component {
   }
   render() {
     return (
-      <div className="pdf">
+      <div>
         <button onClick={this.test}>Generate PDF</button>
-        <div id="test">Fuck Garza</div>
-        <br />
-        <PDF />
+        <div id="test">
+          <h1>Fuck Garza</h1>
+        </div>
+        <div className="lecture">
+          <div className="pdf-viewer">
+            <PDF />
+          </div>
+        </div>
       </div>
     );
   }

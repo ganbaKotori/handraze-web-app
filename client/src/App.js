@@ -10,6 +10,7 @@ import Courses from "./components/layout/Courses";
 import CreateAccount from "./components/layout/CreateAccount";
 import ProfileCreation from "./components/layout/ProfileCreation";
 import InstructorProfileCreation from "./components/layout/InstructorProfileCreation";
+import InstructorPage from "./components/layout/InstructorPage";
 import Popup from "./components/layout/PopUpTest";
 import Photo from "./components/layout/Photo";
 import LoggedOut from "./components/layout/LoggedOut";
@@ -40,6 +41,7 @@ const App = () => {
             <Route exact path="/lecture" component={Lecture} />
             <section className="container">
               <Route exact path="/login" component={Login} />
+              <Route exact path="/instructor" component={InstructorPage} />
               <Route exact path="/register" component={CreateAccount} />
               <Route exact path="/courses" component={Courses} />
               <Route exact path="/createprofile" component={ProfileCreation} />
