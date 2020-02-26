@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import Popup from "../CreateCourse";
+
+import { CreateCourseModal } from "../CreateCourseModal";
+
+import { ButtonToolbar, Button } from "react-bootstrap";
 
 class CreateCourse extends Component {
   constructor(props) {
     super(props);
-    this.state = { showPopup: false };
+    this.state = { deps: [], addModalShow: false };
   }
 
   togglePopup() {
@@ -13,10 +16,18 @@ class CreateCourse extends Component {
     });
   }
   render() {
+    const { deps } = this.state;
+    let addModalClose = () => {
+      this.setState({ addModalShow: false });
+    };
     return (
       <div class="container">
         <h3>
-          <a href="#" onClick={this.togglePopup.bind(this)}>
+          <a
+            href="#"
+            variant="primary"
+            onClick={() => this.setState({ addModalShow: true })}
+          >
             {" "}
             + create a course
           </a>
@@ -65,12 +76,11 @@ class CreateCourse extends Component {
             </div>
           </div>
         </div>
-        {this.state.showPopup ? (
-          <Popup
-            text='Click "Close Button" to hide popup'
-            closePopup={this.togglePopup.bind(this)}
-          />
-        ) : null}
+
+        <CreateCourseModal
+          show={this.state.addModalShow}
+          onHide={addModalClose}
+        />
       </div>
     );
   }
