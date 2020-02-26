@@ -5,10 +5,12 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Login from "./components/layout/Login";
 import Landing from "./components/layout/Landing";
+import Lecture from "./components/layout/Lecture";
 import Courses from "./components/layout/Courses";
 import CreateAccount from "./components/layout/CreateAccount";
 import ProfileCreation from "./components/layout/ProfileCreation";
 import InstructorProfileCreation from "./components/layout/InstructorProfileCreation";
+import InstructorPage from "./components/layout/InstructorPage";
 import Popup from "./components/layout/PopUpTest";
 import Photo from "./components/layout/Photo";
 import LoggedOut from "./components/layout/LoggedOut";
@@ -34,9 +36,12 @@ const App = () => {
         <Fragment>
           <Navbar />
           <Route exact path="/" component={Landing} />
-          <section className="container">
-            <Switch>
+
+          <Switch>
+            <Route exact path="/lecture" component={Lecture} />
+            <section className="container">
               <Route exact path="/login" component={Login} />
+              <Route exact path="/instructor" component={InstructorPage} />
               <Route exact path="/register" component={CreateAccount} />
               <Route exact path="/courses" component={Courses} />
               <Route exact path="/createprofile" component={ProfileCreation} />
@@ -47,8 +52,9 @@ const App = () => {
                 path="/createinstructor"
                 component={InstructorProfileCreation}
               />
-            </Switch>
-          </section>
+            </section>
+          </Switch>
+
           <Footer />
         </Fragment>
       </Router>
