@@ -14,7 +14,7 @@ const userRouter = require("./routes/User"); // localhost:3000/user
 const studentProfile = require("./routes/Student");
 const instructorProfile = require("./routes/Instructor");
 const courseRouter = require("./routes/Course");
-const classRouter = require("./routes/Classroom");
+const classroomRouter = require("./routes/Classroom");
 const questionRouter = require("./routes/Question");
 const lqRouter = require("./routes/LectureQuestion");
 const dqRouter = require("./routes/DiscussionQuestion");
@@ -38,7 +38,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/instructors", instructorRouter);
 app.use("/api/students", studentRouter);
 app.use("/api/courses", courseRouter);
-app.use("/api/classes", classRouter);
+app.use("/api/classes", classroomRouter);
 app.use("/api/question", questionRouter);
 app.use("/api/lecture", lqRouter);
 app.use("/api/discussion", dqRouter);

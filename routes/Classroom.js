@@ -6,17 +6,18 @@ let Course = require("../models/course.model");
 //Load Input Validation
 const validateClassroomInput = require("../validation/classroom-validation");
 
-// Get a classroom
+// @route   GET api/classes/:id
+// @desc    Get a class
+// @access  Public
 router.get('/:id', getClassroom, (req, res) => {
   res.json(res.classroom);
 });
 
-// @route   POST api/classroom
-// @desc    Create a classroom
+// @route   POST api/classes
+// @desc    Create a class
 // @access  Public
 router.route("/").post((req, res) => {
   const topic = req.body.topic;
-  //const studentsAttending = req.body.topic;
   const cid = req.body.cid;
   const inSession = req.body.inSession;
   const sessionStart = req.body.sessionStart;
@@ -41,12 +42,12 @@ router.route("/").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// @route   GET api/classroomes
-// @desc    Get all classroomes
+// @route   GET api/classes
+// @desc    Get all classes
 // @access  Public
 router.route("/").get((req, res) => {
   Classroom.find()
-    .then(classroomes => res.json(classroomes))
+    .then(classrooms => res.json(classrooms))
     .catch(err => res.status(400).json("Error: " + err));
 });
 
@@ -56,8 +57,10 @@ router.route("/").get((req, res) => {
 // router.patch('/:id', getCourse, async (req, res) => { ... }
 
 
-// Delete a classroom
-router.delete('/delete/:id', getClassroom, async (req, res) => {
+// @route   POST api/classes/delete/:id
+// @desc    Delete a class
+// @access  Public
+router.delete('/delete/:cid', getClassroom, async (req, res) => {
   try{
     await res.classroom.remove();
     res.json({message: "Successfully deleted classroom!"}) // good
@@ -67,10 +70,10 @@ router.delete('/delete/:id', getClassroom, async (req, res) => {
 });
 
 
-// @route   POST api/classroom/student
+// @route   POST api/classes/student/:studentid
 // @desc    Add a student to a classroom
 // @access  Public
-router.post("/student", (req, res) => {
+router.post("/addstudent/:id", (req, res) => {
   Classroom.findOne({ _id: req.body.cid }).then(classroom => {
     Student.count({ _id: req.body.id }, function(err, count) {
       if (count > 0) {

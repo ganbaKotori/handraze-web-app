@@ -1,17 +1,17 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
-const Course = require("../routes/Course")
+// TODO: Need to check if classroom already exist
+// const Course = require("../routes/Course");
 
 module.exports = function validateRegisterInput(data) {
   let errors = {};
 
   data.topic = !isEmpty(data.topic) ? data.topic : "";
-  // data.studentsAttending = !isEmpty(data.studentsAttending) ? data.studentsAttending: "";
-  data.cid = !isEmpty(data.description) ? data.description : "";
-  data.inSession = !isEmpty(data.isEmpty) ? data.isEmpty : "";
-  data.sessionStart = !isEmpty(data.classStart) ? data.classStart : "";
-  data.sessionEnd = !isEmpty(data.classDuration) ? data.classDuration : "";
+  data.cid = !isEmpty(data.cid) ? data.cid : "";
+  data.inSession = !isEmpty(data.inSession) ? data.inSession : "";
+  data.sessionStart = !isEmpty(data.sessionStart) ? data.sessionStart : "";
+  data.sessionEnd = !isEmpty(data.sessionEnd) ? data.sessionEnd : "";
 
   if (!Validator.isLength(data.topic, { min: 5, max: 30 })) {
     errors.classTopic = "Classroom topic must be between 5 and 30 characters";
