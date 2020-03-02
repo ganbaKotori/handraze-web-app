@@ -178,6 +178,15 @@ img {
   transition: opacity 0.2s ease-in;
   outline: none;
 }
+#pdf-container {
+  border: 5px solid red;
+  
+  margin: 0 auto;
+  padding: 10px;
+  /* width: 700px; */
+  width: 90%;
+  }
+  
 .prof-profile{
   padding-top:5%;
 }

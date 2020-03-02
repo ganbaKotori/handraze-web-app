@@ -11,13 +11,14 @@ import CourseHome from "./components/layout/CourseHome";
 import CourseDashboard from "./components/layout/CourseDashboard";
 import Popup from "./components/layout/PopUpTest";
 import LoggedOut from "./components/layout/LoggedOut";
+import Lecture from "./components/layout/Lecture";
 import "./App.css";
 
 const App = () => (
   <Router>
     <Fragment>
       <Navbar />
-      <Route exact path="/" component={CourseDashboard} />
+      <Route exact path="/" component={Lecture} />
       <section className="container">
         <Switch>
           <Route exact path="/login" component={Login} />
