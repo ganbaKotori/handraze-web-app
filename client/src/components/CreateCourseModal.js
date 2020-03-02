@@ -17,7 +17,7 @@ export class CreateCourseModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h2> Create Course </h2>
+            <h2> Create Course {this.state.inputValue} </h2>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "./FileUpload";
+import { CourseCard } from "../CourseCard";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -70,6 +71,7 @@ const Dashboard = ({
                   <div className="courses">
                     <div className="row">
                       <div className="col-sm-5">
+                        <CourseCard inputValue={"card bg-success"} />
                         <div className="card bg-success">
                           <div className="card-body">
                             <h5 className="card-title">
