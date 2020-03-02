@@ -243,7 +243,15 @@ img {
   background: var(--light-color);
   color: #333;
 }
-
+.lectureq{
+  padding: .5rem .5rem;
+}
+.center-btn{
+  margin-top: 25%;
+}
+.lecture-card{
+  margin: 2% !important;
+}
 .btn-dark,
 .bg-dark,
 .badge-dark,
