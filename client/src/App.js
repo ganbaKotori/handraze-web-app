@@ -1,19 +1,24 @@
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
-import Login from "./components/layout/Login";
-import Landing from "./components/layout/Landing";
-import Lecture from "./components/layout/Lecture";
 import Courses from "./components/layout/Courses";
 import CreateAccount from "./components/layout/CreateAccount";
-import ProfileCreation from "./components/layout/ProfileCreation";
-import InstructorProfileCreation from "./components/layout/InstructorProfileCreation";
-import InstructorPage from "./components/layout/InstructorPage";
+import InstructorDashboard from "./components/layout/InstructorDashboard";
+import CreateInstructorProfile from "./components/layout/CreateInstructorProfile";
+import CreateStudentProfile from "./components/layout/CreateStudentProfile";
+import Footer from "./components/layout/Footer";
+import InstructorPage from "./components/layout/FileUpload";
+import Landing from "./components/layout/Landing";
+import Lecture from "./components/layout/Lecture";
+import LoggedOut from "./components/layout/LoggedOut";
+import Login from "./components/layout/Login";
+import Navbar from "./components/layout/Navbar";
 import Popup from "./components/layout/PopUpTest";
 import Photo from "./components/layout/Photo";
-import LoggedOut from "./components/layout/LoggedOut";
+import PrivateRoute from "./components/routing/PrivateRoute";
+import ProfileCreation from "./components/layout/ProfileCreation";
+import StudentDashboard from "./components/layout/StudentDashboard";
+
 import "./App.css";
 //Redux
 import { Provider } from "react-redux";
@@ -25,7 +30,6 @@ import setAuthToken from "./utils/setAuthToken";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
-
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -36,30 +40,40 @@ const App = () => {
         <Fragment>
           <Navbar />
           <Route exact path="/" component={Landing} />
-
           <Switch>
             <Route exact path="/lecture" component={Lecture} />
             <section className="container">
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/instructor" component={InstructorPage} />
-              <Route exact path="/register" component={CreateAccount} />
               <Route exact path="/courses" component={Courses} />
-              <Route exact path="/createprofile" component={ProfileCreation} />
               <Route exact path="/createcourse" component={Popup} />
-              <Route exact path="/photo" component={Photo} />
-              <Route
+
+              <PrivateRoute
                 exact
-                path="/createinstructor"
-                component={InstructorProfileCreation}
+                path="/createinstructorprofile"
+                component={CreateInstructorProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/createstudentprofile"
+                component={CreateStudentProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/instructor"
+                component={InstructorDashboard}
+              />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/photo" component={Photo} />
+              <Route exact path="/register" component={CreateAccount} />
+              <PrivateRoute
+                exact
+                path="/student"
+                component={StudentDashboard}
               />
             </section>
           </Switch>
-
-          <Footer />
         </Fragment>
       </Router>
     </Provider>
   );
 };
-
 export default App;

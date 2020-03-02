@@ -22,6 +22,10 @@ class CreateCourse extends Component {
     };
     return (
       <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
         <h3>
           <a
             href="#"

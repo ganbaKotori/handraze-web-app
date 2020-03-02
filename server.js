@@ -1,24 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const app = express();
-const usersRouter = require("./routes/User");
-const authRouter = require("./routes/auth");
-require("dotenv").config();
-const fileRouter = require("./routes/FileUpload");
-
-const instructorRouter = require("./routes/instructor");
-const studentRouter = require("./routes/student");
 
 // define routes here
-const userRouter = require("./routes/User"); // localhost:3000/user
-const studentProfile = require("./routes/Student");
-const instructorProfile = require("./routes/Instructor");
-const courseRouter = require("./routes/Course");
-const questionRouter = require("./routes/Question");
-const lqRouter = require("./routes/LectureQuestion");
-const dqRouter = require("./routes/DiscussionQuestion");
 const answerRouter = require("./routes/Answer");
+const authRouter = require("./routes/auth");
+const courseRouter = require("./routes/Course");
+const dqRouter = require("./routes/DiscussionQuestion");
+const fileRouter = require("./routes/FileUpload");
+const instructorRouter = require("./routes/instructor");
+const lqRouter = require("./routes/LectureQuestion");
+const questionRouter = require("./routes/Question");
+const studentRouter = require("./routes/student");
+const usersRouter = require("./routes/user");
 
+require("dotenv").config();
+const app = express();
 var bodyParser = require("body-parser");
 
 app.use(function(req, res, next) {
@@ -43,7 +39,6 @@ app.use("/api/discussion", dqRouter);
 app.use("/api/answer", answerRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/upload", fileRouter);
-
 app.use(express.json());
 
 const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";

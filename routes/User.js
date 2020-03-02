@@ -180,29 +180,6 @@ router.delete("/", async (req, res) => {
   }
 });
 
-/* TODO: I dont know what to do with this
-//Delete student when user is deleted
-router.post("/student", (req, res) => {
-  Course.findOne({ _id: req.body.cid }).then(course => {
-    
-  });
-});
-*/
-
-//Delete instructor when user is deleted
-router.post("/instructor", (req, res) => {
-  Course.findOne({ _id: req.body.cid }).then(course => {
-    Instructor.count({ _id: req.body.id }, function(err, count) {
-      if (count > 0) {
-        Instructor.deleteOne({ user: req.params.id }, function(err) {});
-      } else {
-        console.log("Instructor not found!");
-        res.status(400).json("Error: " + err);
-      }
-    });
-  });
-});
-
 // @route   POST API/Users/Update
 // @desc    find user
 // @access  Public
@@ -219,6 +196,7 @@ router.post("/update/:id", (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+/* TODO: MERGE WITH UPPER CODE
 // Update a user
 // Patch updates one thing, put updates everything
 router.patch("/:id", getUser, async (req, res) => {
@@ -244,8 +222,9 @@ router.patch("/:id", getUser, async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-});
+});*/
 
+//Function to get user
 async function getUser(req, res, next) {
   let user;
   try {

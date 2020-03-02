@@ -1,9 +1,30 @@
 const router = require("express").Router();
 let StudentProfile = require("../models/student.model");
-let User = require("../models/user.model");
+const auth = require("../middleware/auth");
 
 //Load Input Validation
-//const validateStudentInput = require("../validation/student-validation");
+const validateStudentInput = require("../validation/student-validation");
+
+// @route   GET api/students/me
+// @desc    Retrieve current student profile
+// @access  Private
+router.route("/me").get(auth, async (req, res) => {
+  try {
+    const profile = await await StudentProfile.findOne({ user: req.user.id }); //.populate("user", ["firstName", "lastName"]);
+
+    /*if (!profile) {
+      return res
+        .status(400)
+        .json({ msg: "There is no Student Profile for this user" });
+    }*/
+
+    //res.json(profile);
+    res.json(profile);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 // @route   GET api/students
 // @desc    Retrieve all students
@@ -17,17 +38,17 @@ router.route("/").get((req, res) => {
 // @route   POST api/students
 // @desc    Create a student profile
 // @access  Public
-router.route("/").post((req, res) => {
-  const { errors, isValid } = validateStudentInput(req.body);
+router.route("/").post([auth], async (req, res) => {
+  //const { errors, isValid } = validateStudentInput(req.body);
 
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
+  //if (!isValid) {
+  //  return res.status(400).json(errors);
+  //}
   const profileFields = {};
 
   profileFields.year = req.body.year;
   profileFields.institution = req.body.institution;
-  profileFields.user = req.body.id;
+  profileFields.user = req.user.id;
 
   const newStudentProfile = new StudentProfile(profileFields);
 
@@ -37,13 +58,17 @@ router.route("/").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// Get a student
+// @route   GET api/students
+// @desc    Create a student profile
+// @access  Public
 router.get("/:id", getStudent, (req, res) => {
   res.json(res.student); // good - responds with user's info
 });
 
-// Delete Student by student id
-router.delete("/delete/:id", getStudent, async (req, res) => {
+// @route   DELETE api/students
+// @desc    Delete student profile
+// @access  Public
+router.delete("/:id", getStudent, async (req, res) => {
   try {
     await res.student.remove();
     res.json({ message: "Successfully deleted student!" }); // good
@@ -52,6 +77,7 @@ router.delete("/delete/:id", getStudent, async (req, res) => {
   }
 });
 
+//fucntion to get student profile
 async function getStudent(req, res, next) {
   let student;
   try {
@@ -68,4 +94,3 @@ async function getStudent(req, res, next) {
 }
 
 module.exports = router;
-//console.log("request was made: " + request.url);
