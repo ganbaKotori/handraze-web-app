@@ -3,7 +3,11 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
+<<<<<<< HEAD
+
+=======
 const Validator = require("validator");
+>>>>>>> dev
 const User = require("../models/user.model");
 
 // @route   GET API/auth/
