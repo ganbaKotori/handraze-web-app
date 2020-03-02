@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let InstructorProfile = require("../models/instructor.model");
-let User = require("../models/user.model");
+const User = require("../models/user.model");
+const auth = require("../middleware/auth");
 
 //Load Input Validation
 const validateRegisterInput = require("../validation/instructor-validation");
@@ -9,16 +10,18 @@ const validateRegisterInput = require("../validation/instructor-validation");
 // @desc    Create instructor profile
 // @access  Public
 router.route("/").post((req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body);
+  // const { errors, isValid } = validateRegisterInput(req.body);
 
+  /*
   if (!isValid) {
     return res.status(400).json(errors);
   }
+  */
 
   const profileFields = {};
 
   profileFields.department = req.body.department;
-  profileFields.user = req.body.id;
+  profileFields.user = req.user.id;
 
   const newInstructorProfile = new InstructorProfile(profileFields);
 
@@ -26,6 +29,29 @@ router.route("/").post((req, res) => {
     .save()
     .then(() => res.json("Instructor profile added!"))
     .catch(err => res.status(400).json("Error: " + err));
+});
+
+// @route   GET api/instructors/me
+// @desc    Retrieve current instructor profile
+// @access  Private
+router.route("/me").get(auth, async (req, res) => {
+  try {
+    const profile = await await InstructorProfile.findOne({
+      user: req.user.id
+    });
+
+    /*if (!profile) {
+      return res
+        .status(400)
+        .json({ msg: "There is no Instructor Profile for this user" });
+    }*/
+    //profile.populate("user", ["firstName", "lastName"]);
+
+    res.json(profile);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 // @route   GET api/instructors

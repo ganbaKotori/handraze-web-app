@@ -5,6 +5,8 @@ const { sendWelcomeEmail } = require("../emails/account");
 require("dotenv").config();
 
 const User = require("../models/user.model");
+const Student = require("../models/student.model");
+const Instructor = require("../models/instructor.model");
 
 //Load Input Validation
 const validateRegisterInput = require("../validation/user-validation");
@@ -16,7 +18,6 @@ router.route("/").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const userName = req.body.userName;
   const password = req.body.password;
   try {
     let user = await User.findOne({ email });
@@ -35,7 +36,6 @@ router.route("/").post(async (req, res) => {
 
     const newUser = new User({
       email,
-      userName,
       password,
       lastName,
       firstName
@@ -100,7 +100,6 @@ router.route("/register").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const userName = req.body.userName;
   const password = req.body.password;
 
   try {
@@ -114,7 +113,6 @@ router.route("/register").post(async (req, res) => {
 
     const newUser = new User({
       email,
-      userName,
       password,
       lastName,
       firstName
@@ -161,10 +159,26 @@ router.get("/:id", (req, res) => {
 // @access  Public
 router.delete("/delete/:id", async (req, res) => {
   try {
-    await User.findOneAndDelete({ _id: req.params.id });
+    Student.count({ user: req.body.id }, async function(err, count) {
+      if (count > 0) {
+        console.log("Student found!");
+        await Student.deleteOne({ user: req.body.id })
+          .then(user => console.log("Student profile deleted!"))
+          .catch(err => console.log("Student not found!: " + err));
+      }
+    });
+    Instructor.count({ user: req.body.id }, async function(err, count) {
+      if (count > 0) {
+        console.log("Instrcutor found!");
+        await Instructor.deleteOne({ user: req.body.id })
+          .then(user => console.log("Instructor profile deleted!"))
+          .catch(err => console.log("Instructor not found!: " + err));
+      }
+    });
+    await User.findOneAndDelete({ _id: req.body.id });
     res.json({ message: "User deleted!" });
   } catch (err) {
-    res.status(500).send("Server Error");
+    res.status(500).send("Error: " + err);
   }
 });
 
@@ -184,11 +198,13 @@ router.post("/update/:id", (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-
+// Patch updates one thing, put updates everything 
+  
+/* TODO: MERGE WITH UPPER CODE
 // @route   PATCH api/users/multi-update/:id
 // @desc    Update a single item for a user
 // @access  Public
-router.patch("/multi-update/:id", getUser, async (req, res) => {
+router.patch("/:id", getUser, async (req, res) => {
   if (req.body.email != null) {
     res.user.email = req.body.email;
   }
@@ -211,7 +227,7 @@ router.patch("/multi-update/:id", getUser, async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-});
+});*/
 
 //------------------------------------------------------------------------------
 

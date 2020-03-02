@@ -9,6 +9,11 @@ const studentSchema = new Schema(
       required: true,
       ref: "User"
     },
+    course: {
+      type: Schema.Types.ObjectID,
+      required: false,
+      ref: "Course"
+    },
     year: {
       type: String,
       required: true

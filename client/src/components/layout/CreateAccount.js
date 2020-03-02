@@ -29,9 +29,9 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
     }
   };
 
-  /*if (isAuthenticated) {
-    return <Redirect to="/createprofile" />;
-  }*/
+  if (isAuthenticated) {
+    return <Redirect to="/student" />;
+  }
 
   return (
     <Fragment>
@@ -68,20 +68,6 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
               value={lastName}
               onChange={e => onChange(e)}
               placeholder="Enter last name"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label for="email">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              id="userName"
-              aria-describedby="emailHelp"
-              name="userName"
-              value={userName}
-              onChange={e => onChange(e)}
-              placeholder="Enter username"
               required
             />
           </div>
