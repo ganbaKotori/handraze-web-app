@@ -24,7 +24,7 @@ const Login = ({ login, isAuthenticated }) => {
 
   //Redirect if logged in
   if (isAuthenticated) {
-    return <Redirect to="/createprofile" />;
+    return <Redirect to="/student" />;
   }
   return (
     <Fragment>

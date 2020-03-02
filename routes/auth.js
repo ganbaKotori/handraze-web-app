@@ -3,7 +3,11 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
+<<<<<<< HEAD
 
+=======
+const Validator = require("validator");
+>>>>>>> dev
 const User = require("../models/user.model");
 
 // @route   GET API/auth/
@@ -22,10 +26,17 @@ router.get("/", auth, async (req, res) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    if (!Validator.isEmail(req.body.email)) {
+      errors.email = "Email is invalid";
+    }
     User.findOne({ email: req.body.email }, function(err, userInfo) {
       if (err) {
         res.status(500).send("Couldnt find user");
       } else {
+        if (!req.body.password.match(/^[0-9a-z]+$/)) {
+          res.status(500).send("Password format invalid!");
+        }
+
         if (bcrypt.compareSync(req.body.password, userInfo.password)) {
           const payload = {
             user: {
