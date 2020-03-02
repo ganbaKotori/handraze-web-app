@@ -16,7 +16,14 @@ const studentSchema = new Schema(
     institution: {
       type: String,
       required: true
-    }
+    },
+    courses: [
+      {
+        type: Schema.Types.ObjectID,
+        required: false,
+        ref: "Courses"
+      }
+    ]
   },
   {
     timestamps: true
