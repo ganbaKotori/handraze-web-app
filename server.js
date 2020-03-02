@@ -5,12 +5,7 @@ const mongoose = require("mongoose");
 const answerRouter = require("./routes/Answer");
 const authRouter = require("./routes/auth");
 const courseRouter = require("./routes/Course");
-<<<<<<< HEAD
 const classroomRouter = require("./routes/Classroom");
-const questionRouter = require("./routes/Question");
-const lqRouter = require("./routes/LectureQuestion");
-=======
->>>>>>> dev
 const dqRouter = require("./routes/DiscussionQuestion");
 const fileRouter = require("./routes/FileUpload");
 const instructorRouter = require("./routes/instructor");
