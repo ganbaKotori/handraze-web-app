@@ -17,7 +17,7 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: process.env.S3_BUCKET,
-    // FIXME:"TypeError: Cannot read property 'location' of undefined" in FileUpload
+    // //FIXME:"TypeError: Cannot read property 'location' of undefined" in FileUpload
     //acl: 'public-read',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: 'TESTING_META_DATA!'});
