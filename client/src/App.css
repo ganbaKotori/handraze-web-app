@@ -2,25 +2,18 @@
   text-align: center;
 }
 body {
-  padding-top: 100px;
+  margin: 0%;
 }
-.profpic{
+.profpic {
   height: auto;
-  width:auto;
+  width: auto;
   float: right;
 }
 .modal {
-  display:block;
+  display: block;
 }
 .App-logo {
   height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -82,7 +75,6 @@ ul {
 img {
   width: 100%;
 }
-
 
 /* Text Styles*/
 .x-large {
@@ -180,44 +172,49 @@ img {
 }
 #pdf-container {
   border: 5px solid red;
-  
+
   margin: 0 auto;
   padding: 10px;
   /* width: 700px; */
   width: 90%;
-  }
-  
-.prof-profile{
-  padding-top:5%;
 }
-.activity-board{
+
+.prof-profile {
+  padding-top: 5%;
+}
+.activity-board {
   max-height: 45vh;
   overflow: scroll;
 }
-.notes-board{
+.notes-board {
   max-height: 30vh;
   overflow: scroll;
 }
-.top-part{
+.top-part {
   height: 40vh;
 }
-.dashboard{
+.dashboard {
   height: 100vh;
 }
-.lectures{
-  margin:10px;
-  size:auto;
+.lectures {
+  margin: 10px;
+  size: auto;
 }
-.btn-margin{
-
-  margin-top:10px;
-  padding:25px;
+.btn-margin {
+  margin-top: 10px;
+  padding: 25px;
 }
-.car{
-  margin-top:25%;
+.car {
+  margin-top: 25%;
 }
-.courses{
-  background-color:#eee;
+.prof-profile {
+  padding-top: 5%;
+}
+.car {
+  margin-top: 25%;
+}
+.courses {
+  background-color: #eee;
   padding: 2%;
 }
 .alert {
@@ -243,13 +240,13 @@ img {
   background: var(--light-color);
   color: #333;
 }
-.lectureq{
-  padding: .5rem .5rem;
+.lectureq {
+  padding: 0.5rem 0.5rem;
 }
-.center-btn{
+.center-btn {
   margin-top: 25%;
 }
-.lecture-card{
+.lecture-card {
   margin: 2% !important;
 }
 .btn-dark,
@@ -258,6 +255,10 @@ img {
 .alert-dark {
   background: var(--dark-color);
   color: #fff;
+}
+
+bg-orange {
+  background: #ff7e4b;
 }
 
 .btn-orange,
@@ -391,13 +392,13 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.7rem 2rem;
+  padding: 0.01rem 1rem;
   position: fixed;
   z-index: 1;
   width: 100%;
   top: 0;
-  border-bottom: solid 1px var(--primary-color);
-  opacity: 0.9;
+
+  opacity: 1;
 }
 
 .navbar ul {
@@ -435,6 +436,24 @@ button {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.pdf-viewer {
+  width: 50%;
+  margin-left: 5%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  padding-top: 1%;
+}
+
+.lecture {
+  width: 100%;
+  background: rgb(119, 119, 119);
+  background: linear-gradient(
+    180deg,
+    rgba(119, 119, 119, 1) 8%,
+    rgba(45, 45, 45, 1) 75%
+  );
 }
 
 /* Profiles Page */
@@ -687,6 +706,30 @@ button {
   width: 50%;
 }
 
+.footer {
+  flex-shrink: 0;
+  text-align: center;
+  background-color: rgb(46, 46, 46);
+  color: white;
+}
+
+.flexcontainer {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 320px) {
+  .flexcontainer {
+    display: block;
+  }
+}
+
+.logo {
+  height: auto;
+  width: 12%;
+  padding-bottom: 0.5%;
+  padding-top: 0.5%;
+}
+
 .popup {
   position: fixed;
   width: 100%;
@@ -701,14 +744,24 @@ button {
 .inner {
   position: absolute;
   width: 50%;
-  left: 55%;
-  right: 55%;
-  top: 55%;
-  bottom: 55%;
+  left: 18%;
+  right: 5%;
+  top: 5%;
+  bottom: 3%;
   margin: 10%;
+  padding: 10%;
   border-radius: 20px;
-  background: black;
-  font-size: 250%;
+  background: #aa75ff;
+  font-size: 180%;
+}
+
+.inner button {
+  width: 35%;
+  height: 40%;
+  left: 5%;
+  right: 5%;
+  top: 5%;
+  bottom: 5%;
 }
 
 /* Note: Clear float after the columns */
@@ -716,4 +769,29 @@ button {
   content: "";
   display: table;
   clear: both;
+}
+
+* {
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  position: relative;
+}
+.main-container {
+  min-height: 100vh; /* will cover the 100% of viewport */
+  overflow: hidden;
+  display: block;
+  position: relative;
+  padding-bottom: 100px; /* height of your footer */
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
