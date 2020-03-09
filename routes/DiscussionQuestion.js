@@ -1,11 +1,11 @@
-// FIXME: Can't create a new question in POST using "question": "/question/[question]"
-
 const express = require('express');
 const router = express.Router();
 const DiscussionQuestion = require('../models/discussion.model');
 const Question = require('../models/question.model');
 
-// Get all discussionQuestions
+// @route   GET api/discussion/
+// @desc    Get all discussion questionss
+// @access  Public
 router.get('/', async (req, res) => {
   try {
     const discussionQuestions = await DiscussionQuestion.find();
@@ -15,15 +15,19 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get a discussionQuestion
+// @route   GET api/discussion/:id
+// @desc    Get a discussion question by its id
+// @access  Public
 router.get('/:id', getDiscussionQuestion, (req, res) => {
   res.json(res.discussionQuestion);
 });
 
 // TODO: Have GET display Question and DiscussionQuestion info together
 
-// Add DiscussionQuestion
-router.post('/add', async (req, res) => {
+// @route   POST api/discussion/
+// @desc    Create a discussion question
+// @access  Public
+router.post('/', async (req, res) => {
   const discussionQuestion = new DiscussionQuestion({
     question: req.body.question, // in POST - "question": "/question/[question]"
     topic: req.body.topic
@@ -39,7 +43,9 @@ router.post('/add', async (req, res) => {
 //TODO: Add PATCH for discussionQuestion, not sure how to patch both Question and DiscussionQuestion in one request
 // router.patch('/:id', getDiscussionQuestion, async (req, res) => { ... }
 
-// Delete DiscussionQuestion by discussionQuestion id
+// @route   DELETE api/discussion/delete/:id
+// @desc    Delete discussion question by its id
+// @access  Public
 router.delete('/delete/:id', getDiscussionQuestion, async (req, res) => {
   try{
     await res.discussionQuestion.remove();
@@ -51,6 +57,7 @@ router.delete('/delete/:id', getDiscussionQuestion, async (req, res) => {
 
 //------------------------------------------------------------------------------
 
+// getDiscussionQuestion module: sorts through discussion questions to find on by its id
 async function getDiscussionQuestion(req, res, next) {
   let discussionQuestion
   try {

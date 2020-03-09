@@ -5,13 +5,6 @@ let Student = require("../models/student.model");
 //Load Input Validation
 const validateCourseInput = require("../validation/course-validation");
 
-// @route   GET api/courses/:id
-// @desc    Create a course
-// @access  Public
-router.get("/:id", getCourse, (req, res) => {
-  res.json(res.course);
-});
-
 // @route   POST api/courses
 // @desc    Create a course
 // @access  Public
@@ -52,6 +45,14 @@ router.route("/").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+
+// @route   GET api/courses/:id
+// @desc    Get a course by its id
+// @access  Public
+router.get('/:id', getCourse, (req, res) => {
+  res.json(res.course);
+});
+
 // @route   GET api/courses
 // @desc    Get all courses
 // @access  Public
@@ -65,28 +66,36 @@ router.route("/").get((req, res) => {
 // Patch updates one thing, put updates everything
 // router.patch('/:id', getCourse, async (req, res) => { ... }
 
-// Delete a course
-router.delete("/delete/:id", getCourse, async (req, res) => {
-  try {
+// @route   DELETE api/courses/:id
+// @desc    Delete a course by its id
+// @access  Public
+router.delete('/delete/:id', getCourse, async (req, res) => {
+  try{
     await res.course.remove();
     res.json({ message: "Successfully deleted course!" }); // good
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+
+  // TODO: Delete course from students' list of courses
+
 });
 
-// @route   POST api/courses/student
-// @desc    Add a student to a course
+// @route   POST api/courses/student/:studentid
+// @desc    Add a student to a course by the student id
 // @access  Public
-router.post("/student", (req, res) => {
+router.post("/student/:id", (req, res) => {
   Course.findOne({ _id: req.body.cid }).then(course => {
     Student.count({ _id: req.body.id }, function(err, count) {
       if (count > 0) {
         course.students.unshift(req.body.id);
         course
-          .save()
+          .save() // saves student to course
           .then(course => res.json(course))
           .catch(err => res.status(400).json("Error: " + err));
+
+      // TODO: Need to also save the course to the student
+
       } else {
         console.log("Student not found!");
         res.status(400).json("Error: " + err);
@@ -95,6 +104,9 @@ router.post("/student", (req, res) => {
   });
 });
 
+//------------------------------------------------------------------------------
+
+// getCourse module: sorts through courses to find on by its id
 async function getCourse(req, res, next) {
   let course;
   try {

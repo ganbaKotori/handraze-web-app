@@ -2,8 +2,10 @@ const router = require("express").Router();
 let StudentProfile = require("../models/student.model");
 const auth = require("../middleware/auth");
 const Courses = require("../models/course.model");
+let Course = require("../models/course.model");
+let User = require("../models/user.model");
 
-//Load Input Validation
+// Load Input Validation
 const validateStudentInput = require("../validation/student-validation");
 
 // @route   GET api/students/me
@@ -94,17 +96,26 @@ router.put("/courses", auth, async (req, res) => {
   }
 });
 
-// @route   GET api/students
-// @desc    Create a student profile
+// @route   GET api/students/:id
+// @desc    Get a student's profile
 // @access  Public
 router.get("/:id", getStudent, (req, res) => {
   res.json(res.student); // good - responds with user's info
 });
 
-// @route   DELETE api/students
-// @desc    Delete student profile
+// @route  GET api/students/courses/:id
+// @desc   Get all classes a student is registered to
+// @access Public
+router.get("/courses/:id", getStudent, (req, res) => {
+  res.json(res.student); // gets a single student with that ID
+
+  // Call the attribute courses
+});
+
+// @route   DELETE api/students/:id
+// @desc    Delete a student profile
 // @access  Public
-router.delete("/:id", getStudent, async (req, res) => {
+router.delete("/delete/:id", getStudent, async (req, res) => {
   try {
     await res.student.remove();
     res.json({ message: "Successfully deleted student!" }); // good
@@ -113,7 +124,9 @@ router.delete("/:id", getStudent, async (req, res) => {
   }
 });
 
-//fucntion to get student profile
+//------------------------------------------------------------------------------
+
+// getStudent module: sorts through students to find one by its id
 async function getStudent(req, res, next) {
   let student;
   try {
