@@ -1,20 +1,23 @@
 import React, { Component } from "react";
+import { Card, Button } from "react-bootstrap";
 
 export class CourseCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: "f"
+      inputValue: []
     };
   }
   render() {
     return (
-      <div className={this.props.inputValue}>
-        <div className="card-body">
-          <h5 className="card-title">Political Science 101</h5>
-          <p className="card-text">MW 7:30AM to 11:00AM</p>
-        </div>
-      </div>
+      <Card style={{ width: "20rem" }} className="bg-success">
+        <Card.Body>
+          <Card.Title>{this.props.inputValue.title}</Card.Title>
+          <Card.Text>
+            <p className="card-text">{this.props.inputValue.description}</p>
+          </Card.Text>
+        </Card.Body>
+      </Card>
     );
   }
 }

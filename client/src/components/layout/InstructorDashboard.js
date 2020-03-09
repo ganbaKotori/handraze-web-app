@@ -35,7 +35,7 @@ const Dashboard = ({
         <br />
         {profile.instructor !== null ? (
           <Fragment className="container">
-            <FileUpload />
+            <FileUpload user={user._id} />
             <br />
             <div className="row ">
               <div className="col-12 col-md-8">
@@ -49,7 +49,7 @@ const Dashboard = ({
                 <div className="row prof-profile">
                   <div className="col-2">
                     <img
-                      src="https://via.placeholder.com/100"
+                      src="https://handraze-test-bucket.s3-us-west-1.amazonaws.com/5e545ad861d1d83a44be32ea/1583208500576-MOSHED-2019-11-26-17-42-43.jpg"
                       className="profpic"
                     />
                   </div>
