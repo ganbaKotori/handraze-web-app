@@ -5,6 +5,10 @@ import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 export class CreateCourseModal extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      file: null,
+      user: "test"
+    };
   }
 
   render() {
