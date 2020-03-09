@@ -5,6 +5,10 @@ import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 export class CreateCourseModal extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      file: null,
+      user: "test"
+    };
   }
 
   render() {
@@ -17,7 +21,7 @@ export class CreateCourseModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h2> Create Course {this.state.inputValue} </h2>
+            <h2> Create Course</h2>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
