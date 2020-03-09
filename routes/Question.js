@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Question = require('../models/question.model');
 
-// Get all questions
+// @route   GET api/question/:id
+// @desc    Get a question by its id
+// @access  Public
 router.get('/', async (req, res) => {
   try {
     const questions = await Question.find();
@@ -12,12 +14,16 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get a question
+// @route   GET api/question/
+// @desc    Get all question
+// @access  Public
 router.get('/:id', getQuestion, (req, res) => {
   res.json(res.question);
 });
 
-// Add question
+// @route   POST api/question/add
+// @desc    Create a new question
+// @access  Public
 router.post('/add', async (req, res) => {
   const question = new Question({
     question: req.body.question, // in POST - "user": "/user/[username]"
@@ -31,8 +37,10 @@ router.post('/add', async (req, res) => {
   }
 });
 
-// Edit a question
-router.patch('/:d', getQuestion, async (req, res) => {
+// @route   PATCH api/question/update/:id
+// @desc    Update a question by its id
+// @access  Public
+router.patch('/update/:id', getQuestion, async (req, res) => {
   if(req.body.question != null) {
     res.question.question = req.body.question;
   }
@@ -45,7 +53,9 @@ router.patch('/:d', getQuestion, async (req, res) => {
   }
 });
 
-// Delete question by isntructor id
+// @route   POST api/question/delete/:instructorid
+// @desc    Delete question by instructor id
+// @access  Public
 router.delete('/delete/:id', getQuestion, async (req, res) => {
   try{
     await res.question.remove();
@@ -57,6 +67,7 @@ router.delete('/delete/:id', getQuestion, async (req, res) => {
 
 //------------------------------------------------------------------------------
 
+// getQuestion module: sorts through questions to find one by its id
 async function getQuestion(req, res, next) {
   let question
   try {

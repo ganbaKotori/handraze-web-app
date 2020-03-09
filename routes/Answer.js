@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Answer = require('../models/answer.model');
 
-// Get all answers
+// @route   GET api/answer/
+// @desc    Get all answers
+// @access  Public
 router.get('/', async (req, res) => {
   try {
     const answers = await Answer.find();
@@ -12,12 +14,16 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get a answer
+// @route   GET api/answer/:id
+// @desc    Get a single answer
+// @access  Public
 router.get('/:id', getAnswer, (req, res) => {
   res.json(res.answer);
 });
 
-// Add answer
+// @route   POST api/answer/add/
+// @desc    Create an answer
+// @access  Public
 router.post('/add', async (req, res) => {
   const answer = new Answer({
     answer: req.body.answer,
@@ -34,7 +40,9 @@ router.post('/add', async (req, res) => {
 //TODO: Add PATCH for answer
 // router.patch('/:id', getAnswer, async (req, res) => { ... }
 
-// Delete answer by isntructor id
+// @route   DELETE api/answer/delete/:id
+// @desc   Delete an answer by instructor id
+// @access  Public
 router.delete('/delete/:id', getAnswer, async (req, res) => {
   try{
     await res.answer.remove();
@@ -46,6 +54,7 @@ router.delete('/delete/:id', getAnswer, async (req, res) => {
 
 //------------------------------------------------------------------------------
 
+// getAnswer module: sorts through all answers to find on by its id
 async function getAnswer(req, res, next) {
   let answer
   try {
