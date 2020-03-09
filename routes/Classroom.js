@@ -6,13 +6,6 @@ let Course = require("../models/course.model");
 //Load Input Validation
 const validateClassroomInput = require("../validation/classroom-validation");
 
-// @route   GET api/classes/:id
-// @desc    Get a class
-// @access  Public
-router.get('/:id', getClassroom, (req, res) => {
-  res.json(res.classroom);
-});
-
 // @route   POST api/classes
 // @desc    Create a class
 // @access  Public
@@ -42,6 +35,13 @@ router.route("/").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+// @route   GET api/classes/:id
+// @desc    Get a class
+// @access  Public
+router.get('/:id', getClassroom, (req, res) => {
+  res.json(res.classroom);
+});
+
 // @route   GET api/classes
 // @desc    Get all classes
 // @access  Public
@@ -57,7 +57,7 @@ router.route("/").get((req, res) => {
 // router.patch('/:id', getCourse, async (req, res) => { ... }
 
 
-// @route   POST api/classes/delete/:id
+// @route   DELETE api/classes/delete/:id
 // @desc    Delete a class
 // @access  Public
 router.delete('/delete/:cid', getClassroom, async (req, res) => {
@@ -90,6 +90,9 @@ router.post("/addstudent/:id", (req, res) => {
   });
 });
 
+//------------------------------------------------------------------------------
+
+// getClassroom module: sorts through classrooms to find on by its id
 async function getClassroom(req, res, next) {
   let classroom
   try {
