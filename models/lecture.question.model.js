@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const lectureQuestionSchema = new Schema(
+const questionSchema = new Schema(
   {
     question: {
       type: String,
@@ -24,6 +24,6 @@ const lectureQuestionSchema = new Schema(
   }
 );
 
-const lectureQuestion = mongoose.model("Question", lectureQuestionSchema);
+const Question = mongoose.model("Question", questionSchema);
 
-module.exports = lectureQuestion;
+module.exports = Question;

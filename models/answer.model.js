@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const answerSchema = new Schema(
   {
     answer: {
-      type: String,
+        type: String,
       required: true
     },
     dateSubmitted: {

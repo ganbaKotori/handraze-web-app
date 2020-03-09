@@ -8,11 +8,26 @@ const discussionSchema = new Schema(
       type: Schema.Types.ObjectID,
       required: true,
       ref: "Question"
+        },
+
+    description: {
+       type: String,
+       required: false,
     },
-    topic: {
-      type: String
+
+    answer: [{
+      type: Schema.Types.ObjectID,
+      required: false,
+      ref: "Answer"
+    }],
+
+    dateSubmitted: {
+            type: Date,
+            default: Date.now
     }
+
   },
+
   {
     timestamps: true
   }
