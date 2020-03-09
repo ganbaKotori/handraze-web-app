@@ -48,7 +48,7 @@ router.route("/").post((req, res) => {
   });
   newCourse
     .save()
-    .then(() => res.json("Course added!"))
+    .then(result => res.json(result))
     .catch(err => res.status(400).json("Error: " + err));
 });
 

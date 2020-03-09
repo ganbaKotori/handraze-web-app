@@ -34,6 +34,7 @@ router.route("/me").get(auth, async (req, res) => {
 // @access  Public
 router.route("/").get((req, res) => {
   InstructorProfile.find()
+    .populate("User", ["firstName", "lastName"])
     .then(instructors => res.json(instructors))
     .catch(err => res.status(400).json("Error: " + err));
 });

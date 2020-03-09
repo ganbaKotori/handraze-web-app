@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let StudentProfile = require("../models/student.model");
 const auth = require("../middleware/auth");
+const Courses = require("../models/course.model");
 
 //Load Input Validation
 const validateStudentInput = require("../validation/student-validation");
@@ -19,7 +20,24 @@ router.route("/me").get(auth, async (req, res) => {
     }*/
 
     //res.json(profile);
-    res.json(profile);
+    var courses2 = [];
+    for (var key in profile.course) {
+      //console.log(profile.course[key]);
+      /*const course = Courses.findOne(profile.course[key]).then(result => {
+        //console.log(result);
+        courses2.push(result);
+      });*/
+      const course = await Courses.findOne(profile.course[key]);
+      //console.log(course);
+      courses2.push(course);
+    }
+    //var course3 = JSON.stringify(courses2);
+    //console.log(courses2);
+    //profile.put(courses2);
+    var studentProfile = { profile: profile, courses: courses2 };
+
+    console.log(studentProfile);
+    res.json(studentProfile);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server Error");
@@ -56,6 +74,24 @@ router.route("/").post([auth], async (req, res) => {
     .save()
     .then(() => res.json("Student profile added!"))
     .catch(err => res.status(400).json("Error: " + err));
+});
+
+//@route    PUT api/student/courses
+//@desc     Add profile experience
+//@access   Private
+router.put("/courses", auth, async (req, res) => {
+  const newCourse = {
+    id: req.body.cid
+  };
+
+  try {
+    const studentProfile = await StudentProfile.findOne({ user: req.user.id });
+    studentProfile.course.unshift(req.body.cid);
+    await studentProfile.save();
+    res.json(studentProfile);
+  } catch (error) {
+    res.json(error.message);
+  }
 });
 
 // @route   GET api/students
