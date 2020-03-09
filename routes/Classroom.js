@@ -13,6 +13,7 @@ router.get('/:id', getClassroom, (req, res) => {
   res.json(res.classroom);
 });
 
+
 // @route   POST api/classes
 // @desc    Create a class
 // @access  Public
@@ -60,7 +61,7 @@ router.route("/").get((req, res) => {
 // @route   POST api/classes/delete/:id
 // @desc    Delete a class
 // @access  Public
-router.delete('/delete/:cid', getClassroom, async (req, res) => {
+router.delete('/delete/:id', getClassroom, async (req, res) => {
   try{
     await res.classroom.remove();
     res.json({message: "Successfully deleted classroom!"}) // good
@@ -88,6 +89,51 @@ router.post("/addstudent/:id", (req, res) => {
       }
     });
   });
+});
+
+// @route   POST api/classes/postRating/:id
+// @desc    Post a new rating for a class
+// @access  Public
+router.post("/postRating/:id", getClassroom, async (req, res) => {
+  const rating = req.body.rating;
+  //const comment = req.body.comment;
+
+  const classroom = res.classroom; // from getClassroom
+  const ratingList = classroom.ratings;
+
+  try {
+    if (classroom){
+      if(rating >= 1 && rating <= 5){ // validation
+        ratingList.push(rating);
+        classroom
+          .save()
+          .then(res.json(ratingList));
+      } else {
+        res.json({message: "Invalid rating: Enter rating between 1 and 5."})
+      }
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+
+});
+
+// @route   POST api/classes/getRatings/:id
+// @desc    Get all ratings for a class
+// @access  Public
+router.get('/getRatings/:id', getClassroom, (req, res) => {
+  const classroom = res.classroom; // from getClassroom
+
+  try {
+    if (classroom){
+      res.json(classroom.ratings);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+
+  //const ratingPercentage = (rating[rating] / maxRating) * 100;
+  //const ratingPercentageRounded = `${Math.round(ratingPercentage / 10) * 10}%`;
 });
 
 async function getClassroom(req, res, next) {

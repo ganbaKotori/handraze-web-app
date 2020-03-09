@@ -6,12 +6,22 @@ const isEmpty = require("./is-empty");
 
 module.exports = function validateRegisterInput(data) {
   let errors = {};
+  const minRating = 1;
+  const maxRating = 5;
 
   data.topic = !isEmpty(data.topic) ? data.topic : "";
   data.cid = !isEmpty(data.cid) ? data.cid : "";
   data.inSession = !isEmpty(data.inSession) ? data.inSession : "";
   data.sessionStart = !isEmpty(data.sessionStart) ? data.sessionStart : "";
   data.sessionEnd = !isEmpty(data.sessionEnd) ? data.sessionEnd : "";
+
+  //data.rating =  !isEmpty(data.topic) ? data.topic : "";
+
+/*
+  if(!Validator.isInt(data.rating, {min: 1, max:5})) {
+    errors.classRating = "Classroom rating must be a number between 1 and 5";
+  }
+*/
 
   if (!Validator.isLength(data.topic, { min: 5, max: 30 })) {
     errors.classTopic = "Classroom topic must be between 5 and 30 characters";

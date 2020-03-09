@@ -74,25 +74,6 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// @route   POST api/user/login
-// @desc    Register user
-// @access  Public
-router.route("/login").post((req, res, next) => {
-  User.authenticate(req.body.logemail, req.body.logpassword, function(
-    error,
-    user
-  ) {
-    if (error || !user) {
-      var err = new Error("Wrong email or password.");
-      err.status = 401;
-      return next(err);
-    } else {
-      req.session.userID = user._id;
-      res.status(200).json("Login successful");
-    }
-  });
-});
-
 // @route   POST API/Users/Register
 // @desc    Register user
 // @access  Public
@@ -101,6 +82,7 @@ router.route("/register").post(async (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
+  const avatar = req.body.avatar; // avatar image url
 
   try {
     let user = await User.findOne({ email });
@@ -115,11 +97,12 @@ router.route("/register").post(async (req, res) => {
       email,
       password,
       lastName,
-      firstName
+      firstName,
+      avatar
     });
 
     await newUser.save();
-    //sendWelcomeEmail(newUser.email, newUser.firstName);
+    sendWelcomeEmail(newUser.email, newUser.firstName);
 
     //----- JWT -----
     const payload = {
@@ -143,8 +126,27 @@ router.route("/register").post(async (req, res) => {
   }
 });
 
+// @route   POST api/user/login
+// @desc    Register user and send welcome email
+// @access  Public
+router.route("/login").post((req, res, next) => {
+  User.authenticate(req.body.logemail, req.body.logpassword, function(
+    error,
+    user
+  ) {
+    if (error || !user) {
+      var err = new Error("Wrong email or password.");
+      err.status = 401;
+      return next(err);
+    } else {
+      req.session.userID = user._id;
+      res.status(200).json("Login successful");
+    }
+  });
+});
+
 // @route   GET API/Users/:id
-// @desc    find user
+// @desc    Find user
 // @access  Public
 router.get("/:id", (req, res) => {
   User.findById(req.params.id)
@@ -152,10 +154,11 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+// ---- FIXME: Not deleting users ---- //
 // @route   DELETE API/Users/Delete
 // @desc    find and delete user
 // @access  Public
-router.delete("/", async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   try {
     Student.count({ user: req.body.id }, async function(err, count) {
       if (count > 0) {
@@ -194,6 +197,25 @@ router.post("/update/:id", (req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
     })
     .catch(err => res.status(400).json("Error: " + err));
+});
+
+// @route   POST api/users/update-avatar/:id
+// @desc    Update a user's profile avatar
+// @access  Public
+router.post("/update-avatar/:id", getUser, async (req, res) => {
+  if(req.body.avatar != null) { // if user enters data to change avatar
+    res.user.avatar = req.body.avatar; // change the avatar
+
+    // Check if image exists in s3
+
+  }
+
+  try {
+    const upatedUser = await res.user.save(); // give updated version
+    res.json(upatedUser);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 /* TODO: MERGE WITH UPPER CODE
