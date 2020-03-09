@@ -9,10 +9,9 @@ const validateClassroomInput = require("../validation/classroom-validation");
 // @route   GET api/classes/:id
 // @desc    Get a class
 // @access  Public
-router.get('/:id', getClassroom, (req, res) => {
+router.get("/:id", getClassroom, (req, res) => {
   res.json(res.classroom);
 });
-
 
 // @route   POST api/classes
 // @desc    Create a class
@@ -30,7 +29,7 @@ router.route("/").post((req, res) => {
     return res.status(400).json(errors);
   }
 
-  const newClassroom = new Classroom ({
+  const newClassroom = new Classroom({
     topic,
     cid,
     inSession,
@@ -52,24 +51,21 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-
 // Update a classroom
 // Patch updates one thing, put updates everything
 // router.patch('/:id', getCourse, async (req, res) => { ... }
 
-
-// @route   POST api/classes/delete/:id
+// @route   DELETE api/classes/delete/:id
 // @desc    Delete a class
 // @access  Public
-router.delete('/delete/:id', getClassroom, async (req, res) => {
-  try{
+router.delete("/delete/:id", getClassroom, async (req, res) => {
+  try {
     await res.classroom.remove();
-    res.json({message: "Successfully deleted classroom!"}) // good
+    res.json({ message: "Successfully deleted classroom!" }); // good
   } catch (err) {
-    res.status(500).json({message: err.message})
+    res.status(500).json({ message: err.message });
   }
 });
-
 
 // @route   POST api/classes/student/:studentid
 // @desc    Add a student to a classroom
@@ -102,30 +98,28 @@ router.post("/postRating/:id", getClassroom, async (req, res) => {
   const ratingList = classroom.ratings;
 
   try {
-    if (classroom){
-      if(rating >= 1 && rating <= 5){ // validation
+    if (classroom) {
+      if (rating >= 1 && rating <= 5) {
+        // validation
         ratingList.push(rating);
-        classroom
-          .save()
-          .then(res.json(ratingList));
+        classroom.save().then(res.json(ratingList));
       } else {
-        res.json({message: "Invalid rating: Enter rating between 1 and 5."})
+        res.json({ message: "Invalid rating: Enter rating between 1 and 5." });
       }
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-
 });
 
 // @route   POST api/classes/getRatings/:id
 // @desc    Get all ratings for a class
 // @access  Public
-router.get('/getRatings/:id', getClassroom, (req, res) => {
+router.get("/getRatings/:id", getClassroom, (req, res) => {
   const classroom = res.classroom; // from getClassroom
 
   try {
-    if (classroom){
+    if (classroom) {
       res.json(classroom.ratings);
     }
   } catch (err) {
@@ -137,14 +131,14 @@ router.get('/getRatings/:id', getClassroom, (req, res) => {
 });
 
 async function getClassroom(req, res, next) {
-  let classroom
+  let classroom;
   try {
     classroom = await Classroom.findById(req.params.id);
-    if(classroom == null) {
-      return res.status(404).json({message: 'Cannot find classroom.'})
+    if (classroom == null) {
+      return res.status(404).json({ message: "Cannot find classroom." });
     }
   } catch (err) {
-    return res.status(500).json({message: err.message});
+    return res.status(500).json({ message: err.message });
   }
 
   res.classroom = classroom;

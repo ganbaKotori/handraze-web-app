@@ -11,7 +11,7 @@ const Instructor = require("../models/instructor.model");
 //Load Input Validation
 const validateRegisterInput = require("../validation/user-validation");
 
-// @route   POST api/user/
+// @route   POST api/users/
 // @desc    Register user
 // @access  Public
 router.route("/").post(async (req, res) => {
@@ -65,7 +65,7 @@ router.route("/").post(async (req, res) => {
   }
 });
 
-// @route   GET API/Users/
+// @route   GET api/users/
 // @desc    Get list of users
 // @access  Public
 router.route("/").get((req, res) => {
@@ -102,9 +102,12 @@ router.route("/register").post(async (req, res) => {
     });
 
     await newUser.save();
-    sendWelcomeEmail(newUser.email, newUser.firstName);
+    //sendWelcomeEmail(newUser.email, newUser.firstName);
 
-    //----- JWT -----
+    // Send a default welcome email when user is registered
+    //sendWelcomeEmail(newUser.email, newUser.userName, newUser.firstName, newUser.lastName, newUser.password);
+
+    // Send a new JWT when a user is registered
     const payload = {
       user: {
         id: newUser._id
@@ -183,8 +186,8 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// @route   POST API/Users/Update
-// @desc    find user
+// @route   POST api/users/update/:id
+// @desc    Update everything about a user
 // @access  Public
 router.post("/update/:id", (req, res) => {
   User.findById(res.params.id)
@@ -203,11 +206,11 @@ router.post("/update/:id", (req, res) => {
 // @desc    Update a user's profile avatar
 // @access  Public
 router.post("/update-avatar/:id", getUser, async (req, res) => {
-  if(req.body.avatar != null) { // if user enters data to change avatar
+  if (req.body.avatar != null) {
+    // if user enters data to change avatar
     res.user.avatar = req.body.avatar; // change the avatar
 
     // Check if image exists in s3
-
   }
 
   try {
@@ -219,8 +222,9 @@ router.post("/update-avatar/:id", getUser, async (req, res) => {
 });
 
 /* TODO: MERGE WITH UPPER CODE
-// Update a user
-// Patch updates one thing, put updates everything
+// @route   PATCH api/users/multi-update/:id
+// @desc    Update a single item for a user
+// @access  Public
 router.patch("/:id", getUser, async (req, res) => {
   if (req.body.email != null) {
     res.user.email = req.body.email;
@@ -246,7 +250,9 @@ router.patch("/:id", getUser, async (req, res) => {
   }
 });*/
 
-//Function to get user
+//------------------------------------------------------------------------------
+
+// getUser module: sorts through users to find on by its id
 async function getUser(req, res, next) {
   let user;
   try {
