@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Answer = require('../models/answer.model');
 //const Question = require('../models/question.model');
 
 // @route   GET api/question/:id
@@ -63,6 +64,31 @@ router.delete("/delete/:id", getQuestion, async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+});
+
+// @route   POST api/answer/add/
+// @desc    Create an answer
+// @access  Public
+router.post('/add', async (req, res) => {
+    const answer = new Answer({
+        answer: req.body.answer,
+        dateSubmitted: req.body.dateSubmitted
+    })
+    try {
+        const newAnswer = await answer.save();
+        res.status(201).json(newAnswer); // good - send new users info
+    } catch (err) {
+        res.status(400).json({ message: err.message }); // user input error
+    }
+});
+
+router.delete('/delete/:id', getAnswer, async (req, res) => {
+    try {
+        await res.answer.remove();
+        res.json({ message: "Successfully deleted answer!" }) // good
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
 });
 
 //------------------------------------------------------------------------------
