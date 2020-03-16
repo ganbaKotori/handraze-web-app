@@ -19,6 +19,10 @@ const instructorSchema = new Schema(
     department: {
       type: String,
       required: true
+    },
+    institution: {
+      type: String,
+      required: false
     }
   },
   {

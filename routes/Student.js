@@ -13,26 +13,35 @@ const validateStudentInput = require("../validation/student-validation");
 // @access  Private
 router.route("/me").get(auth, async (req, res) => {
   try {
-    const profile = await await StudentProfile.findOne({ user: req.user.id }); //.populate("user", ["firstName", "lastName"]);
+    const profile = await StudentProfile.findOne({
+      user: req.user.id
+    }); //.populate("user", ["firstName", "lastName"]);
 
-    /*if (!profile) {
+    if (!profile) {
       return res
         .status(400)
         .json({ msg: "There is no Student Profile for this user" });
-    }*/
+    }
+    if (profile) {
+      profile.populate("user", ["firstName", "lastName"]);
+      profile.populate("course", ["title", "description"]);
+    }
 
     //res.json(profile);
     var courses2 = [];
-    for (var key in profile.course) {
-      //console.log(profile.course[key]);
-      /*const course = Courses.findOne(profile.course[key]).then(result => {
-        //console.log(result);
-        courses2.push(result);
-      });*/
-      const course = await Courses.findOne(profile.course[key]);
-      //console.log(course);
-      courses2.push(course);
+    if (profile.course) {
+      for (var key in profile.course) {
+        //console.log(profile.course[key]);
+        /*const course = Courses.findOne(profile.course[key]).then(result => {
+          //console.log(result);
+          courses2.push(result);
+        });*/
+        const course = await Courses.findOne(profile.course[key]);
+        //console.log(course);
+        courses2.push(course);
+      }
     }
+
     //var course3 = JSON.stringify(courses2);
     //console.log(courses2);
     //profile.put(courses2);
@@ -42,18 +51,45 @@ router.route("/me").get(auth, async (req, res) => {
     res.json(studentProfile);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send("Server Error");
+    res.status(500).send(error);
   }
 });
 
 // @route   GET api/students
 // @desc    Retrieve all students
 // @access  Public
-router.route("/").get((req, res) => {
-  StudentProfile.find()
-    .then(students => res.json(students))
-    .catch(err => res.status(400).json("Error: " + err));
+router.route("/").get(async (req, res) => {
+  try {
+    const studentProfiles = await StudentProfile.find()
+      .populate("user", ["firstName", "lastName"])
+      .populate("course", ["title", "description"]);
+    console.log(studentProfiles);
+    res.json(studentProfiles);
+  } catch (error) {
+    res.status(400).json("Error: " + error);
+  }
 });
+
+// @route   GET api/students/user/:user_id
+// @desc    Retrieve student profile by user ID
+// @access  Public
+router.route("/user/:user_id").get(async (req, res) => {
+  try {
+    const studentProfiles = await StudentProfile.findOne({
+      user: req.params.user_id
+    })
+      .populate("user", ["firstName", "lastName"])
+      .populate("course", ["title", "description"]);
+    console.log(studentProfiles);
+    res.json(studentProfiles);
+  } catch (error) {
+    res.status(400).json("Error: " + error);
+  }
+});
+
+// @route   POST api/student/enroll
+// @desc    Add a new course to student profile
+// @access  Public
 
 // @route   POST api/students
 // @desc    Create a student profile
@@ -82,14 +118,17 @@ router.route("/").post([auth], async (req, res) => {
 //@desc     Add profile experience
 //@access   Private
 router.put("/courses", auth, async (req, res) => {
-  const newCourse = {
-    id: req.body.cid
-  };
-
   try {
     const studentProfile = await StudentProfile.findOne({ user: req.user.id });
-    studentProfile.course.unshift(req.body.cid);
-    await studentProfile.save();
+    console.log("student profile: ");
+    console.log(req.body.code);
+    const course = await Course.findOne({ code: req.body.code });
+    console.log(course);
+    if (course) {
+      studentProfile.course.unshift(course._id);
+      await studentProfile.save();
+    }
+
     res.json(studentProfile);
   } catch (error) {
     res.json(error.message);

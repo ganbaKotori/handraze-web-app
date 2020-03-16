@@ -1,4 +1,5 @@
 import {
+  GET_INSTRUCTOR_PROFILE,
   GET_PROFILE,
   GET_PROFILES,
   GET_ENROLLED_COURSES,
@@ -26,6 +27,12 @@ export default function(state = initialState, action) {
         loading: false
       };
 
+    case GET_INSTRUCTOR_PROFILE:
+      return {
+        ...state,
+        profile: payload,
+        loading: false
+      };
     case GET_PROFILES:
       return {
         ...state,

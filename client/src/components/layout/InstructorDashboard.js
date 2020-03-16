@@ -1,19 +1,19 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentProfile } from "../../actions/profile";
+import { getCurrentInstructorProfile } from "../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "./FileUpload";
 import InstructorCourses from "./InstructorCourses";
 import { Button, Spinner } from "react-bootstrap";
 
 const Dashboard = ({
-  getCurrentProfile,
+  getCurrentInstructorProfile,
   auth: { user },
   profile: { profile }
 }) => {
   useEffect(() => {
-    getCurrentProfile();
+    getCurrentInstructorProfile();
   }, []);
   return profile === null ? (
     <div>
@@ -139,7 +139,7 @@ const Dashboard = ({
 };
 
 Dashboard.propTypes = {
-  getCurrentProfile: PropTypes.func.isRequired,
+  getCurrentInstructorProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
@@ -150,5 +150,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getCurrentProfile
+  getCurrentInstructorProfile
 })(Dashboard);

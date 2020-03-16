@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import {
+  GET_INSTRUCTOR_PROFILE,
   GET_PROFILE,
   GET_PROFILES,
   CLEAR_PROFILE,
@@ -92,7 +93,7 @@ export const getInstructorProfileById = userId => async dispatch => {
     console.log(res);
 
     dispatch({
-      type: GET_PROFILE,
+      type: GET_INSTRUCTOR_PROFILE,
       payload: res.data
     });
   } catch (error) {
@@ -104,14 +105,35 @@ export const getInstructorProfileById = userId => async dispatch => {
 };
 
 //Get current users profile
+export const getCurrentInstructorProfile = () => async dispatch => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get("/api/instructors/me");
+
+    const profile2 = { instructor: res.data };
+
+    dispatch({
+      type: GET_INSTRUCTOR_PROFILE,
+      payload: profile2
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+//Get current users profile
 export const getCurrentProfile = () => async dispatch => {
+  dispatch({ type: CLEAR_PROFILE });
   try {
     const res = await axios.get("/api/instructors/me");
 
     const res2 = await axios.get("/api/students/me");
 
     const profile2 = { instructor: res.data, student: res2.data };
-    console.log(profile2.student);
+    //console.log(profile2.student);
 
     dispatch({
       type: GET_PROFILE,
