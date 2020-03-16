@@ -110,52 +110,6 @@ export const login = (email, password) => async dispatch => {
   }
 };
 
-//Login USER
-export const createCourse = (
-  title,
-  description,
-  dayOfWeek,
-  classStart,
-  location,
-  sectionNumber,
-  classDuration
-) => async dispatch => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-
-  const body = JSON.stringify({
-    title,
-    description,
-    dayOfWeek,
-    classStart,
-    location,
-    sectionNumber,
-    classDuration
-  });
-
-  try {
-    const res = await axios.post("/api/courses", body, config);
-
-    dispatch({
-      type: COURSE_CREATED,
-      payload: res.data
-    });
-
-    dispatch(loadUser());
-  } catch (err) {
-    const errors = err.response;
-    if (errors) {
-      ///    errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
-    }
-    dispatch({
-      type: COURSE_CREATED_FAILED
-    });
-  }
-};
-
 //Logout / Clear
 export const logout = () => dispatch => {
   dispatch({

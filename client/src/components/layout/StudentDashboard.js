@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "./FileUpload";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
 import SudentCourses from "./StudentCourses";
 import StudentCourses from "./StudentCourses";
 const Dashboard = ({
@@ -23,7 +23,10 @@ const Dashboard = ({
       <br />
       <br />
       <br />
-      Loading
+      <Fragment>
+        You have not setup a student profile
+        <Link to="/createstudentprofile"> Create Student Profile </Link>
+      </Fragment>
     </div>
   ) : (
     <Fragment>
@@ -35,7 +38,7 @@ const Dashboard = ({
         <br />
         <br />
 
-        {profile.student !== null ? (
+        {profile.student.profile !== null ? (
           <Container>
             <Row>
               <Col xs={7}>
@@ -59,7 +62,8 @@ const Dashboard = ({
                       <div className="col-6">
                         <p className="lead">Student</p>
                         <p className="lead">
-                          {user && user.firstName} {user && user.lastName}
+                          {user && user.firstName ? user && user.firstName : ""}{" "}
+                          {user && user.lastName}
                         </p>
                         <p className="lead">
                           Year: {user && profile.student.profile.year}
