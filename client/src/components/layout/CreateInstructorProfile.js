@@ -6,10 +6,11 @@ import { Link, withRouter } from "react-router-dom";
 
 const CreateProfile = ({ createProfile, history }) => {
   const [formData, setFormData] = useState({
-    department: ""
+    department: "",
+    institution: ""
   });
 
-  const { department } = formData;
+  const { department, institution } = formData;
 
   const onChange = e =>
     setFormData({
@@ -23,6 +24,10 @@ const CreateProfile = ({ createProfile, history }) => {
   };
   return (
     <Fragment>
+      <br />
+      <br />
+      <br />
+      <br />
       <h2> Create Instructor Profile </h2>
       <p>
         {" "}
@@ -41,6 +46,19 @@ const CreateProfile = ({ createProfile, history }) => {
             placeholder="Enter your Department"
             name="department"
             value={department}
+            onChange={e => onChange(e)}
+          />
+        </div>
+        <div className="form-group">
+          <label for="department">Institution</label>
+          <input
+            type="institution"
+            className="form-control"
+            id="institution"
+            aria-describedby="emailHelp"
+            placeholder="Enter your Department"
+            name="institution"
+            value={institution}
             onChange={e => onChange(e)}
           />
         </div>

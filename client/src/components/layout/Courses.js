@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { CreateCourseModal } from "../CreateCourseModal";
-
+import CourseList from "./CourseList";
 import { ButtonToolbar, Button } from "react-bootstrap";
 
 class CreateCourse extends Component {
@@ -85,6 +85,8 @@ class CreateCourse extends Component {
           show={this.state.addModalShow}
           onHide={addModalClose}
         />
+
+        <CourseList />
       </div>
     );
   }
