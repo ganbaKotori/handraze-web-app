@@ -29,45 +29,60 @@ const Login = ({ login, isAuthenticated }) => {
   return (
     <Fragment>
       <div className="container">
-        <h2> Welcome back</h2>
-        <p> Enter your account information below to sign into your profile.</p>
-        <form className="form" onSubmit={e => onSubmit(e)}>
-          <div className="form-group">
-            <label for="email">Email address</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-              name="email"
-              value={email}
-              onChange={e => onChange(e)}
-            />
-          </div>
-          <div className="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={e => onChange(e)}
-            />
-          </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="login-card">
+          <div class="container">
+            <h2> Welcome back</h2>
+            <p>
+              {" "}
+              Enter your account information below to sign into your profile.
+            </p>
+            <form className="form" onSubmit={e => onSubmit(e)}>
+              <div className="form-group">
+                <label for="email">Email address</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                  name="email"
+                  value={email}
+                  onChange={e => onChange(e)}
+                />
+              </div>
+              <div className="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  placeholder="Password"
+                  name="password"
+                  value={password}
+                  onChange={e => onChange(e)}
+                />
+              </div>
 
-          <div className="form-check">
-            <input type="checkbox" className="form-check-input" id="tosCheck" />
-            <label className="form-check-label" for="tosCheck">
-              Remember me
-            </label>
+              <div className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="tosCheck"
+                />
+                <label className="form-check-label" for="tosCheck">
+                  Remember me
+                </label>
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            </form>
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
+        </div>
       </div>
     </Fragment>
   );

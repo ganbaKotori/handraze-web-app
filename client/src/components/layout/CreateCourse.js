@@ -2,11 +2,11 @@ import React, { Fragment, useState } from "react";
 import axios from "axios";
 import { setAlert } from "../../actions/alert";
 import { connect } from "react-redux";
-import { createCourse } from "../../actions/auth";
+import { createCourse } from "../../actions/course";
 import PropTypes from "prop-types";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 
-const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
+const CreateCourse = ({ createCourse, history }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -32,86 +32,117 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    if (password == "") {
-      setAlert("There is no password submitted!", "danger");
-    } else {
-      createCourse({ email, userName, password, lastName, firstName });
+    {
+      createCourse(
+        {
+          title,
+          description,
+          dayOfWeek,
+          classStart,
+          location,
+          sectionNumber,
+          classDuration
+        },
+        history
+      );
     }
   };
-
-  if (isAuthenticated) {
-    return <Redirect to="/student" />;
-  }
 
   return (
     <Fragment>
       <div className="container">
-        <h2> Create Account </h2>
-        <p>
-          {" "}
-          Enter your information below to make an account and get started with
-          Handraze.
-        </p>
+        <h2> Create Course </h2>
+        <p> Enter course info</p>
         <form className="form" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
-            <label for="email">First Name</label>
+            <label for="email">Title</label>
             <input
               type="text"
               className="form-control"
-              id="firstName"
+              id="title"
               aria-describedby="emailHelp"
-              name="firstName"
-              value={firstName}
+              name="title"
+              value={title}
               onChange={e => onChange(e)}
               placeholder="Enter first name"
               required
             />
           </div>
           <div className="form-group">
-            <label for="email">Last Name</label>
+            <label for="email">Description</label>
             <input
               type="text"
               className="form-control"
-              id="lastName"
+              id="description"
               aria-describedby="emailHelp"
-              name="lastName"
-              value={lastName}
+              name="description"
+              value={description}
               onChange={e => onChange(e)}
               placeholder="Enter last name"
               required
             />
           </div>
           <div className="form-group">
-            <label for="email">Email address</label>
+            <label for="email">Day of Week</label>
             <input
-              type="email"
+              type="text"
               className="form-control"
-              id="email"
+              id="dayOfWeek"
               aria-describedby="emailHelp"
-              name="email"
-              value={email}
+              name="dayOfWeek"
+              value={dayOfWeek}
               onChange={e => onChange(e)}
               placeholder="Enter email"
               required
             />
           </div>
           <div className="form-group">
-            <label for="password">Password</label>
+            <label for="password">Class Start</label>
             <input
-              type="password"
+              type="text"
               className="form-control"
-              id="password"
+              id="classStart"
               placeholder="Password"
-              name="password"
-              value={password}
+              name="classStart"
+              value={classStart}
               onChange={e => onChange(e)}
             />
           </div>
-          <div className="form-check">
-            <input type="checkbox" className="form-check-input" id="tosCheck" />
-            <label className="form-check-label" for="tosCheck">
-              Agree to T.O.S / Privacy Policy
-            </label>
+          <div className="form-group">
+            <label for="password">Location</label>
+            <input
+              type="text"
+              className="form-control"
+              id="location"
+              placeholder="Password"
+              name="location"
+              value={location}
+              onChange={e => onChange(e)}
+            />
+          </div>
+          <div className="form-group">
+            <label for="password">Section Number</label>
+            <input
+              type="text"
+              className="form-control"
+              id="sectionNumber"
+              placeholder="Password"
+              name="sectionNumber"
+              value={sectionNumber}
+              onChange={e => onChange(e)}
+            />
+          </div>
+          <div className="form-group">
+            <label for="password">Class Duration</label>
+            <input
+              type="text"
+              className="form-control"
+              id="classDuration"
+              placeholder="Password"
+              name="classDuration"
+              value={classDuration}
+              onChange={e => onChange(e)}
+            />
           </div>
           <button type="submit" className="btn btn-primary">
             Submit
@@ -122,7 +153,7 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
   );
 };
 
-CreateAccount.propTypes = {
+CreateCourse.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
@@ -132,4 +163,6 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { setAlert, register })(CreateAccount);
+export default connect(mapStateToProps, { setAlert, createCourse })(
+  withRouter(CreateCourse)
+);

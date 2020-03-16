@@ -1,34 +1,44 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
+import axios from "axios";
+import { setAlert } from "../../actions/alert";
+import { connect } from "react-redux";
+import { createCourse } from "../../actions/course";
+import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
 const EnrollCourse = () => {
-  return (
-    <div class="container">
+  /*const [formData, setFormData] = useState({
+    code: ""
+  });
 
-        <div class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Enroll in a new course</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="text">Enrollment Code</label>
+  const { code } = formData;
 
-                        <input type="text" class="form-control" id="text" placeholder="123456aF" />
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger">Enroll</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  const onSubmit = async e => {
+    e.preventDefault();
+    {
+      createCourse({
+        code
+      });
+    }
+  };*/
 
-    </div>
-  );
+
+/*
+EnrollCourse.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 };
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, createCourse })(
+  EnrollCourse
+);
+*/
 export default EnrollCourse;
