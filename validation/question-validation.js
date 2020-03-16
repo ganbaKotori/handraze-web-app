@@ -6,6 +6,7 @@ module.exports = function validateRegisterInput(data) {
 
     data.question = !isEmpty(data.question) ? data.question : "";
     data.dateSubmitted = !isEmpty(data.dateSubmitted) ? data.dateSubmitted : "";
+    data.answer = !isEmpty(data.answer) ? data.answer : "";
 
     if (!Validator.isLength(data.question, { min: 10, max: 150 })) {
         errors.question = "Question must not exceed 150 characters";
@@ -14,6 +15,8 @@ module.exports = function validateRegisterInput(data) {
     if (Validator.isEmpty(data.dateSubmitted)) {
         errors.dateSubmitted = "Date submitted is required";
     }
+
+
 
     return {
         errors,

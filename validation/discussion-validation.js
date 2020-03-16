@@ -4,10 +4,17 @@ const isEmpty = require("./is-empty");
 module.exports = function validateRegisterInput(data) {
     let errors = {};
 
-    data.topic = !isEmpty(data.topic) ? data.topic : "";
+    data.description = !isEmpty(data.description) ? data.description : "";
+    data.question = !isEmpty(data.question) ? data.question : "";
 
-    if (Validator.isEmpty(data.topic)) {
-        errors.topic = "Discussion topic is required";
+    if (!Validator.isLength(data.question, { min: 10, max: 150 })) {
+        errors.question = "Question must not exceed 150 characters";
+    }
+
+    if (Validator.isEmpty(data.dateSubmitted)) {
+        errors.dateSubmitted = "Date submitted is required";
+    }
+    
     }
 
     return {
