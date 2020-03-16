@@ -685,18 +685,11 @@ button {
 
 /*START OF NON-BOOTSTRAP CSS------------------------------------*/
 
-.login-card {
+.card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  margin-top: 0%;
-  margin-bottom: 0%;
-  margin-right: 20%;
-  margin-left: 20%;
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+  margin: 5%;
 }
 
 .card:hover {

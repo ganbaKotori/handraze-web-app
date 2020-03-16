@@ -6,8 +6,7 @@ import { Link, withRouter } from "react-router-dom";
 
 const CreateStudentProfile = ({ createProfile2, history }) => {
   const [formData, setFormData] = useState({
-    year: "",
-    institution: ""
+    department: ""
   });
 
   const { year, institution } = formData;
@@ -24,10 +23,6 @@ const CreateStudentProfile = ({ createProfile2, history }) => {
   };
   return (
     <Fragment>
-      <br />
-      <br />
-      <br />
-      <br />
       <h2> Create Student Profile </h2>
       <p> Enter your information below to create a Student Profile!</p>
 

@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "./FileUpload";
-import InstructorCourses from "./InstructorCourses";
-import { Button, Spinner } from "react-bootstrap";
+import { CourseCard } from "../CourseCard";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -23,10 +22,7 @@ const Dashboard = ({
       <br />
       <br />
       <br />
-      <Fragment>
-        You have not setup an instructor profile
-        <Link to="/createinstructorprofile"> Create Instructor Profile </Link>
-      </Fragment>
+      Loading
     </div>
   ) : (
     <Fragment>
@@ -71,21 +67,42 @@ const Dashboard = ({
                 </div>
 
                 <div className="car">
-                  <h3>Courses You're Teaching</h3>
-                  <Link to="/newcourse">
-                    <Button variant="outline-primary">
-                      Start a new Course
-                    </Button>
-                  </Link>
+                  <h3>Courses</h3>
                   <div className="courses">
                     <div className="row">
                       <div className="col-sm-5">
-                        <InstructorCourses course={profile.instructor.course} />
+                        <CourseCard inputValue={"card bg-success"} />
+                        <div className="card bg-success">
+                          <div className="card-body">
+                            <h5 className="card-title">
+                              Political Science 101
+                            </h5>
+                            <p className="card-text">MW 7:30AM to 11:00AM</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="col-sm-5"></div>
+                      <div className="col-sm-5">
+                        <div className="card bg-danger">
+                          <div className="card-body">
+                            <h5 className="card-title">
+                              Advanced Basket Weaving
+                            </h5>
+                            <p className="card-text">TTH 7:30AM to 11:00AM</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div className="row">
-                      <div className="col-sm-5"></div>
+                      <div className="col-sm-5">
+                        <div className="card">
+                          <div className="card-body bg-primary">
+                            <h5 className="card-title">
+                              Database Fundamentals
+                            </h5>
+                            <p className="card-text">MW 7:30AM to 11:00AM</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
