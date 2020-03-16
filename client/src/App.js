@@ -18,6 +18,13 @@ import Photo from "./components/layout/Photo";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import ProfileCreation from "./components/layout/ProfileCreation";
 import StudentDashboard from "./components/layout/StudentDashboard";
+import ThreadDisplay from "./components/layout/ThreadDisplay";
+import Post from "./components/layout/Post";
+import PostEditor from "./components/layout/PostEditor";
+import DiscussionBoard from "./components/layout/Discussion";
+
+
+
 
 import "./App.css";
 //Redux
@@ -45,6 +52,10 @@ const App = () => {
             <section className="container">
               <Route exact path="/courses" component={Courses} />
               <Route exact path="/createcourse" component={Popup} />
+			  <Route exact path="/thread" component={ThreadDisplay}/>
+			  <Route exact path="/post" component={Post}/>
+			  <Route exact path="/postedit" component={PostEditor}/>
+			  <Route exact path="/discussions" component={DiscussionBoard}/>
 
               <PrivateRoute
                 exact

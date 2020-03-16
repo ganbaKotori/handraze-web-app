@@ -65,7 +65,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Mon
+                  Monday
                 </label>
                 <input
                   type="checkbox"
@@ -73,7 +73,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Tues
+                  Tuesday
                 </label>
                 <input
                   type="checkbox"
@@ -81,7 +81,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Wed
+                  Wednesday
                 </label>
                 <input
                   type="checkbox"
@@ -89,7 +89,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Thur
+                  Thursday
                 </label>
                 <input
                   type="checkbox"
@@ -97,7 +97,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Fri
+                  Friday
                 </label>
                 <input
                   type="checkbox"
@@ -105,7 +105,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Sat
+                  Saturday
                 </label>
                 <input
                   type="checkbox"
@@ -113,7 +113,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Sun
+                  Sunday
                 </label>
                 <input
                   type="checkbox"

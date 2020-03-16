@@ -13,6 +13,7 @@
     "html2pdf.js": "^0.9.2",
     "install": "^0.13.0",
     "mdbreact": "^4.25.2",
+    "mgr-pdf-viewer-react": "^1.0.3",
     "npm": "^6.13.7",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
