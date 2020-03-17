@@ -14,12 +14,14 @@ import LoggedOut from "./components/layout/LoggedOut";
 import Lecture from "./components/layout/LectureQuestion";
 import "./App.css";
 import LectureQuestion from "./components/layout/LectureQuestion";
+import EditInstructor from "./components/layout/EditStudent";
+import EditStudent from "./components/layout/EditStudent";
 
 const App = () => (
   <Router>
     <Fragment>
       <Navbar />
-      <Route exact path="/" component={LectureQuestion} />
+      <Route exact path="/" component={EditStudent} />
       <section className="container">
         <Switch>
           <Route exact path="/login" component={Login} />
