@@ -102,27 +102,19 @@ router.delete("/delete/:id", getCourse, async (req, res) => {
 // @route   POST api/courses/student/:studentid
 // @desc    Add a student to a course by the student id
 // @access  Public
-router.post("/student/:id", (req, res) => {
-  Course.findOne({ _id: req.body.cid }).then(course => {
-    Student.count({ _id: req.body.id }, function(err, count) {
-      if (count > 0) {
-        course.students.unshift(req.body.id);
-        course
-          .save() // saves student to course
-          .then(course => res.json(course))
-          .catch(err => res.status(400).json("Error: " + err));
-
-        // TODO: Need to also save the course to the student
-      } else {
-        console.log("Student not found!");
-        res.status(400).json("Error: " + err);
-      }
+router.put("/student/:id", async (req, res) => {
+  try {
+    const course = await Course.findOne({ _id: req.params.id });
+    await Student.findOne({ _id: req.body.student }).then(student => {
+      course.students.unshift(student._id);
+      course.save();
+      res.json(course);
     });
-  });
+  } catch (error) {
+    res.status(400).json("Error adding student: " + error);
+  }
 });
-
 //------------------------------------------------------------------------------
-
 // getCourse module: sorts through courses to find on by its id
 async function getCourse(req, res, next) {
   let course;

@@ -59,7 +59,7 @@ export const register = ({
   });
 
   try {
-    const res = await axios.post("/api/users", body, config);
+    const res = await axios.post("/api/users/register", body, config);
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -67,10 +67,11 @@ export const register = ({
     });
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response;
-    if (errors) {
-      ///    errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+    console.log(err.response);
+    for (var property in err.response.data) {
+      alert(err.response.data[property]);
     }
+
     dispatch({
       type: REGISTER_FAIL
     });

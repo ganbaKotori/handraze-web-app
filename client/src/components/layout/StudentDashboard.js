@@ -38,7 +38,7 @@ const Dashboard = ({
         <br />
         <br />
 
-        {profile.student.profile !== null ? (
+        {profile.student !== null ? (
           <Container>
             <Row>
               <Col xs={7}>
@@ -66,10 +66,10 @@ const Dashboard = ({
                           {user && user.lastName}
                         </p>
                         <p className="lead">
-                          Year: {user && profile.student.profile.year}
+                          Year: {user && profile.student.year}
                         </p>
                         <p className="lead">
-                          Goes to: {user && profile.student.profile.institution}
+                          Goes to: {user && profile.student.institution}
                         </p>
                       </div>
                     </div>
@@ -116,7 +116,7 @@ const Dashboard = ({
             <br />
             <Row>
               <Col xs={9}>
-                <StudentCourses course={profile.student.courses} />
+                <StudentCourses course={profile.student.course} />
               </Col>
             </Row>
           </Container>

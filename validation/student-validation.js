@@ -9,10 +9,6 @@ module.exports = function validateRegisterInput(data) {
   data.institution = !isEmpty(data.institution) ? data.institution : "";
   var years = ["freshman", "sophmore", "junior", "senior"];
 
-  if (Validator.isEmpty(data.id)) {
-    errors.id = "ID is required";
-  }
-
   if (!years.includes(data.year)) {
     errors.year = "Incorrect year";
   }
