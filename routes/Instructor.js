@@ -4,22 +4,17 @@ const User = require("../models/user.model");
 const auth = require("../middleware/auth");
 
 //Load Input Validation
-const validateRegisterInput = require("../validation/instructor-validation");
+const validateInstructorInput = require("../validation/instructor-validation");
 
 // @route   POST api/instructors
 // @desc    Create instructor profile
 // @access  Public
 router.route("/").post([auth], async (req, res) => {
-  // const { errors, isValid } = validateRegisterInput(req.body);
-
-  /*
+  const { errors, isValid } = validateInstructorInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  */
-
   const profileFields = {};
-
   profileFields.department = req.body.department;
   profileFields.department = req.body.institution;
   profileFields.user = req.user.id;
@@ -48,12 +43,6 @@ router.route("/me").get(auth, async (req, res) => {
         .status(400)
         .json({ msg: "There is no Instructor Profile for this user" });
     }
-
-    if (profile) {
-      profile.populate("user", ["firstName", "lastName"]);
-      profile.populate("course", ["title", "description", "code"]);
-    }
-
     res.json(profile);
   } catch (error) {
     console.log(error.message);
