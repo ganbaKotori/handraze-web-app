@@ -14,8 +14,12 @@ export default class ProfileItem extends Component {
       <Card style={{ width: "20rem" }}>
         <Card.Body>
           <Card.Title>
-            {this.props.inputValue.user.firstName}{" "}
-            {this.props.inputValue.user.lastName}
+            {this.props.inputValue.user
+              ? this.props.inputValue.user.firstName
+              : "User has been deleted"}{" "}
+            {this.props.inputValue.user
+              ? this.props.inputValue.user.lastName
+              : ""}
           </Card.Title>
           <Card.Text>
             {" "}
@@ -23,7 +27,9 @@ export default class ProfileItem extends Component {
             {this.props.inputValue.institution}
             <br />
             <Link
-              to={`/student/${this.props.inputValue.user._id}`}
+              to={`/student/${
+                this.props.inputValue.user ? this.props.inputValue.user._id : ""
+              }`}
               className="btn btn-primary"
             >
               View Profile

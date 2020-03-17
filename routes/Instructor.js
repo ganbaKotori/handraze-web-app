@@ -16,7 +16,7 @@ router.route("/").post([auth], async (req, res) => {
   }
   const profileFields = {};
   profileFields.department = req.body.department;
-  profileFields.department = req.body.institution;
+  profileFields.institution = req.body.institution;
   profileFields.user = req.user.id;
 
   const newInstructorProfile = new InstructorProfile(profileFields);

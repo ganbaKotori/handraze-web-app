@@ -18,7 +18,9 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       <Link to="/instructor">
         <Button variant="primary">Instructor</Button>
       </Link>{" "}
-      <Link onClick={logout}>Logout</Link>
+      <Link to="/" onClick={logout}>
+        Logout
+      </Link>
     </Fragment>
   );
 

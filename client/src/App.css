@@ -595,10 +595,13 @@ button {
   margin-bottom: 0.5rem;
 }
 
+.container {
+  margin-top: 5rem;
+}
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-    margin-top: 8rem;
+    margin-top: 5rem;
   }
 
   .hide-sm {

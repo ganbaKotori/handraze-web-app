@@ -48,41 +48,47 @@ const App = () => {
           <Switch>
             <Route exact path="/lecture" component={Lecture} />
             <PrivateRoute exact path="/course/:id" component={Course} />
-            <section className="container">
-              <Route exact path="/courses" component={Courses} />
-              <PrivateRoute exact path="/newcourse" component={CreateCourse} />
-              <PrivateRoute
-                exact
-                path="/createinstructorprofile"
-                component={CreateInstructorProfile}
-              />
-              <PrivateRoute
-                exact
-                path="/createstudentprofile"
-                component={CreateStudentProfile}
-              />
-              <PrivateRoute exact path="/enroll" component={EnrollCourse} />
-              <PrivateRoute
-                exact
-                path="/instructor"
-                component={InstructorDashboard}
-              />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/photo" component={Photo} />
-              <Route
-                exact
-                path="/instructor/:id"
-                component={InstructorProfile}
-              />
-              <Route exact path="/student/:id" component={StudentProfile} />
-              <Route exact path="/profiles" component={Profiles} />
-              <Route exact path="/register" component={CreateAccount} />
-              <PrivateRoute
-                exact
-                path="/student"
-                component={StudentDashboard}
-              />
-            </section>
+            <Fragment>
+              <div className="container">
+                <Route exact path="/courses" component={Courses} />
+                <PrivateRoute
+                  exact
+                  path="/newcourse"
+                  component={CreateCourse}
+                />
+                <PrivateRoute
+                  exact
+                  path="/createinstructorprofile"
+                  component={CreateInstructorProfile}
+                />
+                <PrivateRoute
+                  exact
+                  path="/createstudentprofile"
+                  component={CreateStudentProfile}
+                />
+                <PrivateRoute exact path="/enroll" component={EnrollCourse} />
+                <PrivateRoute
+                  exact
+                  path="/instructor"
+                  component={InstructorDashboard}
+                />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/photo" component={Photo} />
+                <Route
+                  exact
+                  path="/instructor/:id"
+                  component={InstructorProfile}
+                />
+                <Route exact path="/student/:id" component={StudentProfile} />
+                <Route exact path="/profiles" component={Profiles} />
+                <Route exact path="/register" component={CreateAccount} />
+                <PrivateRoute
+                  exact
+                  path="/student"
+                  component={StudentDashboard}
+                />
+              </div>
+            </Fragment>
           </Switch>
         </Fragment>
       </Router>

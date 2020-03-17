@@ -14,14 +14,20 @@ export default class ProfileItem extends Component {
       <Card style={{ width: "20rem" }}>
         <Card.Body>
           <Card.Title>
-            {this.props.inputValue.user.firstName}{" "}
-            {this.props.inputValue.user.lastName}
+            {this.props.inputValue.user
+              ? this.props.inputValue.user.firstName
+              : "User has been deleted"}{" "}
+            {this.props.inputValue.user
+              ? this.props.inputValue.user.lastName
+              : ""}
           </Card.Title>
           <Card.Text>
             {" "}
             Department: {this.props.inputValue.department} <br />
             <Link
-              to={`/instructor/${this.props.inputValue.user._id}`}
+              to={`/instructor/${
+                this.props.inputValue.user ? this.props.inputValue.user._id : ""
+              }`}
               className="btn btn-primary"
             >
               View Profile
