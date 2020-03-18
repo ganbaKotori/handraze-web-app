@@ -25,6 +25,7 @@ export default class ProfileItem extends Component {
             {" "}
             Department: {this.props.inputValue.department} <br />
             <Link
+              className="link"
               to={`/instructor/${
                 this.props.inputValue.user ? this.props.inputValue.user._id : ""
               }`}
