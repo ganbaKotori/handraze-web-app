@@ -1,44 +1,32 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentProfile } from "../../actions/profile";
+import { getCurrentStudentProfile } from "../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "./FileUpload";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
-import SudentCourses from "./StudentCourses";
 import StudentCourses from "./StudentCourses";
 const Dashboard = ({
-  getCurrentProfile,
+  getCurrentStudentProfile,
   auth: { user },
-  profile: { profile }
+  profile: { studentProfile, loading }
 }) => {
   useEffect(() => {
-    getCurrentProfile();
+    getCurrentStudentProfile();
   }, []);
-  return profile === null ? (
+  console.log(studentProfile);
+  return loading ? (
     <div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <Fragment>
-        You have not setup a student profile
-        <Link to="/createstudentprofile"> Create Student Profile </Link>
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
       </Fragment>
     </div>
   ) : (
     <Fragment>
       <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-
-        {profile.student !== null ? (
+        {studentProfile !== null ? (
           <Container>
             <Row>
               <Col xs={7}>
@@ -63,13 +51,19 @@ const Dashboard = ({
                         <p className="lead">Student</p>
                         <p className="lead">
                           {user && user.firstName ? user && user.firstName : ""}{" "}
-                          {user && user.lastName}
+                          {user && user.lastName ? user && user.lastName : ""}
                         </p>
                         <p className="lead">
-                          Year: {user && profile.student.year}
+                          Year:{" "}
+                          {user && studentProfile.year
+                            ? user && studentProfile.year
+                            : ""}
                         </p>
                         <p className="lead">
-                          Goes to: {user && profile.student.institution}
+                          Goes to:{" "}
+                          {user && studentProfile.institution
+                            ? user && studentProfile.institution
+                            : ""}
                         </p>
                       </div>
                     </div>
@@ -116,7 +110,9 @@ const Dashboard = ({
             <br />
             <Row>
               <Col xs={9}>
-                <StudentCourses course={profile.student.course} />
+                <StudentCourses
+                  course={studentProfile.course ? studentProfile.course : []}
+                />
               </Col>
             </Row>
           </Container>
@@ -133,7 +129,7 @@ const Dashboard = ({
 };
 
 Dashboard.propTypes = {
-  getCurrentProfile: PropTypes.func.isRequired,
+  getCurrentStudentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
@@ -144,5 +140,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getCurrentProfile
+  getCurrentStudentProfile
 })(Dashboard);

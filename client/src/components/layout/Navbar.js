@@ -1,14 +1,27 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import handraze from "../../img/handrazelogow.png";
+import store from "../../store";
 
 const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  const [profile, setProfile] = useState(0);
+  store.subscribe(() => {
+    console.log("hope this works");
+    const state = store.getState();
+    if (state.profile.instructorProfile) {
+      setProfile("instructor");
+    } else setProfile("student");
+  });
+
   const authLinks = (
     <Fragment>
+      <Link to="/questions">
+        <Button variant="primary">Questions</Button>
+      </Link>{" "}
       <Link to="/profiles">
         <Button variant="primary">Profiles</Button>
       </Link>{" "}
@@ -18,7 +31,9 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       <Link to="/instructor">
         <Button variant="primary">Instructor</Button>
       </Link>{" "}
-      <Link onClick={logout}>Logout</Link>
+      <Link to="/" onClick={logout}>
+        Logout
+      </Link>
     </Fragment>
   );
 
@@ -28,15 +43,37 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     </Fragment>
   );
   return (
-    <Navbar collapseOnSelect expand="lg" bg="orange" variant="dark">
-      <Link to="/">
-        <img src={handraze} className="logo" alt="student" />
-      </Link>
+    <>
+      <style type="text/css">
+        {`
+    .bg-flat {
+      background-color: purple;
+      color: white;
+    }
 
-      {!loading && (
-        <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-      )}
-    </Navbar>
+    .bg-xxl {
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+    }
+    `}
+      </style>
+
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        bg={profile == "instructor" ? "flat" : "orange"}
+        variant="dark"
+      >
+        <Link to="/">
+          <img src={handraze} className="logo" alt="student" />
+        </Link>
+        {profile}
+
+        {!loading && (
+          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+        )}
+      </Navbar>
+    </>
   );
 };
 

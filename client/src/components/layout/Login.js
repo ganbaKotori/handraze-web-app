@@ -29,12 +29,8 @@ const Login = ({ login, isAuthenticated }) => {
   return (
     <Fragment>
       <div className="container">
-        <br />
-        <br />
-        <br />
-        <br />
-        <div class="login-card">
-          <div class="container">
+        <div className="login-card">
+          <div className="container">
             <h2> Welcome back</h2>
             <p>
               {" "}
@@ -42,7 +38,7 @@ const Login = ({ login, isAuthenticated }) => {
             </p>
             <form className="form" onSubmit={e => onSubmit(e)}>
               <div className="form-group">
-                <label for="email">Email address</label>
+                <label htmlFor="email">Email address</label>
                 <input
                   type="email"
                   className="form-control"
@@ -55,7 +51,7 @@ const Login = ({ login, isAuthenticated }) => {
                 />
               </div>
               <div className="form-group">
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   className="form-control"
@@ -73,7 +69,7 @@ const Login = ({ login, isAuthenticated }) => {
                   className="form-check-input"
                   id="tosCheck"
                 />
-                <label className="form-check-label" for="tosCheck">
+                <label className="form-check-label" htmlFor="tosCheck">
                   Remember me
                 </label>
               </div>

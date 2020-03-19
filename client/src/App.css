@@ -595,10 +595,21 @@ button {
   margin-bottom: 0.5rem;
 }
 
+.container {
+  margin-top: 5rem;
+}
+
+.link {
+  color: #fff;
+}
+.link:hover {
+  color: rgb(209, 209, 209);
+  text-decoration: none;
+}
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-    margin-top: 8rem;
+    margin-top: 5rem;
   }
 
   .hide-sm {

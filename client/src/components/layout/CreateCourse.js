@@ -69,9 +69,9 @@ const CreateCourse = ({ createCourse, history }) => {
             />
           </div>
           <div className="form-group">
-            <label for="email">Description</label>
-            <input
-              type="text"
+            <label for="email">Description</label>​
+            <textarea
+              type="textarea"
               className="form-control"
               id="description"
               aria-describedby="emailHelp"
@@ -80,7 +80,8 @@ const CreateCourse = ({ createCourse, history }) => {
               onChange={e => onChange(e)}
               placeholder="Enter last name"
               required
-            />
+              rows="3"
+            ></textarea>
           </div>
           <div className="form-group">
             <label for="email">Day of Week</label>

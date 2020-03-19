@@ -10,7 +10,7 @@ import CreateInstructorProfile from "./components/layout/CreateInstructorProfile
 import CreateStudentProfile from "./components/layout/CreateStudentProfile";
 import EnrollCourse from "./components/layout/EnrollCourse2";
 import Footer from "./components/layout/Footer";
-import InstructorPage from "./components/layout/FileUpload";
+import InstructorProfile from "./components/layout/InstructorProfile";
 import Landing from "./components/layout/Landing";
 import Lecture from "./components/layout/Lecture";
 import LoggedOut from "./components/layout/LoggedOut";
@@ -18,11 +18,10 @@ import Login from "./components/layout/Login";
 import Navbar from "./components/layout/Navbar";
 import Photo from "./components/layout/Photo";
 import PrivateRoute from "./components/routing/PrivateRoute";
-import ProfileCreation from "./components/layout/ProfileCreation";
-import StudentProfile from "./components/layout/StudentProfile";
-import InstructorProfile from "./components/layout/InstructorProfile";
 import Profiles from "./components/layout/Profiles";
+import Questions from "./components/layout/Questions";
 import StudentDashboard from "./components/layout/StudentDashboard";
+import StudentProfile from "./components/layout/StudentProfile";
 
 import "./App.css";
 //Redux
@@ -48,41 +47,49 @@ const App = () => {
           <Switch>
             <Route exact path="/lecture" component={Lecture} />
             <PrivateRoute exact path="/course/:id" component={Course} />
-            <section className="container">
-              <Route exact path="/courses" component={Courses} />
-              <PrivateRoute exact path="/newcourse" component={CreateCourse} />
-              <PrivateRoute
-                exact
-                path="/createinstructorprofile"
-                component={CreateInstructorProfile}
-              />
-              <PrivateRoute
-                exact
-                path="/createstudentprofile"
-                component={CreateStudentProfile}
-              />
-              <PrivateRoute exact path="/enroll" component={EnrollCourse} />
-              <PrivateRoute
-                exact
-                path="/instructor"
-                component={InstructorDashboard}
-              />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/photo" component={Photo} />
-              <Route
-                exact
-                path="/instructor/:id"
-                component={InstructorProfile}
-              />
-              <Route exact path="/student/:id" component={StudentProfile} />
-              <Route exact path="/profiles" component={Profiles} />
-              <Route exact path="/register" component={CreateAccount} />
-              <PrivateRoute
-                exact
-                path="/student"
-                component={StudentDashboard}
-              />
-            </section>
+            <Fragment>
+              <div className="container">
+                <Route exact path="/courses" component={Courses} />
+                <PrivateRoute
+                  exact
+                  path="/newcourse"
+                  component={CreateCourse}
+                />
+                <PrivateRoute
+                  exact
+                  path="/createinstructorprofile"
+                  component={CreateInstructorProfile}
+                />
+                <PrivateRoute
+                  exact
+                  path="/createstudentprofile"
+                  component={CreateStudentProfile}
+                />
+                <PrivateRoute exact path="/enroll" component={EnrollCourse} />
+                <PrivateRoute
+                  exact
+                  path="/instructor"
+                  component={InstructorDashboard}
+                />
+                <Route
+                  exact
+                  path="/instructor/:id"
+                  component={InstructorProfile}
+                />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/photo" component={Photo} />
+
+                <Route exact path="/student/:id" component={StudentProfile} />
+                <Route exact path="/profiles" component={Profiles} />
+                <Route exact path="/questions" component={Questions} />
+                <Route exact path="/register" component={CreateAccount} />
+                <PrivateRoute
+                  exact
+                  path="/student"
+                  component={StudentDashboard}
+                />
+              </div>
+            </Fragment>
           </Switch>
         </Fragment>
       </Router>

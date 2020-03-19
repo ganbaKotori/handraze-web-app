@@ -38,7 +38,7 @@ export class FileUpload extends Component {
 
   render() {
     return (
-      <div class="container">
+      <div className="container">
         <form onSubmit={this.submitFile}>
           <input
             label="upload file"

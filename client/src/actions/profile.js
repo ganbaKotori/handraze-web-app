@@ -4,7 +4,10 @@ import {
   GET_INSTRUCTOR_PROFILE,
   GET_PROFILE,
   GET_PROFILES,
+  GET_STUDENT_PROFILE,
   CLEAR_PROFILE,
+  CLEAR_INSTRUCTOR_PROFILE,
+  CLEAR_STUDENT_PROFILE,
   GET_ENROLLED_COURSES,
   GET_PROFILE2,
   PROFILE_ERROR,
@@ -106,15 +109,13 @@ export const getInstructorProfileById = userId => async dispatch => {
 
 //Get current users profile
 export const getCurrentInstructorProfile = () => async dispatch => {
-  dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: CLEAR_STUDENT_PROFILE });
   try {
     const res = await axios.get("/api/instructors/me");
 
-    const profile2 = { instructor: res.data };
-
     dispatch({
       type: GET_INSTRUCTOR_PROFILE,
-      payload: profile2
+      payload: res.data
     });
   } catch (error) {
     dispatch({
@@ -125,19 +126,13 @@ export const getCurrentInstructorProfile = () => async dispatch => {
 };
 
 //Get current users profile
-export const getCurrentProfile = () => async dispatch => {
-  dispatch({ type: CLEAR_PROFILE });
+export const getCurrentStudentProfile = () => async dispatch => {
+  dispatch({ type: CLEAR_INSTRUCTOR_PROFILE });
   try {
-    const res = await axios.get("/api/instructors/me");
-
-    const res2 = await axios.get("/api/students/me");
-
-    const profile2 = { instructor: res.data, student: res2.data };
-    //console.log(profile2.student);
-
+    const res = await axios.get("/api/students/me");
     dispatch({
-      type: GET_PROFILE,
-      payload: profile2
+      type: GET_STUDENT_PROFILE,
+      payload: res.data
     });
   } catch (error) {
     dispatch({
@@ -178,7 +173,8 @@ export const createProfile = (
   }
 };
 
-//Create or Update profile
+//@usage  /createinstructorprofile
+//@desc   Use Enrollment Code to gain access to Course
 export const createProfile2 = (
   formData,
   history,
@@ -208,8 +204,8 @@ export const createProfile2 = (
     });
   }
 };
-
-//Login USER
+//@usage  /enroll
+//@desc   Use Enrollment Code to gain access to Course
 export const enrollCourse = (
   { code },
   history,

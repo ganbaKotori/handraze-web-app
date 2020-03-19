@@ -1,5 +1,8 @@
 import {
+  CLEAR_INSTRUCTOR_PROFILE,
+  CLEAR_STUDENT_PROFILE,
   GET_INSTRUCTOR_PROFILE,
+  GET_STUDENT_PROFILE,
   GET_PROFILE,
   GET_PROFILES,
   GET_ENROLLED_COURSES,
@@ -9,6 +12,8 @@ import {
 
 const initialState = {
   profile: null,
+  studentProfile: null,
+  instructorProfile: null,
   profiles: [],
   repos: [],
   enrolledCourses: [],
@@ -26,11 +31,16 @@ export default function(state = initialState, action) {
         profile: payload,
         loading: false
       };
-
+    case GET_STUDENT_PROFILE:
+      return {
+        ...state,
+        studentProfile: payload,
+        loading: false
+      };
     case GET_INSTRUCTOR_PROFILE:
       return {
         ...state,
-        profile: payload,
+        instructorProfile: payload,
         loading: false
       };
     case GET_PROFILES:
@@ -49,8 +59,20 @@ export default function(state = initialState, action) {
     case CLEAR_PROFILE:
       return {
         ...state,
-        profile: null,
+        studentProfile: null,
         loading: false
+      };
+    case CLEAR_STUDENT_PROFILE:
+      return {
+        ...state,
+        studentProfile: null,
+        loading: true
+      };
+    case CLEAR_INSTRUCTOR_PROFILE:
+      return {
+        ...state,
+        instructorProfile: null,
+        loading: true
       };
     case GET_ENROLLED_COURSES:
       return {
