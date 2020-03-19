@@ -23,6 +23,10 @@ import Questions from "./components/layout/Questions";
 import StudentDashboard from "./components/layout/StudentDashboard";
 import StudentProfile from "./components/layout/StudentProfile";
 
+import LectureQuestion from "./components/layout/LectureQuestion";
+import EditInstructor from "./components/layout/EditStudent";
+import EditStudent from "./components/layout/EditStudent";
+
 import "./App.css";
 //Redux
 import { Provider } from "react-redux";
@@ -50,6 +54,7 @@ const App = () => {
             <Fragment>
               <div className="container">
                 <Route exact path="/courses" component={Courses} />
+                <Route exact path="/edit" component={EditStudent} />
                 <PrivateRoute
                   exact
                   path="/newcourse"
