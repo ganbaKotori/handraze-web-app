@@ -19,6 +19,10 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import ProfileCreation from "./components/layout/ProfileCreation";
 import StudentDashboard from "./components/layout/StudentDashboard";
 
+import LectureQuestion from "./components/layout/LectureQuestion";
+import EditInstructor from "./components/layout/EditStudent";
+import EditStudent from "./components/layout/EditStudent";
+
 import "./App.css";
 //Redux
 import { Provider } from "react-redux";
@@ -43,6 +47,7 @@ const App = () => {
           <Switch>
             <Route exact path="/lecture" component={Lecture} />
             <section className="container">
+              <Route exact path="/edit" component={EditStudent} />
               <Route exact path="/courses" component={Courses} />
               <Route exact path="/createcourse" component={Popup} />
 
