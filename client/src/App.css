@@ -6,7 +6,7 @@ body {
 }
 .profpic {
   height: auto;
-  width: auto;
+  width: 100%;
   float: right;
 }
 .modal {
@@ -170,6 +170,43 @@ img {
   transition: opacity 0.2s ease-in;
   outline: none;
 }
+#pdf-container {
+  border: 5px solid red;
+
+  margin: 0 auto;
+  padding: 10px;
+  /* width: 700px; */
+  width: 90%;
+}
+
+.prof-profile {
+  padding-top: 5%;
+}
+.activity-board {
+  max-height: 45vh;
+  overflow: scroll;
+}
+.notes-board {
+  max-height: 30vh;
+  overflow: scroll;
+}
+.top-part {
+  height: 40vh;
+}
+.dashboard {
+  height: 100vh;
+}
+.lectures {
+  margin: 10px;
+  size: auto;
+}
+.btn-margin {
+  margin-top: 10px;
+  padding: 25px;
+}
+.car {
+  margin-top: 25%;
+}
 .prof-profile {
   padding-top: 5%;
 }
@@ -203,7 +240,15 @@ img {
   background: var(--light-color);
   color: #333;
 }
-
+.lectureq {
+  padding: 0.5rem 0.5rem;
+}
+.center-btn {
+  margin-top: 25%;
+}
+.lecture-card {
+  margin: 2% !important;
+}
 .btn-dark,
 .bg-dark,
 .badge-dark,
@@ -550,10 +595,21 @@ button {
   margin-bottom: 0.5rem;
 }
 
+.container {
+  margin-top: 5rem;
+}
+
+.link {
+  color: #fff;
+}
+.link:hover {
+  color: rgb(209, 209, 209);
+  text-decoration: none;
+}
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-    margin-top: 8rem;
+    margin-top: 5rem;
   }
 
   .hide-sm {
@@ -640,11 +696,18 @@ button {
 
 /*START OF NON-BOOTSTRAP CSS------------------------------------*/
 
-.card {
+.login-card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  margin: 5%;
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-right: 20%;
+  margin-left: 20%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 3%;
+  padding-bottom: 3%;
 }
 
 .card:hover {

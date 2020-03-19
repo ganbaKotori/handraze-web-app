@@ -1,27 +1,11 @@
-// FIXME: Can't create a new question in POST using "question": "/question/[question]"
 const express = require('express');
 const router = express.Router();
 const LectureQuestion = require('../models/lecture.model');
 const Question = require('../models/question.model');
 
-// Get all lectureQuestions
-router.get('/', async (req, res) => {
-  try {
-    const lectureQuestions = await LectureQuestion.find();
-    res.json(lectureQuestions);
-  } catch {
-    res.status(500).json({message: err.message});
-  }
-});
-
-// Get a lectureQuestion
-router.get('/:id', getLectureQuestion, (req, res) => {
-  res.json(res.lectureQuestion);
-});
-
-// TODO: Have GET display Question and LectureQuestion info together
-
-// Add LectureQuestion
+// @route   POST api/lecture/add
+// @desc    Create a new lecture question
+// @access  Public
 router.post('/add', async (req, res) => {
   const lectureQuestion = new LectureQuestion({
     question: req.body.question, // in POST - "question": "/question/[question]"
@@ -34,6 +18,27 @@ router.post('/add', async (req, res) => {
     res.status(400).json({message: err.message}); // user input error
   }
 });
+
+// @route   GET api/lecture
+// @desc    Get all lecture questions
+// @access  Public
+router.get('/', async (req, res) => {
+  try {
+    const lectureQuestions = await LectureQuestion.find();
+    res.json(lectureQuestions);
+  } catch {
+    res.status(500).json({message: err.message});
+  }
+});
+
+// @route   GET api/lecture/:id
+// @desc    Get a lecture question by its id
+// @access  Public
+router.get('/:id', getLectureQuestion, (req, res) => {
+  res.json(res.lectureQuestion);
+});
+
+// TODO: Have GET display Question and LectureQuestion info together
 
 //TODO: Add PATCH for lectureQuestion, not sure how to patch both Question and LectureQuestion in one request
 // router.patch('/:id', getLectureQuestion, async (req, res) => { ... }
@@ -50,6 +55,7 @@ router.delete('/delete/:id', getLectureQuestion, async (req, res) => {
 
 //------------------------------------------------------------------------------
 
+// getLectureQuestion module: sorts through lectuer questions to find one by its id
 async function getLectureQuestion(req, res, next) {
   let lectureQuestion
   try {

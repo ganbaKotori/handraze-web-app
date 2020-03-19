@@ -4,53 +4,19 @@ const User = require("../models/user.model");
 const auth = require("../middleware/auth");
 
 //Load Input Validation
-const validateRegisterInput = require("../validation/instructor-validation");
-
-// @route   GET api/instructors/me
-// @desc    Retrieve current instructor profile
-// @access  Private
-router.route("/me").get(auth, async (req, res) => {
-  try {
-    const profile = await await InstructorProfile.findOne({
-      user: req.user.id
-    });
-
-    /*if (!profile) {
-      return res
-        .status(400)
-        .json({ msg: "There is no Instructor Profile for this user" });
-    }*/
-    //profile.populate("user", ["firstName", "lastName"]);
-
-    res.json(profile);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// @route   GET api/instructors
-// @desc    Retrieve all instructors
-// @access  Public
-router.route("/").get((req, res) => {
-  InstructorProfile.find()
-    .then(instructors => res.json(instructors))
-    .catch(err => res.status(400).json("Error: " + err));
-});
+const validateInstructorInput = require("../validation/instructor-validation");
 
 // @route   POST api/instructors
 // @desc    Create instructor profile
 // @access  Public
 router.route("/").post([auth], async (req, res) => {
-  //const { errors, isValid } = validateRegisterInput(req.body);
-
-  /*if (!isValid) {
+  const { errors, isValid } = validateInstructorInput(req.body);
+  if (!isValid) {
     return res.status(400).json(errors);
-  }*/
-
+  }
   const profileFields = {};
-
   profileFields.department = req.body.department;
+  profileFields.institution = req.body.institution;
   profileFields.user = req.user.id;
 
   const newInstructorProfile = new InstructorProfile(profileFields);
@@ -61,20 +27,70 @@ router.route("/").post([auth], async (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// @route   GET api/:id
-// @desc    Retrieve instructor profile
+// @route   GET api/instructors/me
+// @desc    Retrieve current instructor profile
+// @access  Private
+router.route("/me").get(auth, async (req, res) => {
+  try {
+    const profile = await InstructorProfile.findOne({
+      user: req.user.id
+    })
+      .populate("user", ["firstName", "lastName"])
+      .populate("course", ["title", "description", "code"]);
+
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ msg: "There is no Instructor Profile for this user" });
+    }
+    res.json(profile);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send(error);
+  }
+});
+
+// @route   GET api/instructors
+// @desc    Get all instructors
+// @access  Public
+router.route("/").get((req, res) => {
+  InstructorProfile.find()
+    .populate("user", ["firstName", "lastName"])
+    .then(instructors => res.json(instructors))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
+// @route   GET api/instructors/:id
+// @desc    Get an instructor by its id
 // @access  Public
 router.get("/:id", getInstructor, (req, res) => {
   res.json(res.instructor);
 });
 
+// @route   GET api/instructor/user/:user_id
+// @desc    Retrieve instructor profile by user ID
+// @access  Public
+router.route("/user/:user_id").get(async (req, res) => {
+  try {
+    const instructorProfiles = await InstructorProfile.findOne({
+      user: req.params.user_id
+    })
+      .populate("user", ["firstName", "lastName"])
+      .populate("course", ["title", "description"]);
+    console.log(instructorProfiles);
+    res.json(instructorProfiles);
+  } catch (error) {
+    res.status(400).json("Error: " + error);
+  }
+});
+
 //TODO: Add PATCH for instructor, not sure how to patch both User and Instructor in one request
 // router.patch('/:id', getInstructor, async (req, res) => { ... }
 
-// @route   GET api/:id
-// @desc    Delete instructor profile
+// @route   DELETE api/instructors/delete/:id
+// @desc    Delete an instructor by its id
 // @access  Public
-router.delete("/:id", getInstructor, async (req, res) => {
+router.delete("/delete/:id", getInstructor, async (req, res) => {
   try {
     await res.instructor.remove();
     res.json({ message: "Successfully deleted instructor!" }); // good
@@ -84,7 +100,8 @@ router.delete("/:id", getInstructor, async (req, res) => {
 });
 
 //------------------------------------------------------------------------------
-//function to get instructor
+
+// getInstructor module: sorts through instructors to find one by its id
 async function getInstructor(req, res, next) {
   let instructor;
   try {

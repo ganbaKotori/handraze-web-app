@@ -2,21 +2,26 @@ import axios from "axios";
 import React, { Component } from "react";
 
 export class FileUpload extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      file: null
+      file: null,
+      user: ""
     };
   }
 
   submitFile = event => {
     event.preventDefault();
     const formData = new FormData();
+    formData.text = this.state.user;
+
     formData.append("file", this.state.file[0]);
+    console.log(formData);
     axios
       .post(`/api/upload/file-upload`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
+          user: this.props.user
         }
       })
       .then(response => {
@@ -33,7 +38,7 @@ export class FileUpload extends Component {
 
   render() {
     return (
-      <div class="container">
+      <div className="container">
         <form onSubmit={this.submitFile}>
           <input
             label="upload file"
