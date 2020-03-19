@@ -5,10 +5,6 @@ import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 export class CreateCourseModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      file: null,
-      user: "test"
-    };
   }
 
   render() {
@@ -69,7 +65,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Mon
+                  Monday
                 </label>
                 <input
                   type="checkbox"
@@ -77,7 +73,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Tues
+                  Tuesday
                 </label>
                 <input
                   type="checkbox"
@@ -85,7 +81,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Wed
+                  Wednesday
                 </label>
                 <input
                   type="checkbox"
@@ -93,7 +89,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Thur
+                  Thursday
                 </label>
                 <input
                   type="checkbox"
@@ -101,7 +97,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Fri
+                  Friday
                 </label>
                 <input
                   type="checkbox"
@@ -109,7 +105,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Sat
+                  Saturday
                 </label>
                 <input
                   type="checkbox"
@@ -117,7 +113,7 @@ export class CreateCourseModal extends Component {
                   id="tosCheck"
                 />
                 <label className="form-check-label" for="tosCheck">
-                  Sun
+                  Sunday
                 </label>
                 <input
                   type="checkbox"

@@ -21,6 +21,11 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import Profiles from "./components/layout/Profiles";
 import Questions from "./components/layout/Questions";
 import StudentDashboard from "./components/layout/StudentDashboard";
+import ThreadDisplay from "./components/layout/ThreadDisplay";
+import Post from "./components/layout/Post";
+import PostEditor from "./components/layout/PostEditor";
+import DiscussionBoard from "./components/layout/Discussion";
+
 import StudentProfile from "./components/layout/StudentProfile";
 
 import LectureQuestion from "./components/layout/LectureQuestion";
