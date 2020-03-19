@@ -5,27 +5,34 @@ const Schema = mongoose.Schema;
 const discussionSchema = new Schema(
   {
     question: {
-      type: Schema.Types.ObjectID,
-      required: true,
-      ref: "Question"
-        },
-
-    description: {
-       type: String,
-       required: false,
+      type: String,
+      required: true
     },
 
-    answer: [{
-      type: Schema.Types.ObjectID,
-      required: false,
-      ref: "Answer"
-    }],
+    description: {
+      type: String,
+      required: false
+    },
+
+    answer: [
+      {
+        user: {
+          type: Schema.Types.ObjectID,
+          required: true,
+          ref: "User"
+        },
+        text: { type: String, required: false },
+        name: {
+          type: String,
+          required: true
+        }
+      }
+    ],
 
     dateSubmitted: {
-            type: Date,
-            default: Date.now
+      type: Date,
+      default: Date.now
     }
-
   },
 
   {
