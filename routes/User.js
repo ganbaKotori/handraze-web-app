@@ -3,67 +3,12 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { sendWelcomeEmail } = require("../emails/account");
 require("dotenv").config();
-
+//Importing Models
 const User = require("../models/user.model");
 const Student = require("../models/student.model");
 const Instructor = require("../models/instructor.model");
-
 //Load Input Validation
 const validateRegisterInput = require("../validation/user-validation");
-
-// @route   POST api/users/
-// @desc    Register user
-// @access  Public
-router.route("/").post(async (req, res) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const password = req.body.password;
-  try {
-    let user = await User.findOne({ email });
-
-    if (user) {
-      return res
-        .status(400)
-        .json({ errors: [{ message: "User with email already exists!" }] });
-    }
-
-    const { errors, isValid } = validateRegisterInput(req.body);
-
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
-    const newUser = new User({
-      email,
-      password,
-      lastName,
-      firstName
-    });
-
-    await newUser.save();
-
-    //----- JWT -----
-    const payload = {
-      user: {
-        id: newUser._id
-      }
-    };
-
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: 360000 }, // optional but recommended
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send(err.message);
-  }
-});
 
 // @route   GET api/users/
 // @desc    Get list of users
@@ -74,7 +19,60 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// @route   POST api/users/login
+// @route   POST api/users/register
+// @desc    Register user and send welcome email
+// @access  Public
+router.route("/register").post(async (req, res) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const password = req.body.password;
+  const avatar = req.body.avatar; // avatar image url
+  //check user input for invalidation
+  const { errors, isValid } = validateRegisterInput(req.body);
+  //if user input is invalid, return with error message
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  try {
+    let user = await User.findOne({ email });
+    //if email is already taken in db, then return with error message
+    if (user) {
+      return res.status(400).json({ email: "User already exists!" });
+    }
+    const newUser = new User({
+      email,
+      password,
+      lastName,
+      firstName,
+      avatar
+    });
+    await newUser.save(); //store new user into database
+    //sendWelcomeEmail(newUser.email, newUser.firstName);
+
+    // Send a default welcome email when user is registered
+    //sendWelcomeEmail(newUser.email, newUser.userName, newUser.firstName, newUser.lastName, newUser.password);
+    // Send a new JWT when a user is registered
+    const payload = {
+      user: {
+        id: newUser._id
+      }
+    };
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: 360000 }, // optional but recommended
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// @route   POST api/user/login
 // @desc    Register user
 // @access  Public
 router.route("/login").post((req, res, next) => {
@@ -93,60 +91,8 @@ router.route("/login").post((req, res, next) => {
   });
 });
 
-// @route   POST api/users/register
-// @desc    Register user
-// @access  Public
-router.route("/register").post(async (req, res) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const password = req.body.password;
-
-  try {
-    let user = await User.findOne({ email });
-
-    if (user) {
-      return res
-        .status(400)
-        .json({ errors: [{ message: "User already exists!" }] });
-    }
-
-    const newUser = new User({
-      email,
-      password,
-      lastName,
-      firstName
-    });
-
-    await newUser.save();
-
-    // Send a default welcome email when user is registered
-    sendWelcomeEmail(newUser.email, newUser.userName, newUser.firstName, newUser.lastName, newUser.password);
-
-    // Send a new JWT when a user is registered
-    const payload = {
-      user: {
-        id: newUser._id
-      }
-    };
-
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: 360000 }, // optional but recommended
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
-
-// @route   GET api/users/:id
-// @desc    find user
+// @route   GET API/Users/:id
+// @desc    Find user
 // @access  Public
 router.get("/:id", (req, res) => {
   User.findById(req.params.id)
@@ -154,7 +100,8 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// @route   DELETE api/users/delete/:id
+// ---- FIXME: Not deleting users ---- //
+// @route   DELETE API/Users/Delete
 // @desc    find and delete user
 // @access  Public
 router.delete("/delete/:id", async (req, res) => {
@@ -189,7 +136,6 @@ router.post("/update/:id", (req, res) => {
   User.findById(res.params.id)
     .then(user => {
       user.email = req.body.email;
-
       user
         .save()
         .then(() => res.json({ message: "User updated!" }))
@@ -198,8 +144,24 @@ router.post("/update/:id", (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// Patch updates one thing, put updates everything 
-  
+// @route   POST api/users/update-avatar/:id
+// @desc    Update a user's profile avatar
+// @access  Public
+router.post("/update-avatar/:id", getUser, async (req, res) => {
+  if (req.body.avatar != null) {
+    // if user enters data to change avatar
+    res.user.avatar = req.body.avatar; // change the avatar
+    // Check if image exists in s3
+  }
+
+  try {
+    const upatedUser = await res.user.save(); // give updated version
+    res.json(upatedUser);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 /* TODO: MERGE WITH UPPER CODE
 // @route   PATCH api/users/multi-update/:id
 // @desc    Update a single item for a user

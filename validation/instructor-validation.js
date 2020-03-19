@@ -6,12 +6,13 @@ module.exports = function validateRegisterInput(data) {
 
   data.id = !isEmpty(data.id) ? data.id : "";
   data.department = !isEmpty(data.department) ? data.department : "";
-
-  if (Validator.isEmpty(data.id)) {
-    errors.id = "ID is required";
-  }
+  data.institution = !isEmpty(data.institution) ? data.institution : "";
 
   if (Validator.isEmpty(data.department)) {
+    errors.department = "Department is required";
+  }
+
+  if (Validator.isEmpty(data.institution)) {
     errors.department = "Department is required";
   }
 

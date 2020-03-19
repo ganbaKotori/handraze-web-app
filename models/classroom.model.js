@@ -31,7 +31,13 @@ const classroomSchema = new Schema(
     sessionEnd: {
       type: Date,
       default: Date.now
-    }
+    },
+    ratings: [
+      {
+      type: Number,
+      required: false
+      }
+    ]
   },
   {
     timestamps: true

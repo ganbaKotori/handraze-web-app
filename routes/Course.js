@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let Course = require("../models/course.model");
 let Student = require("../models/student.model");
+let Instructor = require("../models/instructor.model");
 
 //Load Input Validation
 const validateCourseInput = require("../validation/course-validation");
@@ -8,7 +9,8 @@ const validateCourseInput = require("../validation/course-validation");
 // @route   POST api/courses
 // @desc    Create a course
 // @access  Public
-router.route("/").post((req, res) => {
+router.route("/").post(async (req, res) => {
+  const instructor = req.body.instructor;
   const title = req.body.title;
   const description = req.body.description;
   const dayOfWeek = req.body.dayOfWeek;
@@ -17,11 +19,11 @@ router.route("/").post((req, res) => {
   const sectionNumber = req.body.sectionNumber;
   const classDuration = req.body.classDuration;
 
-  const { errors, isValid } = validateCourseInput(req.body);
+  // const { errors, isValid } = validateCourseInput(req.body);
 
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
+  //if (!isValid) {
+  // return res.status(400).json(errors);
+  //}
   var code = "";
   var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var charactersLength = characters.length;
@@ -30,6 +32,7 @@ router.route("/").post((req, res) => {
   }
 
   const newCourse = new Course({
+    instructor,
     title,
     description,
     dayOfWeek,
@@ -41,15 +44,31 @@ router.route("/").post((req, res) => {
   });
   newCourse
     .save()
-    .then(result => res.json(result))
+    .then(async result => {
+      try {
+        console.log(newCourse._id);
+        const instructorProfile = await Instructor.findOne({
+          _id: req.body.instructor
+        });
+        instructorProfile.course.unshift(newCourse._id);
+        await instructorProfile.save().then(result => {
+          console.log(result);
+          console.log("course added to instructor profile");
+          console.log("course added!");
+        });
+        //res.json(instructorProfile);
+        res.json(result);
+      } catch (error) {
+        res.json(error.message);
+      }
+    })
     .catch(err => res.status(400).json("Error: " + err));
 });
-
 
 // @route   GET api/courses/:id
 // @desc    Get a course by its id
 // @access  Public
-router.get('/:id', getCourse, (req, res) => {
+router.get("/:id", getCourse, (req, res) => {
   res.json(res.course);
 });
 
@@ -69,8 +88,8 @@ router.route("/").get((req, res) => {
 // @route   DELETE api/courses/:id
 // @desc    Delete a course by its id
 // @access  Public
-router.delete('/delete/:id', getCourse, async (req, res) => {
-  try{
+router.delete("/delete/:id", getCourse, async (req, res) => {
+  try {
     await res.course.remove();
     res.json({ message: "Successfully deleted course!" }); // good
   } catch (err) {
@@ -78,34 +97,24 @@ router.delete('/delete/:id', getCourse, async (req, res) => {
   }
 
   // TODO: Delete course from students' list of courses
-
 });
 
 // @route   POST api/courses/student/:studentid
 // @desc    Add a student to a course by the student id
 // @access  Public
-router.post("/student/:id", (req, res) => {
-  Course.findOne({ _id: req.body.cid }).then(course => {
-    Student.count({ _id: req.body.id }, function(err, count) {
-      if (count > 0) {
-        course.students.unshift(req.body.id);
-        course
-          .save() // saves student to course
-          .then(course => res.json(course))
-          .catch(err => res.status(400).json("Error: " + err));
-
-      // TODO: Need to also save the course to the student
-
-      } else {
-        console.log("Student not found!");
-        res.status(400).json("Error: " + err);
-      }
+router.put("/student/:id", async (req, res) => {
+  try {
+    const course = await Course.findOne({ _id: req.params.id });
+    await Student.findOne({ _id: req.body.student }).then(student => {
+      course.students.unshift(student._id);
+      course.save();
+      res.json(course);
     });
-  });
+  } catch (error) {
+    res.status(400).json("Error adding student: " + error);
+  }
 });
-
 //------------------------------------------------------------------------------
-
 // getCourse module: sorts through courses to find on by its id
 async function getCourse(req, res, next) {
   let course;
