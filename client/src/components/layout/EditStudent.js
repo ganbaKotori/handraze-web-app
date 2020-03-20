@@ -67,4 +67,4 @@ const EditStudent = () => {
   );
 };
 
-export default EditIntructor;
+export default EditStudent;

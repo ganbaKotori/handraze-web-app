@@ -25,6 +25,10 @@ const discussionSchema = new Schema(
         name: {
           type: String,
           required: true
+        },
+        dateSubmitted: {
+          type: Date,
+          default: Date.now
         }
       }
     ],
