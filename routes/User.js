@@ -1,63 +1,55 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const { sendWelcomeEmail } = require("../emails/account");
+const sender = require("../services/mailer");
 require("dotenv").config();
-//Importing Models
+
 const User = require("../models/user.model");
 const Student = require("../models/student.model");
 const Instructor = require("../models/instructor.model");
+
 //Load Input Validation
 const validateRegisterInput = require("../validation/user-validation");
 
-// @route   GET api/users/
-// @desc    Get list of users
+// @route   POST api/users/
+// @desc    Register user
 // @access  Public
-router.route("/").get((req, res) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json("Error: " + err));
-});
-
-// @route   POST api/users/register
-// @desc    Register user and send welcome email
-// @access  Public
-router.route("/register").post(async (req, res) => {
+router.route("/").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-  const avatar = req.body.avatar; // avatar image url
-  //check user input for invalidation
-  const { errors, isValid } = validateRegisterInput(req.body);
-  //if user input is invalid, return with error message
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
   try {
     let user = await User.findOne({ email });
-    //if email is already taken in db, then return with error message
+
     if (user) {
-      return res.status(400).json({ email: "User already exists!" });
+      return res
+        .status(400)
+        .json({ errors: [{ message: "User with email already exists!" }] });
     }
+
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     const newUser = new User({
       email,
       password,
       lastName,
-      firstName,
-      avatar
+      firstName
     });
-    await newUser.save(); //store new user into database
-    //sendWelcomeEmail(newUser.email, newUser.firstName);
 
-    // Send a default welcome email when user is registered
-    //sendWelcomeEmail(newUser.email, newUser.userName, newUser.firstName, newUser.lastName, newUser.password);
-    // Send a new JWT when a user is registered
+    await newUser.save();
+
+    //----- JWT -----
     const payload = {
       user: {
         id: newUser._id
       }
     };
+
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
@@ -68,12 +60,85 @@ router.route("/register").post(async (req, res) => {
       }
     );
   } catch (err) {
+    console.error(err.message);
     res.status(500).send(err.message);
   }
 });
 
-// @route   POST api/user/login
+// @route   GET api/users/
+// @desc    Get list of users
+// @access  Public
+router.route("/").get((req, res) => {
+  User.find()
+    .then(users => res.json(users))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
+// @route   POST API/Users/Register
 // @desc    Register user
+// @access  Public
+router.route("/register").post(async (req, res) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const password = req.body.password;
+  const avatar = req.body.avatar; // avatar image url
+
+  try {
+    let user = await User.findOne({ email });
+
+    if (user) {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "User already exists!" }] });
+    }
+
+    const newUser = new User({
+      email,
+      password,
+      lastName,
+      firstName,
+      avatar
+    });
+
+    await newUser.save();
+
+    // Send an email to new user registered
+    const data = {
+      templateName: "welcome",
+      email: newUser.email,
+      userName: newUser.userName,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      password: newUser.password
+    };
+
+    sender.sendEmail(data);
+
+    // Send a new JWT when a user is registered
+    const payload = {
+      user: {
+        id: newUser._id
+      }
+    };
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: 360000 }, // optional but recommended
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   POST api/user/login
+// @desc    Register user and send welcome email
 // @access  Public
 router.route("/login").post((req, res, next) => {
   User.authenticate(req.body.logemail, req.body.logpassword, function(
@@ -100,33 +165,26 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// ---- FIXME: Not deleting users ---- //
 // @route   DELETE API/Users/Delete
 // @desc    find and delete user
 // @access  Public
-router.delete("/delete/:id", async (req, res) => {
-  try {
-    Student.count({ user: req.body.id }, async function(err, count) {
-      if (count > 0) {
-        console.log("Student found!");
-        await Student.deleteOne({ user: req.body.id })
-          .then(user => console.log("Student profile deleted!"))
-          .catch(err => console.log("Student not found!: " + err));
-      }
-    });
-    Instructor.count({ user: req.body.id }, async function(err, count) {
-      if (count > 0) {
-        console.log("Instrcutor found!");
-        await Instructor.deleteOne({ user: req.body.id })
-          .then(user => console.log("Instructor profile deleted!"))
-          .catch(err => console.log("Instructor not found!: " + err));
-      }
-    });
-    await User.findOneAndDelete({ _id: req.body.id });
-    res.json({ message: "User deleted!" });
-  } catch (err) {
-    res.status(500).send("Error: " + err);
-  }
+router.delete("/delete/:id", getUser, async (req, res) => {
+  /* I changed the whole request, it wasn't deleting users at all and kept giving
+   * me warnings for using collection.count (deprecated). I haven't tested it for
+   * users that are both instuctors and students though.
+   * - Skylar
+   */
+  const user = res.user;
+
+  const student = Student.deleteOne({_id: user.id});
+  const instructor = Instructor.deleteOne({_id: user.id});
+  const root = User.deleteOne({_id: user.id});
+
+  Promise.all([student, instructor, root]).then(() => {
+    res.status(200).json({message: 'User deleted!'});
+  }).catch(err => {
+    res.status(500).json("Error: " + err);
+  });
 });
 
 // @route   POST api/users/update/:id
@@ -136,6 +194,7 @@ router.post("/update/:id", (req, res) => {
   User.findById(res.params.id)
     .then(user => {
       user.email = req.body.email;
+
       user
         .save()
         .then(() => res.json({ message: "User updated!" }))
@@ -151,6 +210,7 @@ router.post("/update-avatar/:id", getUser, async (req, res) => {
   if (req.body.avatar != null) {
     // if user enters data to change avatar
     res.user.avatar = req.body.avatar; // change the avatar
+
     // Check if image exists in s3
   }
 
