@@ -67,7 +67,6 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         <Link to="/">
           <img src={handraze} className="logo" alt="student" />
         </Link>
-        {profile}
 
         {!loading && (
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>

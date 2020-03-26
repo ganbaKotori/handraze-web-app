@@ -9,11 +9,11 @@ const courseSchema = new Schema(
       required: true,
       ref: "Instructor"
     },
-    question: [
+    discussion: [
       {
         type: Schema.Types.ObjectID,
         required: false,
-        ref: "Question"
+        ref: "discussion"
       }
     ],
     students: [
@@ -36,27 +36,28 @@ const courseSchema = new Schema(
       maxlength: 50,
       required: true
     },
-    classStart: {
-      type: Date,
-      default: Date.now
+    classEnd: {
+      type: String,
+      required: true
     },
+    classStart: {
+      type: String,
+      required: true
+    },
+
     dayOfWeek: [
       {
         type: String,
         required: true
       }
     ],
-    classDuration: {
-      type: String,
-      required: true
-    },
     location: {
       type: String,
       required: true
     },
     sectionNumber: {
       type: String,
-      required: true
+      required: false
     }
   },
   {

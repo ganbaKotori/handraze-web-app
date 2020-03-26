@@ -15,6 +15,9 @@ const Dashboard = ({
     getCurrentStudentProfile();
   }, []);
   console.log(studentProfile);
+  {
+    document.title = "Student";
+  }
   return loading ? (
     <div>
       <Fragment>

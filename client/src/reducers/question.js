@@ -1,4 +1,4 @@
-import { GET_QUESTIONS, QUESTION_ERROR } from "../actions/types";
+import { GET_QUESTION, GET_QUESTIONS, QUESTION_ERROR } from "../actions/types";
 
 const initialState = {
   questions: [],
@@ -14,7 +14,13 @@ export default function(state = initialState, action) {
     case GET_QUESTIONS:
       return {
         ...state,
-        posts: payload,
+        questions: payload,
+        loading: false
+      };
+    case GET_QUESTION:
+      return {
+        ...state,
+        question: payload,
         loading: false
       };
     case QUESTION_ERROR:

@@ -7,8 +7,8 @@ module.exports = function validateRegisterInput(data) {
   data.title = !isEmpty(data.title) ? data.title : "";
   data.description = !isEmpty(data.description) ? data.description : "";
   data.classStart = !isEmpty(data.classStart) ? data.classStart : "";
+  data.classEnd = !isEmpty(data.classEnd) ? data.classEnd : "";
   //data.dayOfWeek = !isEmpty(data.dayOfWeek) ? data.dayOfWeek : "";
-  data.classDuration = !isEmpty(data.classDuration) ? data.classDuration : "";
   data.location = !isEmpty(data.location) ? data.location : "";
   data.sectionNumber = !isEmpty(data.sectionNumber) ? data.sectionNumber : "";
   var week = [
@@ -33,6 +33,10 @@ module.exports = function validateRegisterInput(data) {
     errors.classStart = "Class start is required";
   }
 
+  if (Validator.isEmpty(data.classEnd)) {
+    errors.classStart = "Class end is required";
+  }
+
   if (!data.dayOfWeek.some(r => week.indexOf(r) >= 0)) {
     errors.weekDay = "Incorrect day of the week";
   }
@@ -41,24 +45,12 @@ module.exports = function validateRegisterInput(data) {
   //  errors.weekDay = "Day of the week is required";
   //}
 
-  if (isNaN(data.classDuration)) {
-    errors.classDuration = "Class duration must be a number";
-  }
-
-  if (Validator.isEmpty(data.classDuration)) {
-    errors.classDuration = "Class Duration is required";
-  }
-
   if (Validator.isEmpty(data.location)) {
     errors.location = "Location is required";
   }
 
   if (isNaN(data.sectionNumber)) {
     errors.sectionNumber = "Section number must be a number";
-  }
-
-  if (Validator.isEmpty(data.sectionNumber)) {
-    errors.sectionNumber = "Section number is required";
   }
 
   return {

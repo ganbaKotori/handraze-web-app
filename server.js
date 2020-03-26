@@ -61,7 +61,7 @@ app.get("/", (req, res) => {
   res.send("Handraze Backend Server");
 });
 
-port = 3000; // go to http://localhost:3000
+port = process.env.PORT || 3000; // go to http://localhost:3000
 var server = app.listen(port, function() {
   console.log(`Handraze Express Server listening on port ${port}`);
 });

@@ -2,26 +2,40 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import student from "../../img/handrazelogow.png";
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to="/student" />;
   }
+  {
+    document.title = "Handraze";
+  }
   return (
     <section className="landing">
       <div className="dark-overlay">
         <div className="landing-inner">
+          <div className="landing-logo">
+            <img src={student} alt="student" />
+          </div>
+
           <h1 className="x-large">one hand can do so much</h1>
+          <p className="medium">
+            <b>
+              Developed by Alexander Ramirez, David Garza, Diego Gonzalez, Luis
+              Rodriguez, and Skylar Fido
+            </b>
+          </p>
           <p className="lead"></p>
           <div className="buttons">
-            <a href="register.html" className="btn btn-primary">
-              About
+            <a
+              href="https://github.com/ganbaKotori/handraze-web-app"
+              className="btn btn-primary"
+            >
+              GitHub
             </a>
-            <a href="login.html" className="btn btn-danger">
-              Get Started
-            </a>
-            <a href="login.html" className="btn btn-dark">
-              User's Guide
+            <a href="http://docs.handraze.org" className="btn btn-dark">
+              Documents
             </a>
           </div>
         </div>

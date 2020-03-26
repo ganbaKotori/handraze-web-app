@@ -27,9 +27,9 @@ export const createCourse = (
     description,
     dayOfWeek,
     classStart,
+    classEnd,
     location,
-    sectionNumber,
-    classDuration
+    sectionNumber
   },
   history,
   edit = false
@@ -53,9 +53,9 @@ export const createCourse = (
     description,
     dayOfWeek,
     classStart,
+    classEnd,
     location,
-    sectionNumber,
-    classDuration
+    sectionNumber
   });
 
   try {

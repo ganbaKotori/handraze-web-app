@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Courses from "./components/layout/Courses";
-import Course from "./components/layout/Course";
+import Course from "./components/layout/Course/Course";
 import CreateAccount from "./components/layout/CreateAccount";
 import CreateCourse from "./components/layout/CreateCourse";
 import InstructorDashboard from "./components/layout/InstructorDashboard";
@@ -16,6 +16,7 @@ import Lecture from "./components/layout/Lecture";
 import LoggedOut from "./components/layout/LoggedOut";
 import Login from "./components/layout/Login";
 import Navbar from "./components/layout/Navbar";
+import NewQuestion from "./components/layout/Course/NewQuestion";
 import Photo from "./components/layout/Photo";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Profiles from "./components/layout/Profiles";
@@ -28,7 +29,7 @@ import DiscussionBoard from "./components/layout/Discussion";
 
 import StudentProfile from "./components/layout/StudentProfile";
 
-import LectureQuestion from "./components/layout/LectureQuestion";
+import DiscussionQuestionPage from "./components/layout/Course/DiscussionQuestionPage";
 import EditInstructor from "./components/layout/EditStudent";
 import EditStudent from "./components/layout/EditStudent";
 
@@ -88,7 +89,12 @@ const App = () => {
                 />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/photo" component={Photo} />
-
+                <Route
+                  exact
+                  path="/question/:id"
+                  component={DiscussionQuestionPage}
+                />
+                <Route exact path="/new-question/:id" component={NewQuestion} />
                 <Route exact path="/student/:id" component={StudentProfile} />
                 <Route exact path="/profiles" component={Profiles} />
                 <Route exact path="/questions" component={Questions} />

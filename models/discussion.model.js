@@ -13,6 +13,10 @@ const discussionSchema = new Schema(
       type: String,
       required: false
     },
+    name: {
+      type: String,
+      required: false
+    },
 
     answer: [
       {
@@ -44,6 +48,6 @@ const discussionSchema = new Schema(
   }
 );
 
-const Discussion = mongoose.model("Discussion", discussionSchema);
+const Discussion = mongoose.model("discussion", discussionSchema);
 
 module.exports = Discussion;

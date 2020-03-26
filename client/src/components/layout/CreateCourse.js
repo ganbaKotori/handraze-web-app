@@ -10,38 +10,61 @@ const CreateCourse = ({ createCourse, history }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    dayOfWeek: "",
     classStart: "",
+    classEnd: "",
     location: "",
-    sectionNumber: "",
-    classDuration: ""
+    sectionNumber: ""
+  });
+
+  const [formData2, setFormData2] = useState({
+    dayOfWeek: []
   });
 
   const {
     title,
     description,
-    dayOfWeek,
     classStart,
+    classEnd,
     location,
-    sectionNumber,
-    classDuration
+    sectionNumber
   } = formData;
 
-  const onChange = e =>
+  const { dayOfWeek } = formData2;
+
+  const onClick = e => {
+    let index;
+
+    // check if the check box is checked or unchecked
+    if (e.target.checked) {
+      // add the numerical value of the checkbox to options array
+      dayOfWeek.push(e.target.value);
+    } else {
+      // or remove the value from the unchecked checkbox from the array
+      index = dayOfWeek.indexOf(+e.target.value);
+      dayOfWeek.splice(index, 1);
+    }
+    setFormData2({ ...formData2, [e.target.checked]: e.target.value });
+  };
+
+  const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const onSubmit = async e => {
     e.preventDefault();
     {
+      console.log(dayOfWeek);
+      console.log(formData);
+      console.log(classEnd);
       createCourse(
         {
+          classEnd,
           title,
           description,
           dayOfWeek,
           classStart,
           location,
-          sectionNumber,
-          classDuration
+          sectionNumber
         },
         history
       );
@@ -64,7 +87,7 @@ const CreateCourse = ({ createCourse, history }) => {
               name="title"
               value={title}
               onChange={e => onChange(e)}
-              placeholder="Enter first name"
+              placeholder="name of course"
               required
             />
           </div>
@@ -78,34 +101,119 @@ const CreateCourse = ({ createCourse, history }) => {
               name="description"
               value={description}
               onChange={e => onChange(e)}
-              placeholder="Enter last name"
+              placeholder="brief description of course"
               required
               rows="3"
             ></textarea>
           </div>
           <div className="form-group">
             <label for="email">Day of Week</label>
-            <input
-              type="text"
-              className="form-control"
-              id="dayOfWeek"
-              aria-describedby="emailHelp"
-              name="dayOfWeek"
-              value={dayOfWeek}
-              onChange={e => onChange(e)}
-              placeholder="Enter email"
-              required
-            />
+            <br />
+            <br />
+            <table>
+              <tr>
+                <td className="dayOfWeek">
+                  {" "}
+                  <div className="input-group ">
+                    <input
+                      type="checkbox"
+                      value={"Monday"}
+                      onClick={e => onClick(e)}
+                    />
+                    <label>Monday</label>
+                  </div>
+                </td>
+                <td className="dayOfWeek">
+                  {" "}
+                  <div className="input-group">
+                    <input
+                      type="checkbox"
+                      value={"Tuesday"}
+                      onClick={e => onClick(e)}
+                    />
+                    <label>Tuesday</label>
+                  </div>
+                </td>
+                <td className="dayOfWeek">
+                  {" "}
+                  <div className="input-group">
+                    <input
+                      type="checkbox"
+                      value={"Wednesday"}
+                      onClick={e => onClick(e)}
+                    />
+                    <label>Wednesday</label>
+                  </div>
+                </td>
+                <td className="dayOfWeek">
+                  {" "}
+                  <div className="input-group">
+                    <input
+                      type="checkbox"
+                      value={"Thursday"}
+                      onClick={e => onClick(e)}
+                    />
+                    <label>Thursday</label>
+                  </div>
+                </td>
+                <td className="dayOfWeek">
+                  {" "}
+                  <div className="input-group">
+                    <input
+                      type="checkbox"
+                      value={"Friday"}
+                      onClick={e => onClick(e)}
+                    />
+                    <label>Friday</label>
+                  </div>
+                </td>
+                <td className="dayOfWeek">
+                  {"  "}
+                  <div className="input-group">
+                    <input
+                      type="checkbox"
+                      value={"Saturday"}
+                      onClick={e => onClick(e)}
+                    />
+                    <label> Saturday </label>
+                  </div>
+                </td>
+                <td className="dayOfWeek">
+                  {" "}
+                  <div className="input-group">
+                    <input
+                      type="checkbox"
+                      value={"Sunday"}
+                      onClick={e => onClick(e)}
+                    />
+                    <label>Sunday</label>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <br />
           </div>
           <div className="form-group">
-            <label for="password">Class Start</label>
+            <label for="password">What time does the class start?</label>
             <input
               type="text"
               className="form-control"
               id="classStart"
-              placeholder="Password"
+              placeholder="example: 8:30 AM"
               name="classStart"
               value={classStart}
+              onChange={e => onChange(e)}
+            />
+          </div>
+          <div className="form-group">
+            <label for="password">What time does the class end?</label>
+            <input
+              type="text"
+              className="form-control"
+              id="classEnd"
+              placeholder="example: 8:30 AM"
+              name="classEnd"
+              value={classEnd}
               onChange={e => onChange(e)}
             />
           </div>
@@ -115,7 +223,7 @@ const CreateCourse = ({ createCourse, history }) => {
               type="text"
               className="form-control"
               id="location"
-              placeholder="Password"
+              placeholder="building, room number, etc."
               name="location"
               value={location}
               onChange={e => onChange(e)}
@@ -127,21 +235,9 @@ const CreateCourse = ({ createCourse, history }) => {
               type="text"
               className="form-control"
               id="sectionNumber"
-              placeholder="Password"
+              placeholder="optional"
               name="sectionNumber"
               value={sectionNumber}
-              onChange={e => onChange(e)}
-            />
-          </div>
-          <div className="form-group">
-            <label for="password">Class Duration</label>
-            <input
-              type="text"
-              className="form-control"
-              id="classDuration"
-              placeholder="Password"
-              name="classDuration"
-              value={classDuration}
               onChange={e => onChange(e)}
             />
           </div>

@@ -70,7 +70,7 @@ const CreateStudentProfile = ({ createProfile2, history }) => {
             className="form-control"
             id="institution"
             aria-describedby="emailHelp"
-            placeholder="Enter your Department"
+            placeholder="Where do you attend school?"
             name="institution"
             value={institution}
             onChange={e => onChange(e)}
@@ -80,7 +80,6 @@ const CreateStudentProfile = ({ createProfile2, history }) => {
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
-        <Link to="/student">Go to Student Profile</Link>
       </form>
     </Fragment>
   );

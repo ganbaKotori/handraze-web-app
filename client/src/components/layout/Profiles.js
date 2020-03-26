@@ -21,6 +21,9 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
     //console.log(res.data[x]);
     newArray2.push(profiles[1][x]);
   }
+  {
+    document.title = "Profiles";
+  }
   console.log(newArray);
   return (
     <Fragment>
