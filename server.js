@@ -46,7 +46,8 @@ app.use("/api/upload", fileRouter);
 app.use(express.json());
 
 // CONNECT TO MONGODB
-const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
+const uri = "mongodb://alex:alex123@ds235378.mlab.com:35378/handraze-beta";
+
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
