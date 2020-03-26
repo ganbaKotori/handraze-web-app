@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const path = require("path");
 require("dotenv").config();
 
 // DEFINE ROUTES HERE
@@ -57,9 +58,15 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-app.get("/", (req, res) => {
-  res.send("Handraze Backend Server");
-});
+// Server static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 port = process.env.PORT || 3000; // go to http://localhost:3000
 var server = app.listen(port, function() {
