@@ -14,10 +14,10 @@ router.route("/").post(async (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const dayOfWeek = req.body.dayOfWeek;
+  const classEnd = req.body.classEnd;
   const classStart = req.body.classStart;
   const location = req.body.location;
   const sectionNumber = req.body.sectionNumber;
-  const classDuration = req.body.classDuration;
 
   // const { errors, isValid } = validateCourseInput(req.body);
 
@@ -36,10 +36,10 @@ router.route("/").post(async (req, res) => {
     title,
     description,
     dayOfWeek,
-    classDuration,
     location,
     sectionNumber,
     code,
+    classEnd,
     classStart
   });
   newCourse
@@ -117,9 +117,17 @@ router.put("/student/:id", async (req, res) => {
 //------------------------------------------------------------------------------
 // getCourse module: sorts through courses to find on by its id
 async function getCourse(req, res, next) {
-  let course;
+  var course;
   try {
-    course = await Course.findById(req.params.id);
+    course = await Course.findById({
+      _id: req.params.id
+    }).populate("discussion", [
+      "question",
+      "description",
+      "dateSubmitted",
+      "name",
+      "_id"
+    ]);
     if (course == null) {
       return res.status(404).json({ message: "Cannot find course." });
     }

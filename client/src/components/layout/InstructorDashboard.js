@@ -15,6 +15,9 @@ const Dashboard = ({
   useEffect(() => {
     getCurrentInstructorProfile();
   }, []);
+  {
+    document.title = "Instructor";
+  }
   return loading ? (
     <div>
       <Fragment>
@@ -43,7 +46,7 @@ const Dashboard = ({
                   <div className="row prof-profile">
                     <div className="col-2">
                       <img
-                        src="https://handraze-test-bucket.s3-us-west-1.amazonaws.com/5e545ad861d1d83a44be32ea/1583208500576-MOSHED-2019-11-26-17-42-43.jpg"
+                        src="https://via.placeholder.com/100"
                         className="profpic"
                       />
                     </div>

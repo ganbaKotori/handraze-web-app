@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const DiscussionQuestion = require("../models/discussion.model");
+const Course = require("../models/course.model");
+const User = require("../models/user.model");
+
 //const Answer = require("../models/answer.model");
 
 // @route   GET api/discussion/
@@ -28,15 +31,23 @@ router.get("/:id", getDiscussionQuestion, (req, res) => {
 // @desc    Create a discussion question
 // @access  Public
 router.post("/", async (req, res) => {
-  const discussionQuestion = new DiscussionQuestion({
-    question: req.body.question, // in POST - "question": "/question/[question]"
-    description: req.body.description,
-    user: req.body.user
-  });
   try {
-    await discussionQuestion
-      .save()
-      .then(() => res.json("Discussion question added!"));
+    const course = await Course.findOne({ _id: req.body.course });
+    const user = await User.findOne({ _id: req.body.user });
+    const name = user.firstName + " " + user.lastName;
+    const discussionQuestion = new DiscussionQuestion({
+      question: req.body.question, // in POST - "question": "/question/[question]"
+      description: req.body.description,
+      user: req.body.user,
+      name: name
+    });
+    if (course) {
+      await discussionQuestion.save().then(question => {
+        course.discussion.unshift(question._id);
+        course.save();
+        res.json(course);
+      });
+    }
   } catch (err) {
     res.status(400).json({ message: err.message }); // user input error
   }
@@ -99,7 +110,9 @@ router.delete("/delete/:id", getAnswer, async (req, res) => {
 async function getDiscussionQuestion(req, res, next) {
   let discussionQuestion;
   try {
-    discussionQuestion = await DiscussionQuestion.findById(req.params.id);
+    discussionQuestion = await DiscussionQuestion.findById({
+      _id: req.params.id
+    });
     if (discussionQuestion == null) {
       return res
         .status(404)

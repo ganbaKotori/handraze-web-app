@@ -56,7 +56,7 @@ const CreateProfile = ({ createProfile, history }) => {
             className="form-control"
             id="institution"
             aria-describedby="emailHelp"
-            placeholder="Enter your Department"
+            placeholder="Where do you teach?"
             name="institution"
             value={institution}
             onChange={e => onChange(e)}

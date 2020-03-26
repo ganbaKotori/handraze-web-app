@@ -420,9 +420,17 @@ button {
 }
 
 /* Landing Page */
+.landing-logo {
+  width: 50%;
+}
+
+table {
+  width: 70%;
+}
+
 .landing {
   position: relative;
-  background: url("./img/showcase.jpg") no-repeat center center/cover;
+  background: url("./img/pyramid.jpeg") no-repeat center center/cover;
   height: 100vh;
 }
 
@@ -606,6 +614,20 @@ button {
   color: rgb(209, 209, 209);
   text-decoration: none;
 }
+
+.Logo {
+  background-image: url(./img/chalkboard.jpg);
+}
+
+.jumbotron_text {
+  color: white;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
@@ -724,13 +746,6 @@ button {
   width: 50%;
 }
 
-.footer {
-  flex-shrink: 0;
-  text-align: center;
-  background-color: rgb(46, 46, 46);
-  color: white;
-}
-
 .flexcontainer {
   display: flex;
   align-items: center;
@@ -816,23 +831,23 @@ footer {
 
 /*--discussion--*/
 .post-editor {
-	margin: 1em 20%
+  margin: 1em 20%;
 }
 
 .post-editor-button {
-	float: right;
-	margin-top: 1em;
+  float: right;
+  margin-top: 1em;
 }
 
 .post-body {
-	margin: 1em 20%;
+  margin: 1em 20%;
 }
 
-@media(max-width: 900px){
-	.post-editor {
-		margin: 1em;
-	}
-	.post-body {
-		margin: 1em;
-}
+@media (max-width: 900px) {
+  .post-editor {
+    margin: 1em;
+  }
+  .post-body {
+    margin: 1em;
+  }
 }
