@@ -3,6 +3,7 @@ const router = express.Router();
 const DiscussionQuestion = require("../models/discussion.model");
 const Course = require("../models/course.model");
 const User = require("../models/user.model");
+const auth = require("../middleware/auth");
 
 //const Answer = require("../models/answer.model");
 
@@ -30,26 +31,56 @@ router.get("/:id", getDiscussionQuestion, (req, res) => {
 // @route   POST api/discussion/
 // @desc    Create a discussion question
 // @access  Public
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
-    const course = await Course.findOne({ _id: req.body.course });
-    const user = await User.findOne({ _id: req.body.user });
+    console.log(req.body.id)
+    const course = await Course.findById({
+      _id: req.body.id
+    })
+    console.log(req.user)
+    const user = await User.findOne({ _id: req.user.id });
     const name = user.firstName + " " + user.lastName;
     const discussionQuestion = new DiscussionQuestion({
       question: req.body.question, // in POST - "question": "/question/[question]"
       description: req.body.description,
-      user: req.body.user,
+      user: req.user.id,
       name: name
     });
+    console.log(course)
     if (course) {
       await discussionQuestion.save().then(question => {
         course.discussion.unshift(question._id);
         course.save();
-        res.json(course);
+        console.log("question added!")
+        res.json(question);
       });
     }
   } catch (err) {
+    console.log(err.message);
     res.status(400).json({ message: err.message }); // user input error
+  }
+});
+
+
+// @route   PUT api/questions/answer
+// @desc    Post an answer to a question
+// @access  Public
+router.put("/answer", auth, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.user.id });
+    const name = user.firstName + " " + user.lastName;
+    const answer1 = {
+      user: req.user.id,
+      text: req.body.text,
+      name: name
+    }
+    await DiscussionQuestion.findOne({ _id: req.body.id }).then(question => {
+      question.answer.unshift(answer1);
+      question.save();
+      res.json(question);
+    });
+  } catch (error) {
+    res.status(400).json("Error adding answer: " + error);
   }
 });
 

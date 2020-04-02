@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { createCourse } from "../../../actions/course";
+import { createQuestion } from "../../../../actions/question";
 import PropTypes from "prop-types";
 import { Redirect, withRouter } from "react-router-dom";
-import question from "../../../reducers/question";
+import question from "../../../../reducers/question";
 
-const CreateCourse = ({ history, createCourse, match }) => {
+const NewQuestion = ({ history, createQuestion, match }) => { 
   const [id, setId] = useState(2);
   useEffect(() => {
     setId(match.params.id);
@@ -13,7 +13,7 @@ const CreateCourse = ({ history, createCourse, match }) => {
   }, null);
   const [formData, setFormData] = useState({
     question: "",
-    description: ""
+    description: "",
   });
 
   const { question, description } = formData;
@@ -23,7 +23,7 @@ const CreateCourse = ({ history, createCourse, match }) => {
   const onSubmit = async e => {
     e.preventDefault();
     {
-      createCourse(
+      createQuestion(
         {
           id,
           question,
@@ -77,8 +77,8 @@ const CreateCourse = ({ history, createCourse, match }) => {
   );
 };
 
-CreateCourse.propTypes = {
-  register: PropTypes.func.isRequired,
+NewQuestion.propTypes = {
+  createQuestion: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 
@@ -86,6 +86,6 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { createCourse })(
-  withRouter(CreateCourse)
+export default connect(mapStateToProps, { createQuestion })(
+  withRouter(NewQuestion)
 );

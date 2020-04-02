@@ -4,11 +4,7 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
   {
-    instructor: {
-      type: Schema.Types.ObjectID,
-      required: true,
-      ref: "Instructor"
-    },
+   
     discussion: [
       {
         type: Schema.Types.ObjectID,

@@ -1,3 +1,5 @@
+
+
 .App {
   text-align: center;
 }
@@ -7,7 +9,6 @@ body {
 .profpic {
   height: auto;
   width: 100%;
-  float: right;
 }
 .modal {
   display: block;

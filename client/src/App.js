@@ -16,8 +16,9 @@ import Lecture from "./components/layout/Lecture";
 import LoggedOut from "./components/layout/LoggedOut";
 import Login from "./components/layout/Login";
 import Navbar from "./components/layout/Navbar";
-import NewQuestion from "./components/layout/Course/NewQuestion";
+import NewQuestion from "./components/layout/Course/DiscusssionQuestion/PostQuestion";
 import Photo from "./components/layout/Photo";
+import PostAnswer from "./components/layout/Course/DiscusssionQuestion/PostAnswer";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Profiles from "./components/layout/Profiles";
 import Questions from "./components/layout/Questions";
@@ -29,7 +30,7 @@ import DiscussionBoard from "./components/layout/Discussion";
 
 import StudentProfile from "./components/layout/StudentProfile";
 
-import DiscussionQuestionPage from "./components/layout/Course/DiscussionQuestionPage";
+import DiscussionQuestionPage from "./components/layout/Course/DiscusssionQuestion/DiscussionQuestionPage";
 import EditInstructor from "./components/layout/EditStudent";
 import EditStudent from "./components/layout/EditStudent";
 
@@ -95,6 +96,7 @@ const App = () => {
                   component={DiscussionQuestionPage}
                 />
                 <Route exact path="/new-question/:id" component={NewQuestion} />
+                <Route exact path="/new-answer/:id" component={PostAnswer} />
                 <Route exact path="/student/:id" component={StudentProfile} />
                 <Route exact path="/profiles" component={Profiles} />
                 <Route exact path="/questions" component={Questions} />
