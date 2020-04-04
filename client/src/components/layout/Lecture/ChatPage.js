@@ -3,20 +3,20 @@ import { Form, Icon, Input, Button, Row, Col, } from 'antd';
 import io from "socket.io-client";
 import { connect } from "react-redux";
 import  moment  from "moment";
+import { getChats, afterPostMessage  } from "../../../actions/chat";
+import  ChatCard  from "./ChatCard";
 
 export class ChatPage extends Component {
     state= {
         chatMessage: "",
     }
-
     componentDidMount() {
         let server = "http://localhost:3000";
-
+        this.props.dispatch(getChats());
         this.socket = io(server);
-        
-
         this.socket.on("Output Chat Message", messageFromBackEnd => {
             console.log(messageFromBackEnd)
+            this.props.dispatch(afterPostMessage(messageFromBackEnd));
         })
     }
 
@@ -26,6 +26,12 @@ export class ChatPage extends Component {
         })
     }
 
+    renderCards = () =>
+        this.props.chats.chats
+        && this.props.chats.chats.map((chat) => (
+            <ChatCard key={chat._id}  {...chat} />
+        ));
+        
     submitChatMessage = (e) => {
         e.preventDefault();
         {(console.log(this.props))}
@@ -34,7 +40,7 @@ export class ChatPage extends Component {
         let userName = this.props.user1.user.firstName;
         let userImage = this.props.user1.user.lastName;
         let nowTime = moment();
-        let type = "Image"
+        let type = "Text"
 
         this.socket.emit("Input Chat Message", {
             chatMessage,
@@ -50,50 +56,47 @@ export class ChatPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <div>
-                    
-                    <p style={{ fontSize: '2rem', textAlign: 'center' }}> Real Time Chat</p>
-                </div>
-
-                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                    <div className="infinite-container">
-                        {/* {this.props.chats && (
-                            <div>{this.renderCards()}</div>
-                        )} */}
-                        <div
-                            ref={el => {
-                                this.messagesEnd = el;
-                            }}
-                            style={{ float: "left", clear: "both" }}
-                        />
+            <div class="newsfeed">
+            <div class="list-group notes-board"> {this.renderCards()}
+                    <div
+                        ref={el => {
+                            this.messagesEnd = el;
+                        }}
+                        style={{ float: "left", clear: "both" }}
+                    />
                     </div>
-
-                    <Row >
-                        <Form layout="inline" onSubmit={this.submitChatMessage}>
-                            <Col span={18}>
-                                <Input
-                                    id="message"
-                                    prefix="Message"
-                                    placeholder="Let's start talking"
-                                    type="text"
-                                    value={this.state.chatMessage}
-                                    onChange={this.hanleSearchChange}
-                                />
-                            </Col>
-                            <Col span={2}>
-                                
-                            </Col>
-
-                            <Col span={4}>
-                                <Button type="primary" style={{ width: '100%' }} onClick={this.submitChatMessage}  htmlType="submit">
-                                Enter
-                                </Button>
-                            </Col>
-                        </Form>
-                    </Row>
+                   
+                  <div className="list-group-item list-group-item-action flex-column align-items-start">
+                  <Form layout="inline" onSubmit={this.submitChatMessage}>
+                  <div class="input-group mb-3">
+                  <input
+      
+                    class="form-control form-control-lg"
+                    placeholder="Enter a message."
+                    id="message"
+                    prefix={"test"}
+                    type="text"
+                    value={this.state.chatMessage}
+                    onChange={this.hanleSearchChange}
+                  />
+                    
+                  <div class="input-group-prepend">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      id="button-addon1"
+                      type="primary" style={{ width: '100%' }} 
+                      onClick={this.submitChatMessage} 
+                      htmlType="submit"
+                    >
+                      Send
+                    </button>
+                  </div>
                 </div>
-                
-            </React.Fragment>
+                    </Form>
+                  </div>
+            </div>
+        </React.Fragment>
         )
     }
 }
@@ -101,10 +104,10 @@ export class ChatPage extends Component {
 const mapStateToProps = state => {
     console.log(state)
     return {
-        user1: state.auth
+        user1: state.auth,
+        chats: state.chat
     }
     
 }
-
 
 export default connect(mapStateToProps)(ChatPage);

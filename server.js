@@ -16,6 +16,8 @@ const { Chat } = require("./models/Chat");
 app.use(cors());
 
 // DEFINE ROUTES HERE
+
+const chatRouter = require("./routes/Chat");
 const userRouter = require("./routes/User");
 const studentRouter = require("./routes/Student");
 const instructorRouter = require("./routes/Instructor");
@@ -46,6 +48,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());    
 
 // SETUP ROUTES HERE
+app.use("/api/chats", chatRouter);
 app.use("/api/users", userRouter);
 app.use("/api/instructors", instructorRouter);
 app.use("/api/students", studentRouter);

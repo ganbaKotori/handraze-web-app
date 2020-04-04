@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React, { Fragment,Component } from "react";
 import { PDF } from "./PDFviewer";
 import htmlpdf from "html2pdf.js";
+import ChatPage from "./Lecture/ChatPage"
+import {Row , Col} from "react-bootstrap";
 
 class Lecture extends Component {
   constructor(props) {
@@ -37,85 +39,21 @@ class Lecture extends Component {
   }
   render() {
     return (
-      <div>
-        <button onClick={this.test}>Generate PDF</button>
-        <div id="test">
-          <h1>Introduction to David Garza 101: Wackology</h1>
-        </div>
-        <div className="lecture">
-          <div className="pdf-viewer col-4 col-xs-12">
-            <PDF />
+      <Fragment>
+        <div style={{ "margin-top": '5em' }}>
+          <div className="container">
+          <button onClick={this.test}>Generate PDF</button>
+<h1>Introduction to David Garza 101: Wackology</h1>
           </div>
-          <div class="col-4 col-xs-12 ">
-            <div class="list-group ">
-              <a
-                href="#"
-                class="list-group-item list-group-item-action flex-column align-items-start "
-              >
-                <p class="mb-1">message</p>
-              </a>
-              <a
-                href="#"
-                class="list-group-item list-group-item-action flex-column align-items-start list-group-item-secondary"
-              >
-                <p class="mb-1">this is a random message</p>
-              </a>
-              <a
-                href="#"
-                class="list-group-item list-group-item-action flex-column align-items-start "
-              >
-                <p class="mb-1">neat powerpoint</p>
-              </a>
-              <a
-                href="#"
-                class="list-group-item list-group-item-action flex-column align-items-start list-group-item-secondary"
-              >
-                <p class="mb-1">F</p>
-              </a>
-              <a
-                href="#"
-                class="list-group-item list-group-item-action flex-column align-items-start "
-              >
-                <p class="mb-1">F</p>
-              </a>
-              <a
-                href="#"
-                class="list-group-item list-group-item-action flex-column align-items-start list-group-item-secondary"
-              >
-                <p class="mb-1">F</p>
-              </a>
-              <a
-                href="#"
-                class="list-group-item list-group-item-action flex-column align-items-start "
-              >
-                <p class="mb-1">F</p>
-              </a>
-              <a
-                href="#"
-                class="list-group-item list-group-item-action flex-column align-items-start "
-              >
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    class="form-control form-control-lg"
-                    placeholder="Enter a message."
-                  />
-
-                  <div class="input-group-prepend">
-                    <button
-                      class="btn btn-outline-secondary"
-                      type="button"
-                      id="button-addon1"
-                    >
-                      Send
-                    </button>
-                  </div>
-                </div>
-              </a>
+          <div className="lecture">
+          <Row>
+            <Col><PDF /></Col>
+            <Col><br/><br/><ChatPage/></Col>
+          </Row>
             </div>
-          </div>
-        </div>
-        <div class="container">
+          
+       
+          
           <div class="row">
             <div class="col-md-8 col-xs-12">
               <div class="embed-responsive embed-responsive-16by9 ">
@@ -131,8 +69,8 @@ class Lecture extends Component {
               </div>
             </div>
           </div>
-        </div>
       </div>
+      </Fragment>
     );
   }
 }

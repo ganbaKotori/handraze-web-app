@@ -56,10 +56,12 @@ const App = () => {
           <Navbar />
           <Route exact path="/" component={Landing} />
           <Switch>
-            <Route exact path="/lecture" component={Lecture} />
+            
             <PrivateRoute exact path="/course/:id" component={Course} />
+            <Route exact path="/lecture" component={Lecture} />
             <Fragment>
               <div className="container">
+              
               <Route exact path="/chat" component={ChatPage} />
                 <Route exact path="/courses" component={Courses} />
                 <Route exact path="/edit" component={EditStudent} />
