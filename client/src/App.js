@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import ChatPage from "./components/layout/Lecture/ChatPage";
 import Courses from "./components/layout/Courses";
 import Course from "./components/layout/Course/Course";
 import CreateAccount from "./components/layout/CreateAccount";
@@ -59,6 +60,7 @@ const App = () => {
             <PrivateRoute exact path="/course/:id" component={Course} />
             <Fragment>
               <div className="container">
+              <Route exact path="/chat" component={ChatPage} />
                 <Route exact path="/courses" component={Courses} />
                 <Route exact path="/edit" component={EditStudent} />
                 <PrivateRoute
