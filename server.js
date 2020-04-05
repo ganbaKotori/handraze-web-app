@@ -1,9 +1,23 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const cors = require('cors')
+const path = require("path");
+
+
 require("dotenv").config();
+const cookieParser = require("cookie-parser");
+
+const server = require("http").createServer(app);
+const io = require("socket.io")(server)
+
+const { Chat } = require("./models/chat.model");
+
+app.use(cors());
 
 // DEFINE ROUTES HERE
+
+const chatRouter = require("./routes/Chat");
 const userRouter = require("./routes/User");
 const studentRouter = require("./routes/Student");
 const instructorRouter = require("./routes/Instructor");
@@ -25,11 +39,16 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+
+
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());    
 
 // SETUP ROUTES HERE
+app.use("/api/chats", chatRouter);
 app.use("/api/users", userRouter);
 app.use("/api/instructors", instructorRouter);
 app.use("/api/students", studentRouter);
@@ -44,12 +63,21 @@ app.use("/api/upload", fileRouter);
 
 app.use(express.json());
 
+/*const connect = mongoose.connect(config.mongoURI,
+  {
+    useNewUrlParser: true, useUnifiedTopology: true,
+    useCreateIndex: true, useFindAndModify: false
+  })
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));*/
+
 // CONNECT TO MONGODB
 const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
-mongoose.connect(uri, {
+const connect = mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 const connection = mongoose.connection;
@@ -61,7 +89,29 @@ app.get("/", (req, res) => {
   res.send("Handraze Backend Server");
 });
 
+io.on("connection", socket => {
+  socket.on("Input Chat Message", msg => {
+    connect.then(db => {
+      try {
+        let chat = new Chat({message: msg.chatMessage, sender: msg.userId, type: msg.userName })
+
+        chat.save((err,doc)=> {
+          if(err) return res.json({success: false, err})
+
+          Chat.find({"_id": doc._id})
+          .populate("sender")
+          .exec((err, doc) => {
+            return io.emit("Output Chat Message", doc);
+          })
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    })
+  })
+})
+
 port = process.env.PORT || 3000; // go to http://localhost:3000
-var server = app.listen(port, function() {
+server.listen(port, function() {
   console.log(`Handraze Express Server listening on port ${port}`);
 });
