@@ -1,5 +1,5 @@
 import PDFViewer from "mgr-pdf-viewer-react";
-import pdf from "../../pdfs/LBP-Presentation.pdf";
+import pdf from "../../../pdfs/LBP-Presentation.pdf";
 
 import React, { Component, useState } from "react";
 

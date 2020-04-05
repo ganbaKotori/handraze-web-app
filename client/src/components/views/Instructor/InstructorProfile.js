@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getInstructorProfileById } from "../../actions/profile";
+import { getInstructorProfileById } from "../../../actions/profile";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 
 const Profile = ({

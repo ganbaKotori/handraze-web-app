@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
-import { setAlert } from "../../actions/alert";
+import { setAlert } from "../../../actions/alert";
 import { connect } from "react-redux";
-import { register } from "../../actions/auth";
+import { register } from "../../../actions/auth";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 

@@ -1,32 +1,26 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { CourseCard } from "../CourseCard";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { InstructorCourseCard } from "./InstructorCourseCard";
 
-const StudentCourses = ({ course }) => {
+const InstructorCourses = ({ course }) => {
   var max = 3;
   var count = 0;
   function func(number) {
     console.log(number);
-    return <CourseCard inputValue={course} />;
+    return <InstructorCourseCard inputValue={course} />;
   }
   const courses = course.map(
     course => (
       (count += 1),
       console.log(count),
       func(count),
-      (<CourseCard inputValue={course} />)
+      (<InstructorCourseCard inputValue={course} />)
     )
   ); //create a CourseCard for every course id in the Course array in Student P
 
   return (
     <Fragment>
-      <h3>Courses</h3>{" "}
-      <Link to="/enroll">
-        <Button variant="outline-primary">Enroll Course</Button>
-      </Link>
       <div className="courses">
         <div className="row">
           {courses}
@@ -38,8 +32,8 @@ const StudentCourses = ({ course }) => {
   );
 };
 
-StudentCourses.propTypes = {
+InstructorCourses.propTypes = {
   course: PropTypes.array.isRequired
 };
 
-export default StudentCourses;
+export default InstructorCourses;

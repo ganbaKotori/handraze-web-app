@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const server = require("http").createServer(app);
 const io = require("socket.io")(server)
 
-const { Chat } = require("./models/Chat");
+const { Chat } = require("./models/chat.model");
 
 app.use(cors());
 

@@ -1,38 +1,31 @@
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import ChatPage from "./components/layout/Lecture/ChatPage";
-import Courses from "./components/layout/Courses";
-import Course from "./components/layout/Course/Course";
-import CreateAccount from "./components/layout/CreateAccount";
-import CreateCourse from "./components/layout/CreateCourse";
-import InstructorDashboard from "./components/layout/InstructorDashboard";
-import CreateInstructorProfile from "./components/layout/CreateInstructorProfile";
-import CreateStudentProfile from "./components/layout/CreateStudentProfile";
-import EnrollCourse from "./components/layout/EnrollCourse2";
-import Footer from "./components/layout/Footer";
-import InstructorProfile from "./components/layout/InstructorProfile";
-import Landing from "./components/layout/Landing";
-import Lecture from "./components/layout/Lecture";
-import LoggedOut from "./components/layout/LoggedOut";
-import Login from "./components/layout/Login";
-import Navbar from "./components/layout/Navbar";
-import NewQuestion from "./components/layout/Course/NewQuestion";
-import Photo from "./components/layout/Photo";
+import ChatPage from "./components/views/Lecture/ChatPage";
+import Course from "./components/views/Course/Course";
+import CreateAccount from "./components/views/Auth/CreateAccount";
+import CreateCourse from "./components/views/Course/CreateCourse";
+import InstructorDashboard from "./components/views/Instructor/InstructorDashboard";
+import CreateInstructorProfile from "./components/views/Instructor/CreateInstructorProfile";
+import CreateStudentProfile from "./components/views/Student/CreateStudentProfile";
+import EnrollCourse from "./components/views/Student/EnrollCourse2";
+import InstructorProfile from "./components/views/Instructor/InstructorProfile";
+import Landing from "./components/views/Landing";
+import Lecture from "./components/views/Lecture/Lecture";
+import LoggedOut from "./components/views/LoggedOut";
+import Login from "./components/views/Auth/Login";
+import Navbar from "./components/views/Navbar";
+import NewQuestion from "./components/views/Course/NewQuestion";
 import PrivateRoute from "./components/routing/PrivateRoute";
-import Profiles from "./components/layout/Profiles";
-import Questions from "./components/layout/Questions";
-import StudentDashboard from "./components/layout/StudentDashboard";
-import ThreadDisplay from "./components/layout/ThreadDisplay";
-import Post from "./components/layout/Post";
-import PostEditor from "./components/layout/PostEditor";
-import DiscussionBoard from "./components/layout/Discussion";
+import Profiles from "./components/views/Profiles";
+import Questions from "./components/views/Course/Questions";
+import StudentDashboard from "./components/views/Student/StudentDashboard";
 
-import StudentProfile from "./components/layout/StudentProfile";
+import StudentProfile from "./components/views/Student/StudentProfile";
 
-import DiscussionQuestionPage from "./components/layout/Course/DiscussionQuestionPage";
-import EditInstructor from "./components/layout/EditStudent";
-import EditStudent from "./components/layout/EditStudent";
+import DiscussionQuestionPage from "./components/views/Course/DiscussionQuestionPage";
+import EditInstructor from "./components/views/Student/EditStudent";
+import EditStudent from "./components/views/Student/EditStudent";
 
 import "./App.css";
 //Redux
@@ -56,14 +49,12 @@ const App = () => {
           <Navbar />
           <Route exact path="/" component={Landing} />
           <Switch>
-            
             <PrivateRoute exact path="/course/:id" component={Course} />
             <Route exact path="/lecture" component={Lecture} />
             <Fragment>
               <div className="container">
               
               <Route exact path="/chat" component={ChatPage} />
-                <Route exact path="/courses" component={Courses} />
                 <Route exact path="/edit" component={EditStudent} />
                 <PrivateRoute
                   exact
@@ -92,7 +83,6 @@ const App = () => {
                   component={InstructorProfile}
                 />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/photo" component={Photo} />
                 <Route
                   exact
                   path="/question/:id"

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getQuestions } from "../../actions/question";
+import { getQuestions } from "../../../actions/question";
 
 const Questions = ({ getQuestions, question: { questions, loading } }) => {
   useEffect(() => {

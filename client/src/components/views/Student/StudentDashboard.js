@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentStudentProfile } from "../../actions/profile";
+import { getCurrentStudentProfile } from "../../../actions/profile";
 import { Link } from "react-router-dom";
-import { FileUpload } from "./FileUpload";
+import { FileUpload } from "../FileUpload";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import StudentCourses from "./StudentCourses";
 const Dashboard = ({

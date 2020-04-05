@@ -1,7 +1,7 @@
 import React, { Fragment,Component } from "react";
 import { PDF } from "./PDFviewer";
 import htmlpdf from "html2pdf.js";
-import ChatPage from "./Lecture/ChatPage"
+import ChatPage from "./ChatPage"
 import {Row , Col} from "react-bootstrap";
 
 class Lecture extends Component {

@@ -1,7 +1,7 @@
 import React, { Fragment, Component, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCourses } from "../../actions/course";
+import { getCourses } from "../../../actions/course";
 
 const CourseList = ({ getCourses, course: { courses, loading } }) => {
   useEffect(() => {

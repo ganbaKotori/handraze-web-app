@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { CreateCourseModal } from "../CreateCourseModal";
+import { CreateCourseModal } from "../../CreateCourseModal";
 import CourseList from "./CourseList";
 import { ButtonToolbar, Button } from "react-bootstrap";
 

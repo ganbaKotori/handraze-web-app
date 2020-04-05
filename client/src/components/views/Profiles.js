@@ -2,8 +2,8 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getProfiles } from "../../actions/profile";
-import InstructorProfileItem from "./InstructorProfileItem";
-import StudentProfileItem from "./StudentProfileItem";
+import InstructorProfileItem from "./Instructor/InstructorProfileItem";
+import StudentProfileItem from "./Student/StudentProfileItem";
 import { Spinner } from "react-bootstrap";
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {

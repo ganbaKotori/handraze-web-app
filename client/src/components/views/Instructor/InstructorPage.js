@@ -6,7 +6,7 @@ const InstructorPage = () => {
     <div class="row ">
         <div class="col-12 col-md-8">
         <div class="row col-md-8">
-        <h3>Instructor Profile <a href="#" class="btn btn-primary">EDIT</a></h3>
+        
         </div>
             <div class="row prof-profile">
                 

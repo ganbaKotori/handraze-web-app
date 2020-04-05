@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { enrollCourse } from "../../actions/profile";
+import { enrollCourse } from "../../../actions/profile";
 import { Link, withRouter } from "react-router-dom";
 
 const EnrollCourse2 = ({ enrollCourse, history }) => {

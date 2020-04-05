@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentInstructorProfile } from "../../actions/profile";
+import { getCurrentInstructorProfile } from "../../../actions/profile";
 import { Link } from "react-router-dom";
-import { FileUpload } from "./FileUpload";
+import { FileUpload } from "../FileUpload";
 import InstructorCourses from "./InstructorCourses";
 import { Button, Spinner } from "react-bootstrap";
 
