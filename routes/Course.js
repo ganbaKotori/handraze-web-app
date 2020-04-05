@@ -89,14 +89,16 @@ router.route("/").get((req, res) => {
 // @desc    Delete a course by its id
 // @access  Public
 router.delete("/delete/:id", getCourse, async (req, res) => {
-  try {
-    await res.course.remove();
-    res.json({ message: "Successfully deleted course!" }); // good
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+  const course = res.course;
 
-  // TODO: Delete course from students' list of courses
+    const student = Student.deleteOne({_id: course.id});
+    const root = Course.deleteOne({_id: course.id});
+
+    Promise.all([student, root]).then(() => {
+      res.status(200).json({message: 'Course deleted!'});
+    }).catch(err => {
+      res.status(500).json("Error: " + err);
+    });
 });
 
 // @route   POST api/courses/student/:studentid
@@ -114,6 +116,7 @@ router.put("/student/:id", async (req, res) => {
     res.status(400).json("Error adding student: " + error);
   }
 });
+
 //------------------------------------------------------------------------------
 // getCourse module: sorts through courses to find on by its id
 async function getCourse(req, res, next) {
