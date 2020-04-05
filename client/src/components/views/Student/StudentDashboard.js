@@ -46,7 +46,7 @@ const Dashboard = ({
                     <div className="row prof-profile">
                       <div className="col-4">
                         <img
-                          src="https://via.placeholder.com/100"
+                          src={user && user.avatar ? user && user.avatar : "https://via.placeholder.com/100"}
                           className="profpic"
                         />
                       </div>

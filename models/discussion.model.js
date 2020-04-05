@@ -13,6 +13,11 @@ const discussionSchema = new Schema(
       type: String,
       required: false
     },
+    user: {
+      type: Schema.Types.ObjectID,
+      required: true,
+      ref: "User"
+    },
     name: {
       type: String,
       required: false

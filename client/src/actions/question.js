@@ -42,10 +42,10 @@ export const getQuestion = id => async dispatch => {
   }
 };
 
-//@usage  /enroll
-//@desc   Use Enrollment Code to gain access to Course
+//@usage  /api/questions
+//@desc   Post new discussion question to a course
 export const createQuestion = (
-  { course, question, description },
+  { id, question, description },
   history,
   edit = false
 ) => async dispatch => {
@@ -56,18 +56,19 @@ export const createQuestion = (
       }
     };
     const body = JSON.stringify({
-      course,
+      id,
       question,
       description
     });
     console.log(body);
     const res = await axios.post("/api/questions", body, config);
+    console.log("question data");
     console.log(res.data);
     dispatch({
       type: CREATE_QUESTION,
       payload: res.data
     });
-    history.push("./instructor");
+    history.push(`/question/${res.data._id}`);
   } catch (error) {
     console.log(error);
     dispatch({
@@ -76,3 +77,38 @@ export const createQuestion = (
     });
   }
 };
+
+//@usage  PUT /api/questions/answer
+//@desc   Post new discussion question to a course
+export const postAnswer = (
+  { id, text },
+  history,
+  edit = false
+) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    const body = JSON.stringify({
+      id,
+      text
+    });
+    console.log(body);
+    const res = await axios.put("/api/questions/answer", body, config);
+    console.log(res.data);
+    dispatch({
+      type: CREATE_QUESTION,
+      payload: res.data
+    });
+    history.push(`/question/${id}`);
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: QUESTION_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+

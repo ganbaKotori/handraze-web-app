@@ -26,6 +26,7 @@ export class FileUpload extends Component {
       })
       .then(response => {
         // handle your response;
+        window.location.reload(false);
       })
       .catch(error => {
         // handle your error
@@ -38,16 +39,14 @@ export class FileUpload extends Component {
 
   render() {
     return (
-      <div className="container">
-        <form onSubmit={this.submitFile}>
+        <form onSubmit={this.submitFile} >
           <input
-            label="upload file"
+            label="Change Profile Picture"
             type="file"
             onChange={this.handleFileUpload}
-          />
-          <button type="submit">Send</button>
+          />       
+          <button type="submit" className="btn btn-primary">Submit</button>
         </form>
-      </div>
     );
   }
 }

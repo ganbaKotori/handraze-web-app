@@ -19,9 +19,6 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const authLinks = (
     <Fragment>
-      <Link to="/questions">
-        <Button variant="primary">Questions</Button>
-      </Link>{" "}
       <Link to="/profiles">
         <Button variant="primary">Profiles</Button>
       </Link>{" "}

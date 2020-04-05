@@ -2,7 +2,8 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCourse } from "../../../actions/course";
-import DiscussionQuestions from "./DiscussionQuestions";
+import { Link } from "react-router-dom";
+import DiscussionQuestions from "./DiscusssionQuestion/DiscussionQuestions";
 import {
   Col,
   Spinner,
@@ -44,7 +45,7 @@ const Course = ({ getCourse, course: { course, loading }, match }) => {
           <h1>{course.title}</h1>
           <p>{course.description}</p>
           <p>Section {course.sectionNumber}</p>
-          Lectures: {dayOfWeek} from <b>{course.classStart}</b> to{" "}
+          Lectures: {dayOfWeek} from <b>https://youtu.be/x1JQuWxt3cE</b> to{" "}
           <b>{course.classEnd}</b>
         </Container>
       </Jumbotron>
@@ -154,9 +155,12 @@ const Course = ({ getCourse, course: { course, loading }, match }) => {
               <DiscussionQuestions
                 question={course.discussion ? course.discussion : []}
               />
-              <a href="#" class="btn btn-danger btn-lg btn-block btn-margin">
+              
+              
+                <Link to={`/new-question/${course._id}`} class="btn btn-danger btn-lg btn-block btn-margin">
                 Ask Question
-              </a>
+                </Link>
+             
             </Col>
             <Col>
               <h3>Peer Notes</h3>
