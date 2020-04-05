@@ -1,4 +1,4 @@
-import { GET_QUESTION, GET_QUESTIONS, QUESTION_ERROR } from "../actions/types";
+import { CREATE_QUESTION, GET_QUESTION, GET_QUESTIONS, QUESTION_ERROR, CREATE_ANSWER } from "../actions/types";
 
 const initialState = {
   questions: [],
@@ -11,6 +11,18 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case CREATE_QUESTION:
+      return {
+        ...state,
+        courses: [...state.questions, payload],
+        loading: false
+      }
+    case CREATE_ANSWER:
+      return {
+        ...state,
+        courses: [...state.questions, payload],
+        loading: false
+      }
     case GET_QUESTIONS:
       return {
         ...state,

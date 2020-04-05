@@ -75,7 +75,7 @@ router.route("/user/:user_id").get(async (req, res) => {
     const instructorProfiles = await InstructorProfile.findOne({
       user: req.params.user_id
     })
-      .populate("user", ["firstName", "lastName"])
+      .populate("user", ["firstName", "lastName", "avatar"])
       .populate("course", ["title", "description"]);
     console.log(instructorProfiles);
     res.json(instructorProfiles);

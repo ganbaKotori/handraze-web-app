@@ -5,7 +5,7 @@ import { getCurrentInstructorProfile } from "../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "./FileUpload";
 import InstructorCourses from "./InstructorCourses";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, Spinner, Col, Row } from "react-bootstrap";
 
 const Dashboard = ({
   getCurrentInstructorProfile,
@@ -30,27 +30,22 @@ const Dashboard = ({
     <Fragment>
       <div>
         {instructorProfile !== null ? (
-          <Fragment>
-            <div className="container">
-              <FileUpload user={user._id} />
-              <br />
-              <div className="row ">
-                <div className="col-12 col-md-8">
-                  <div className="row col-md-8">
-                    <h3>
-                      <a href="#" className="btn btn-primary">
-                        EDIT
-                      </a>
-                    </h3>
-                  </div>
-                  <div className="row prof-profile">
-                    <div className="col-2">
+          <Fragment>    
+            <br/>    
+            <Row>
+              <Col>
+                  <Row>
+                    <h3>Dashboard</h3>  
+                  </Row>
+                  <Row>
+                  <Col>
                       <img
-                        src="https://via.placeholder.com/100"
+                        src={user && user.avatar ? user && user.avatar : "https://via.placeholder.com/100"}
                         className="profpic"
                       />
-                    </div>
-                    <div className="col-6">
+                    </Col>
+                    <Col xs={8}>
+                    
                       <p className="lead"> Instructor </p>
                       <p className="lead">
                         {user && user.firstName} {user && user.lastName}
@@ -58,42 +53,19 @@ const Dashboard = ({
                       <p className="lead">
                         Department: {user && instructorProfile.department}
                       </p>
-
                       <p className="lead">
                         {" "}
-                        Teaches at: {user && instructorProfile.institution}
+                        institution: {user && instructorProfile.institution}
                       </p>
-                    </div>
-                  </div>
-
-                  <div className="car">
-                    <h3>Courses You're Teaching</h3>
-                    <Link to="/newcourse">
-                      <Button variant="outline-primary">
-                        Start a new Course
-                      </Button>
-                    </Link>
-                    <div className="courses">
-                      <div className="row">
-                        <div className="col-sm-5">
-                          <InstructorCourses
-                            course={
-                              instructorProfile.course
-                                ? instructorProfile.course
-                                : []
-                            }
-                          />
-                        </div>
-                        <div className="col-sm-5"></div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-5"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-6 col-md-4">
-                  <h3> News Feed</h3>
+                      
+                      </Col>
+                      
+                    </Row>
+                    <Row><FileUpload user={user._id} /></Row>
+                    
+                    </Col>
+              <Col>
+              <h3> News Feed</h3>
                   <div className="newsfeed">
                     <div className="list-group">
                       <a
@@ -127,9 +99,27 @@ const Dashboard = ({
                       </a>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
+              </Col>
+            </Row>
+            <Row>
+            <Col >
+              <h3>Courses You're Teaching</h3>
+              <Link to="/newcourse">
+              <Button variant="outline-primary">
+                 Start a new Course
+              </Button>
+              </Link>
+              <div className="courses">
+                 <InstructorCourses
+                    course={
+                    instructorProfile.course
+                    ? instructorProfile.course
+                    : []
+                    }
+                    />
+               </div>
+            </Col>
+            </Row>
           </Fragment>
         ) : (
           <Fragment>

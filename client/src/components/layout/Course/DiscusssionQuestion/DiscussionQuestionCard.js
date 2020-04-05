@@ -8,6 +8,7 @@ export class DiscussionQuestionCard extends Component {
     this.state = {
       inputValue: []
     };
+    
   }
 
   render() {
@@ -15,6 +16,7 @@ export class DiscussionQuestionCard extends Component {
     return (
       <Link
         className="list-group-item list-group-item-action flex-column align-items-start"
+        target="_blank"
         to={`/question/${this.props.inputValue._id}`}
       >
         <div class="d-flex w-100 justify-content-between">

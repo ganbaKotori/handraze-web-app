@@ -78,7 +78,7 @@ export const getStudentProfileById = userId => async dispatch => {
     console.log(res);
 
     dispatch({
-      type: GET_PROFILE,
+      type: GET_STUDENT_PROFILE,
       payload: res.data
     });
   } catch (error) {

@@ -46,7 +46,7 @@ router.route("/user/:user_id").get(async (req, res) => {
     const studentProfiles = await StudentProfile.findOne({
       user: req.params.user_id
     })
-      .populate("user", ["firstName", "lastName"])
+      .populate("user", ["firstName", "lastName","avatar"])
       .populate("course", ["title", "description"]);
     res.json(studentProfiles);
   } catch (error) {
