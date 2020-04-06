@@ -15,15 +15,14 @@ import Lecture from "./components/views/Lecture/Lecture";
 import LoggedOut from "./components/views/LoggedOut";
 import Login from "./components/views/Auth/Login";
 import Navbar from "./components/views/Navbar";
-import NewQuestion from "./components/views/Course/NewQuestion";
+import PostQuestion from "./components/views/Course/DiscusssionQuestion/PostQuestion";
+import PostAnswer from "./components/views/Course/DiscusssionQuestion/PostAnswer";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Profiles from "./components/views/Profiles";
 import Questions from "./components/views/Course/Questions";
 import StudentDashboard from "./components/views/Student/StudentDashboard";
-
 import StudentProfile from "./components/views/Student/StudentProfile";
-
-import DiscussionQuestionPage from "./components/views/Course/DiscussionQuestionPage";
+import DiscussionQuestionPage from "./components/views/Course/DiscusssionQuestion/DiscussionQuestionPage";
 import EditInstructor from "./components/views/Student/EditStudent";
 import EditStudent from "./components/views/Student/EditStudent";
 
@@ -88,7 +87,7 @@ const App = () => {
                   path="/question/:id"
                   component={DiscussionQuestionPage}
                 />
-                <Route exact path="/new-question/:id" component={NewQuestion} />
+                <Route exact path="/new-question/:id" component={PostQuestion} />
                 <Route exact path="/new-answer/:id" component={PostAnswer} />
                 <Route exact path="/student/:id" component={StudentProfile} />
                 <Route exact path="/profiles" component={Profiles} />

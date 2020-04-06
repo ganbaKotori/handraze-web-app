@@ -46,10 +46,9 @@ const DiscussionQuestionPage = ({
       </div>
       <div class="row">
         <div class="col-md-4">
-          <a type="button" class="btn btn-primary btn-lg center-btn " href="#">
-          <Link className="link" to={`/new-answer/${question._id}`}> Submit Answer</Link>
-           
-          </a>
+
+          <Link className="btn btn-primary btn-lg center-btn" to={`/new-answer/${question._id}`}> Submit Answer</Link>
+
         </div>
         <div class="col-8 ">
           <Answers answer={question.answer ? question.answer : []}/>

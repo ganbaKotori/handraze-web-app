@@ -14,13 +14,13 @@ export default function(state = initialState, action) {
     case CREATE_QUESTION:
       return {
         ...state,
-        courses: [...state.questions, payload],
+        questions: [...state.questions, payload],
         loading: false
       }
     case CREATE_ANSWER:
       return {
         ...state,
-        courses: [...state.questions, payload],
+        questions : [...state.questions, payload],
         loading: false
       }
     case GET_QUESTIONS:

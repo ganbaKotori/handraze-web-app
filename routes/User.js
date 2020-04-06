@@ -113,7 +113,7 @@ router.route("/register").post(async (req, res) => {
       password: newUser.password
     };
 
-    sender.sendEmail(data);
+    //sender.sendEmail(data);
 
     // Send a new JWT when a user is registered
     const payload = {

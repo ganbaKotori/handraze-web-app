@@ -45,7 +45,7 @@ const Course = ({ getCourse, course: { course, loading }, match }) => {
           <h1>{course.title}</h1>
           <p>{course.description}</p>
           <p>Section {course.sectionNumber}</p>
-          Lectures: {dayOfWeek} from <b>https://youtu.be/x1JQuWxt3cE</b> to{" "}
+          Lectures: {dayOfWeek} from <b>{course.classStart}</b> to{" "}
           <b>{course.classEnd}</b>
         </Container>
       </Jumbotron>

@@ -47,6 +47,7 @@ router.post("/", auth, async (req, res) => {
       name: name
     });
     console.log(course)
+    console.log("discussion part where course is found")
     if (course) {
       await discussionQuestion.save().then(question => {
         course.discussion.unshift(question._id);
