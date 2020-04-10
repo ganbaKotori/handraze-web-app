@@ -12,7 +12,7 @@ router.route("/me").get(auth, async (req, res) => {
       user: req.user.id
     })
       .populate("user", ["firstName", "lastName"])
-      .populate("course", ["title", "description"]);
+      .populate("course", ["title", "description","classStart", "classEnd","dayOfWeek"]);
     if (!profile) {
       return res
         .status(400)
@@ -31,7 +31,7 @@ router.route("/").get(async (req, res) => {
   try {
     const studentProfiles = await StudentProfile.find()
       .populate("user", ["firstName", "lastName"])
-      .populate("course", ["title", "description"]);
+      .populate("course", ["title", "description", "classStart", "classEnd","dayOfWeek"]);
     res.json(studentProfiles);
   } catch (error) {
     res.status(400).json("Error: " + error);
