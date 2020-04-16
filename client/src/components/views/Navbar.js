@@ -19,24 +19,24 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const authLinks = (
     <Fragment>
-      <Link to="/profiles">
+      <Nav.Link to="/profiles">
         <Button variant="primary">Profiles</Button>
-      </Link>{" "}
-      <Link to="/student">
+      </Nav.Link>{" "}
+      <Nav.Link to="/student">
         <Button variant="primary">Student</Button>
-      </Link>{" "}
-      <Link to="/instructor">
+      </Nav.Link>{" "}
+      <Nav.Link to="/instructor">
         <Button variant="primary">Instructor</Button>
-      </Link>{" "}
-      <Link to="/" onClick={logout}>
+      </Nav.Link>{" "}
+      <Nav.Link to="/" onClick={logout}>
         Logout
-      </Link>
+      </Nav.Link  >
     </Fragment>
   );
 
   const guestLinks = (
     <Fragment>
-      <Link to="/login">Login</Link> <Link to="/register">Register</Link>
+      <Nav.Link to="/login">Login</Nav.Link> <Nav.Link to="/register">Register</Nav.Link>
     </Fragment>
   );
   return (
@@ -61,13 +61,17 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         bg={profile == "instructor" ? "flat" : "orange"}
         variant="dark"
       >
-        <Link to="/">
-          <img src={handraze} className="logo" alt="student" />
-        </Link>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
+        <Navbar.Brand to="/">HandRaze</Navbar.Brand>
+        <br />
+
+        <Navbar.Collapse id="responsive-navbar-nav">
 
         {!loading && (
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
         )}
+        </Navbar.Collapse >
       </Navbar>
     </>
   );

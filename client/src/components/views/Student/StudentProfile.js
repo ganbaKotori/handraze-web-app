@@ -31,8 +31,8 @@ const Profile = ({
               <Col xs={7}>
                 {" "}
                 <div className="row ">
-                  <div className="col-12 col-md-8">
-                    <div className="row col-md-8">
+                  <div className="col-12 col-xs-12">
+                    <div className="row col-xs-12">
                     </div>
                     <div className="row prof-profile">
                       <div className="col-4">
@@ -41,7 +41,7 @@ const Profile = ({
                           className="profpic"
                         />
                       </div>
-                      <div className="col-6">
+                      <div className="col-6 col-xs-12">
                         <p className="lead">Student</p>
                         <p className="lead">
                           {studentProfile.user && studentProfile.user.firstName ? studentProfile.user && studentProfile.user.firstName : ""}{" "}
