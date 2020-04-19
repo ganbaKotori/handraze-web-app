@@ -9,10 +9,11 @@ import  ChatCard  from "./ChatCard";
 export class ChatPage extends Component {
     state= {
         chatMessage: "",
+        chatRoom: ""
     }
     componentDidMount() {
         let server = "http://localhost:3000";
-        this.props.dispatch(getChats());
+        this.props.dispatch(getChats("Alex"));
         this.socket = io(server);
         this.socket.on("Output Chat Message", messageFromBackEnd => {
             console.log(messageFromBackEnd)
@@ -39,6 +40,7 @@ export class ChatPage extends Component {
         let userId = this.props.user1.user._id;
         let userName = this.props.user1.user.firstName;
         let userImage = this.props.user1.user.lastName;
+        let room = this.props.user1.user.firstName;
         let nowTime = moment();
         let type = "Text"
 
@@ -48,6 +50,7 @@ export class ChatPage extends Component {
             userName,
             userImage,
             nowTime,
+            room,
             type
         });
         this.setState({ chatMessage: "" })

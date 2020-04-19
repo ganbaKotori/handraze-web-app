@@ -3,9 +3,11 @@ const router = express.Router();
 const {Chat} = require("../models/chat.model");
 const auth = require("../middleware/auth");
 
-router.get("/getchats",auth, async (req, res) => {
+router.get("/getchats/:id",auth, async (req, res) => {
     console.log("chat router is bneing used")
-    await Chat.find()
+    await Chat.find({
+        "room" : req.params.id
+    })
         .populate("sender")
         .exec((err, chats) => {
             console.log(chats)

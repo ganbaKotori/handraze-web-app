@@ -90,15 +90,26 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", socket => {
+  var defaultRoom = 'general';
+  var rooms = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
+  //Emit the rooms array
+  socket.emit('setup', {
+    rooms: rooms
+  });
+  
   socket.on("Input Chat Message", msg => {
+
+    //msg.room = defaultRoom;
+    socket.join(defaultRoom);
+    io.in(defaultRoom).emit("user joined", msg);
     connect.then(db => {
       try {
-        let chat = new Chat({message: msg.chatMessage, sender: msg.userId, type: msg.userName })
+        let chat = new Chat({message: msg.chatMessage, sender: msg.userId, room: msg.room, type: msg.userName })
 
         chat.save((err,doc)=> {
           if(err) return res.json({success: false, err})
 
-          Chat.find({"_id": doc._id})
+          Chat.find({room: defaultRoom})
           .populate("sender")
           .exec((err, doc) => {
             return io.emit("Output Chat Message", doc);
