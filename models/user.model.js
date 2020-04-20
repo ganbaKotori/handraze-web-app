@@ -16,6 +16,11 @@ const userSchema = new Schema(
       required: true,
       minlength: 6
     },
+    passwordConfirmation: {
+      type: String,
+      required: true,
+      minlength: 6
+    },
     lastName: {
       type: String,
       required: true,
@@ -45,7 +50,11 @@ userSchema.statics.authenticate = function(email, password, callback) {
       var err = new Error("User not found.");
       err.status = 401;
       return callback(err);
-    }
+      }
+      if (!(user.password === user.passwordConfirmation)) {
+          var passErr = new Error("Passwords do not match!!!");
+          return callback(passErr);
+      }
     bcrypt.compare(password, user.password, function(err, result) {
       if (result === true) {
         return callback(null, user);

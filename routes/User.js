@@ -82,6 +82,7 @@ router.route("/register").post(async (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
+  const passwordConf = req.body.passwordConf;
   const avatar = req.body.avatar; // avatar image url
 
   try {
@@ -96,6 +97,7 @@ router.route("/register").post(async (req, res) => {
     const newUser = new User({
       email,
       password,
+      passwordConf,
       lastName,
       firstName,
       avatar
