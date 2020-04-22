@@ -9,6 +9,14 @@ class Lecture extends Component {
     super(props);
     this.state = { showPopup: false };
     this.test = this.test.bind(this);
+    this.state = {
+      id : this.props.match.params.id
+  }
+
+  }
+
+  componentDidMount() {
+    
   }
 
   test() {
@@ -32,12 +40,15 @@ class Lecture extends Component {
       .save();
   }
 
+
+
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup
     });
   }
   render() {
+    console.log(this.state.id)
     return (
       <Fragment>
         <div style={{ "margin-top": '5em' }}>
@@ -48,7 +59,7 @@ class Lecture extends Component {
           <div className="lecture">
           <Row>
             <Col><PDF /></Col>
-            <Col><br/><br/><ChatPage/></Col>
+            <Col><br/><br/><ChatPage inputValue={this.state.id}/></Col>
           </Row>
             </div>
           

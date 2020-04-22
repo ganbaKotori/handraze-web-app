@@ -1,10 +1,36 @@
 const router = require("express").Router();
-let Classroom = require("../models/classroom.model");
+let Lecture = require("../models/lecture.model");
 let Student = require("../models/student.model");
 let Course = require("../models/course.model");
 
 //Load Input Validation
 const validateClassroomInput = require("../validation/classroom-validation");
+
+// @route   POST api/classes
+// @desc    Create a class
+// @access  Public
+router.route("/").post((req, res) => {
+  const topic = req.body.topic;
+  const course = req.body.course;
+  //const inSession = req.body.inSession;
+  //const sessionStart = req.body.sessionStart;
+  //const sessionEnd = req.body.sessionEnd;
+
+  //const { errors, isValid } = validateClassroomInput(req.body);
+
+  /**if (!isValid) {
+    return res.status(400).json(errors);
+  }*/
+
+  const newLecture = new Lecture({
+    topic,
+    course
+  });
+  newLecture
+    .save()
+    .then(() => res.json("Lecture started!"))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
 // @route   GET api/classes/:id
 // @desc    Get a class
@@ -13,40 +39,11 @@ router.get("/:id", getClassroom, (req, res) => {
   res.json(res.classroom);
 });
 
-// @route   POST api/classes
-// @desc    Create a class
-// @access  Public
-router.route("/").post((req, res) => {
-  const topic = req.body.topic;
-  const cid = req.body.cid;
-  const inSession = req.body.inSession;
-  const sessionStart = req.body.sessionStart;
-  const sessionEnd = req.body.sessionEnd;
-
-  const { errors, isValid } = validateClassroomInput(req.body);
-
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  const newClassroom = new Classroom({
-    topic,
-    cid,
-    inSession,
-    sessionStart,
-    sessionEnd
-  });
-  newClassroom
-    .save()
-    .then(() => res.json("Classroom added!"))
-    .catch(err => res.status(400).json("Error: " + err));
-});
-
 // @route   GET api/classes
 // @desc    Get all classes
 // @access  Public
 router.route("/").get((req, res) => {
-  Classroom.find()
+  Lecture.find()
     .then(classrooms => res.json(classrooms))
     .catch(err => res.status(400).json("Error: " + err));
 });

@@ -2,8 +2,10 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCourse } from "../../../actions/course";
+import { getLectures } from "../../../actions/lecture";
 import { Link } from "react-router-dom";
 import DiscussionQuestions from "./DiscusssionQuestion/DiscussionQuestions";
+import LectureList from "../Lecture/LectureList";
 import {
   Col,
   Spinner,
@@ -16,12 +18,15 @@ import {
 } from "react-bootstrap";
 import chalkboard from "../../../img/chalkboard.jpg";
 
-const Course = ({ getCourse, course: { course, loading }, match }) => {
+const Course = ({ getLectures, getCourse, course: { course, loading }, lectures: { lectures, loading2 }, match }) => {
   useEffect(() => {
     getCourse(match.params.id);
-  }, [getCourse]);
+    getLectures();
+  }, [getCourse, getLectures]);
   console.log("course info should appear here");
   console.log(course);
+  console.log(lectures);
+  
   var dayOfWeek;
   if (course !== null) {
     dayOfWeek = course.dayOfWeek.map(day => (
@@ -121,6 +126,7 @@ const Course = ({ getCourse, course: { course, loading }, match }) => {
             </Col>
             <Col xs={6}>
               <h3>Lectures</h3>
+              <LectureList lecture={ lectures ? lectures : []}/>
               <div class="row">
                 <div class="col">
                   <img
@@ -236,11 +242,14 @@ const Course = ({ getCourse, course: { course, loading }, match }) => {
 
 Course.propTypes = {
   getCourse: PropTypes.func.isRequired,
-  course: PropTypes.object.isRequired
+  course: PropTypes.object.isRequired,
+  getLectures: PropTypes.func.isRequired,
+  lectures: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  course: state.course
+  course: state.course,
+  lectures: state.lecture
 });
 
-export default connect(mapStateToProps, { getCourse })(Course);
+export default connect(mapStateToProps, { getCourse,getLectures })(Course);

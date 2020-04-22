@@ -16,19 +16,18 @@ const { Chat } = require("./models/chat.model");
 app.use(cors());
 
 // DEFINE ROUTES HERE
-
+const authRouter = require("./routes/Auth");
 const chatRouter = require("./routes/Chat");
-const userRouter = require("./routes/User");
-const studentRouter = require("./routes/Student");
-const instructorRouter = require("./routes/Instructor");
 const courseRouter = require("./routes/Course");
-const classroomRouter = require("./routes/Classroom");
 const discussionQuestionRouter = require("./routes/DiscussionQuestion");
-//const lqRouter = require("./routes/LectureQuestion");
-//const dqRouter = require("./routes/DiscussionQuestion");
-//const answerRouter = require("./routes/Answer");
-const authRouter = require("./routes/auth");
 const fileRouter = require("./routes/FileUpload");
+const instructorRouter = require("./routes/Instructor");
+const lectureRouter = require("./routes/Lecture");
+const studentRouter = require("./routes/Student");
+const userRouter = require("./routes/User");
+//const lqRouter = require("./routes/LectureQuestion");
+
+
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:5000"); // update to match the domain you will make the request from
@@ -48,12 +47,14 @@ app.use(bodyParser.json());
 app.use(cookieParser());    
 
 // SETUP ROUTES HERE
+app.use("/api/courses", courseRouter);
 app.use("/api/chats", chatRouter);
+app.use("/api/lectures", lectureRouter);
 app.use("/api/users", userRouter);
 app.use("/api/instructors", instructorRouter);
 app.use("/api/students", studentRouter);
-app.use("/api/courses", courseRouter);
-app.use("/api/classes", classroomRouter);
+
+
 app.use("/api/questions", discussionQuestionRouter);
 //app.use("/api/lecture", lqRouter);
 //app.use("/api/discussion", dqRouter);
@@ -100,8 +101,8 @@ io.on("connection", socket => {
   socket.on("Input Chat Message", msg => {
 
     //msg.room = defaultRoom;
-    socket.join(defaultRoom);
-    io.in(defaultRoom).emit("user joined", msg);
+    //
+    //io.in(msg.room).emit("user joined", msg);
     connect.then(db => {
       try {
         let chat = new Chat({message: msg.chatMessage, sender: msg.userId, room: msg.room, type: msg.userName })
@@ -109,10 +110,12 @@ io.on("connection", socket => {
         chat.save((err,doc)=> {
           if(err) return res.json({success: false, err})
 
-          Chat.find({room: defaultRoom})
+          Chat.find({room: msg.room})
           .populate("sender")
           .exec((err, doc) => {
-            return io.emit("Output Chat Message", doc);
+            socket.join(msg.room);
+            console.log(doc)
+            return io.to(msg.room).emit("Output Chat Message", doc.slice(-1).pop());
           })
         })
       } catch (error) {
