@@ -1,17 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const { Chat } = require("./models/chat.model");
 const app = express();
 const cors = require('cors')
 const path = require("path");
 
-
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-
 const server = require("http").createServer(app);
 const io = require("socket.io")(server)
-
-const { Chat } = require("./models/chat.model");
 
 app.use(cors());
 
@@ -25,9 +22,6 @@ const instructorRouter = require("./routes/Instructor");
 const lectureRouter = require("./routes/Lecture");
 const studentRouter = require("./routes/Student");
 const userRouter = require("./routes/User");
-//const lqRouter = require("./routes/LectureQuestion");
-
-
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:5000"); // update to match the domain you will make the request from
@@ -38,29 +32,21 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-
-
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());    
 
 // SETUP ROUTES HERE
+app.use("/api/auth", authRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/chats", chatRouter);
-app.use("/api/lectures", lectureRouter);
-app.use("/api/users", userRouter);
 app.use("/api/instructors", instructorRouter);
+app.use("/api/lectures", lectureRouter);
 app.use("/api/students", studentRouter);
-
-
 app.use("/api/questions", discussionQuestionRouter);
-//app.use("/api/lecture", lqRouter);
-//app.use("/api/discussion", dqRouter);
-//app.use("/api/answer", answerRouter);
-app.use("/api/auth", authRouter);
 app.use("/api/upload", fileRouter);
+app.use("/api/users", userRouter);
 
 app.use(express.json());
 
@@ -99,17 +85,11 @@ io.on("connection", socket => {
   });
   
   socket.on("Input Chat Message", msg => {
-
-    //msg.room = defaultRoom;
-    //
-    //io.in(msg.room).emit("user joined", msg);
     connect.then(db => {
       try {
         let chat = new Chat({message: msg.chatMessage, sender: msg.userId, room: msg.room, type: msg.userName })
-
         chat.save((err,doc)=> {
           if(err) return res.json({success: false, err})
-
           Chat.find({room: msg.room})
           .populate("sender")
           .exec((err, doc) => {

@@ -166,6 +166,7 @@ export const createProfile = (
       history.push("./instructor");
     }
   } catch (error) {
+    alert(error.response.data)
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status }
@@ -198,6 +199,7 @@ export const createProfile2 = (
       history.push("./student");
     }
   } catch (error) {
+    alert(error.response.data)
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status }

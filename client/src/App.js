@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import Alert from "./components/views/Alert";
 import ChatPage from "./components/views/Lecture/ChatPage";
 import Course from "./components/views/Course/Course";
 import CreateAccount from "./components/views/Auth/CreateAccount";
@@ -47,7 +48,9 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
+          <Alert/>
           <Route exact path="/" component={Landing} />
+          
           <Switch>
             <PrivateRoute exact path="/course/:id" component={Course} />
             <Route exact path="/lecture/:id" component={Lecture} />

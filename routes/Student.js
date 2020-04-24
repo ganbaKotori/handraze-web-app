@@ -20,7 +20,7 @@ router.route("/").post([auth], async (req, res) => {
   newStudentProfile
     .save()
     .then(() => res.json("Student profile added!"))
-    .catch(err => res.status(400).json("Error: " + err));
+    .catch(err => res.status(400).json(err.message));
 });
 
 // @route   GET api/students
@@ -70,7 +70,6 @@ router.route("/me").get(auth, async (req, res) => {
   }
 });
 
-
 // @route   GET api/students/user/:user_id
 // @desc    Retrieve student profile by user ID
 // @access  Public
@@ -86,8 +85,6 @@ router.route("/user/:user_id").get(async (req, res) => {
     res.status(400).json("Error: " + error);
   }
 });
-
-
 
 //@route    PUT api/student/courses
 //@desc     Add course
@@ -121,8 +118,6 @@ router.get("/courses/:id", getStudent, (req, res) => {
 
   // Call the attribute courses
 });
-
-
 
 //------------------------------------------------------------------------------
 

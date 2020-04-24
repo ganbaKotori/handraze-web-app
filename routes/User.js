@@ -90,7 +90,13 @@ router.route("/register").post(async (req, res) => {
     if (user) {
       return res
         .status(400)
-        .json({ errors: [{ message: "User already exists!" }] });
+        .json("User already exists!");
+    }
+
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
     }
 
     const newUser = new User({
@@ -133,7 +139,7 @@ router.route("/register").post(async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send(err.message);
   }
 });
 
