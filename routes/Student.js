@@ -1,8 +1,54 @@
 const router = require("express").Router();
 let StudentProfile = require("../models/student.model");
-const auth = require("../middleware/auth");
 let Course = require("../models/course.model");
+const auth = require("../middleware/auth");
 const validateStudentInput = require("../validation/student-validation"); // Load Input Validation
+
+// @route   POST api/students
+// @desc    Create a student profile
+// @access  Private
+router.route("/").post([auth], async (req, res) => {
+  const { errors, isValid } = validateStudentInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  const newStudentProfile = new StudentProfile({
+    year: req.body.year,
+    institution: req.body.institution,
+    user: req.user.id
+  });
+  newStudentProfile
+    .save()
+    .then(() => res.json("Student profile added!"))
+    .catch(err => res.status(400).json(err.message));
+});
+
+// @route   GET api/students
+// @desc    Retrieve all students
+// @access  Public
+router.route("/").get(async (req, res) => {
+  try {
+    const studentProfiles = await StudentProfile.find()
+      .populate("user", ["firstName", "lastName"])
+      .populate("course", ["title", "description", "classStart", "classEnd","dayOfWeek"]);
+    res.json(studentProfiles);
+  } catch (error) {
+    res.status(400).json("Error: " + error);
+  }
+});
+
+// @route   DELETE api/students/:id
+// @desc    Delete a student profile
+// @access  Private
+router.delete("/delete/:id", getStudent, async (req, res) => {
+  try {
+    await res.student.remove();
+    res.json({ message: "Successfully deleted student!" }); // good
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // @route   GET api/students/me
 // @desc    Retrieve current student profile
 // @access  Private
@@ -24,20 +70,6 @@ router.route("/me").get(auth, async (req, res) => {
   }
 });
 
-// @route   GET api/students
-// @desc    Retrieve all students
-// @access  Public
-router.route("/").get(async (req, res) => {
-  try {
-    const studentProfiles = await StudentProfile.find()
-      .populate("user", ["firstName", "lastName"])
-      .populate("course", ["title", "description", "classStart", "classEnd","dayOfWeek"]);
-    res.json(studentProfiles);
-  } catch (error) {
-    res.status(400).json("Error: " + error);
-  }
-});
-
 // @route   GET api/students/user/:user_id
 // @desc    Retrieve student profile by user ID
 // @access  Public
@@ -54,27 +86,8 @@ router.route("/user/:user_id").get(async (req, res) => {
   }
 });
 
-// @route   POST api/students
-// @desc    Create a student profile
-// @access  Private
-router.route("/").post([auth], async (req, res) => {
-  const { errors, isValid } = validateStudentInput(req.body);
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-  const newStudentProfile = new StudentProfile({
-    year: req.body.year,
-    institution: req.body.institution,
-    user: req.user.id
-  });
-  newStudentProfile
-    .save()
-    .then(() => res.json("Student profile added!"))
-    .catch(err => res.status(400).json("Error: " + err));
-});
-
 //@route    PUT api/student/courses
-//@desc     Add profile experience
+//@desc     Add course
 //@access   Private
 router.put("/courses", auth, async (req, res) => {
   try {
@@ -104,18 +117,6 @@ router.get("/courses/:id", getStudent, (req, res) => {
   res.json(res.student); // gets a single student with that ID
 
   // Call the attribute courses
-});
-
-// @route   DELETE api/students/:id
-// @desc    Delete a student profile
-// @access  Public
-router.delete("/delete/:id", getStudent, async (req, res) => {
-  try {
-    await res.student.remove();
-    res.json({ message: "Successfully deleted student!" }); // good
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
 });
 
 //------------------------------------------------------------------------------

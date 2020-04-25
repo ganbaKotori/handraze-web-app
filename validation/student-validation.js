@@ -2,7 +2,7 @@ const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
 module.exports = function validateRegisterInput(data) {
-  let errors = {};
+  let errors = "";
 
   data.id = !isEmpty(data.id) ? data.id : "";
   data.year = !isEmpty(data.year) ? data.year : "";
@@ -10,19 +10,19 @@ module.exports = function validateRegisterInput(data) {
   var years = ["freshman", "sophmore", "junior", "senior"];
 
   if (!years.includes(data.year)) {
-    errors.year = "Incorrect year";
+    errors = "Incorrect year";
   }
 
   if (Validator.isEmpty(data.year)) {
-    errors.year = "Year is required";
+    errors = "Year is required";
   }
 
   if (Validator.isEmpty(data.institution)) {
-    errors.institution = "Institution is required";
+    errors = "Institution is required";
   }
 
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: errors == ""
   };
 };
