@@ -5,7 +5,7 @@ const isEmpty = require("./is-empty");
 // const Course = require("../routes/Course");
 
 module.exports = function validateRegisterInput(data) {
-  let errors = {};
+  let errors = "";
   const minRating = 1;
   const maxRating = 5;
 
@@ -24,11 +24,11 @@ module.exports = function validateRegisterInput(data) {
 */
 
   if (!Validator.isLength(data.topic, { min: 5, max: 30 })) {
-    errors.classTopic = "Classroom topic must be between 5 and 30 characters";
+    errors = "Classroom topic must be between 5 and 30 characters";
   }
 
   if (Validator.isEmpty(data.cid)) {
-    errors.classID = "Classroom ID is required";
+    errors = "Classroom ID is required";
   }
 
 // need to check if cid is part of a Course by looking for sectionID?
@@ -40,19 +40,19 @@ module.exports = function validateRegisterInput(data) {
   //});
 
   if (Validator.isEmpty(data.inSession)) {
-    errors.classInSession = "Must specify if classroom is in session";
+    errors = "Must specify if classroom is in session";
   }
 
   if (Validator.isEmpty(data.sessionStart)) {
-    errors.classSessionStart = "Session Start is required";
+    errors = "Session Start is required";
   }
 
   if (Validator.isEmpty(data.sessionEnd)) {
-    errors.classSessionEnd = "Session End is required";
+    errors = "Session End is required";
   }
 
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: errors == ""
   };
 };

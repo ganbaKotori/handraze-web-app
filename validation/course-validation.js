@@ -2,7 +2,7 @@ const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
 module.exports = function validateRegisterInput(data) {
-  let errors = {};
+  let errors = "";
 
   data.title = !isEmpty(data.title) ? data.title : "";
   data.description = !isEmpty(data.description) ? data.description : "";
@@ -22,23 +22,23 @@ module.exports = function validateRegisterInput(data) {
   ];
 
   if (!Validator.isLength(data.title, { min: 10, max: 30 })) {
-    errors.classTitle = "Class title must be between 10 and 30 characters";
+    errors = "Class title must be between 10 and 30 characters";
   }
 
   if (Validator.isEmpty(data.description)) {
-    errors.classDescription = "Class descripton is required";
+    errors = "Class descripton is required";
   }
 
   if (Validator.isEmpty(data.classStart)) {
-    errors.classStart = "Class start is required";
+    errors = "Class start is required";
   }
 
   if (Validator.isEmpty(data.classEnd)) {
-    errors.classStart = "Class end is required";
+    errors = "Class end is required";
   }
 
   if (!data.dayOfWeek.some(r => week.indexOf(r) >= 0)) {
-    errors.weekDay = "Incorrect day of the week";
+    errors = "Incorrect day of the week";
   }
 
   //if (Validator.isEmpty(data.dayOfWeek)) {
@@ -46,15 +46,15 @@ module.exports = function validateRegisterInput(data) {
   //}
 
   if (Validator.isEmpty(data.location)) {
-    errors.location = "Location is required";
+    errors = "Location is required";
   }
 
   if (isNaN(data.sectionNumber)) {
-    errors.sectionNumber = "Section number must be a number";
+    errors = "Section number must be a number";
   }
 
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: errors == ""
   };
 };
