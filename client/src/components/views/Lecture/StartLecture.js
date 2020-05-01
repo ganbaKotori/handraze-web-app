@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import { startLecture } from "../../../actions/lecture";
 
-const StartLecture = ({ startLecture, history }) => {
+const StartLecture = ({ startLecture, history, match }) => {
+  const [course, setId] = useState(2);
+  useEffect(() => {
+    setId(match.params.id);
+    console.log(course);
+  }, null);
   const [formData, setFormData] = useState({
     topic: "",
     course: ""
   });
 
-  const { topic, course } = formData;
+  const { topic } = formData;
 
   const onChange = e =>
     setFormData({
@@ -20,7 +25,7 @@ const StartLecture = ({ startLecture, history }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    startLecture(formData, history)
+    startLecture({topic, course}, history)
   };
 
   return (
@@ -44,20 +49,7 @@ const StartLecture = ({ startLecture, history }) => {
             required
           />
         </div>
-        <label for="text">
-            Course
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="course"
-            aria-describedby="emailHelp"
-            name="course"
-            value={course}
-            onChange={e => onChange(e)}
-            placeholder="ourse"
-            required
-          />
+
         <br/>
         <button type="submit" class="btn btn-danger">
           Begin Lecture

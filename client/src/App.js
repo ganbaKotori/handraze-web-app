@@ -93,7 +93,7 @@ const App = () => {
                 />
                 <Route exact path="/new-question/:id" component={PostQuestion} />
                 <Route exact path="/new-answer/:id" component={PostAnswer} />
-                <Route exact path="/new-lecture" component={StartLecture} />
+                <Route exact path="/new-lecture/:id" component={StartLecture} />
                 <Route exact path="/student/:id" component={StudentProfile} />
                 <Route exact path="/profiles" component={Profiles} />
                 <Route exact path="/questions" component={Questions} />

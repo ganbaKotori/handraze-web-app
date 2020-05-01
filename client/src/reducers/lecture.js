@@ -1,4 +1,4 @@
-import { GET_LECTURES, CREATE_LECTURE, LECTURE_ERROR } from "../actions/types";
+import { GET_LECTURE, GET_LECTURES, CREATE_LECTURE, LECTURE_ERROR } from "../actions/types";
 
 const initialState = {
   lectures: [],
@@ -13,13 +13,19 @@ export default function(state = initialState, action) {
     case CREATE_LECTURE:
       return {
         ...state,
-        lectures: [...state.lectures, payload],
+        lectures: [payload,...state.lectures],
         loading: false
       }
     case GET_LECTURES:
         return {
           ...state,
           lectures: payload,
+          loading: false
+        };
+    case GET_LECTURE:
+        return {
+          ...state,
+          lecture: payload,
           loading: false
         };
     case LECTURE_ERROR:

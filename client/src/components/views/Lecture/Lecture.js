@@ -1,8 +1,10 @@
 import React, { Fragment,Component } from "react";
 import { PDF } from "./PDFviewer";
 import htmlpdf from "html2pdf.js";
+import { connect } from "react-redux";
 import ChatPage from "./ChatPage"
-import {Row , Col} from "react-bootstrap";
+import {Row , Col ,Jumbotron, Container} from "react-bootstrap";
+import { getLecture } from "../../../actions/lecture";
 
 class Lecture extends Component {
   constructor(props) {
@@ -15,8 +17,10 @@ class Lecture extends Component {
 
   }
 
-  componentDidMount() {
-    
+  componentWillMount() {
+    const { getLecture } = this.props
+     getLecture(this.state.id)
+     console.log(this.props)
   }
 
   test() {
@@ -48,20 +52,25 @@ class Lecture extends Component {
     });
   }
   render() {
-    console.log(this.state.id)
+    const { lecture } = this.props.lecture
+    //console.log(this.props.lecture.lecture.topic)
     return (
       <Fragment>
-        <div style={{ "margin-top": '5em' }}>
-          <div className="container">
-          <button onClick={this.test}>Generate PDF</button>
-<h1>Introduction to David Garza 101: Wackology</h1>
-          </div>
-          <div className="lecture">
+          <Jumbotron fluid className="Logo">
+        <Container className="jumbotron_text">
+          <h5>Topic</h5>
+    <h3>{this.props.lecture.lecture && this.props.lecture.lecture.topic? this.props.lecture.lecture.topic: "loading"} </h3>
+        <button onClick={this.test}>Generate PDF</button>
+        </Container>
+      </Jumbotron>
           <Row>
-            <Col><PDF /></Col>
-            <Col><br/><br/><ChatPage inputValue={this.state.id}/></Col>
-          </Row>
-            </div>
+          <Col>
+          <PDF />
+          </Col>
+          <Col>
+          <ChatPage inputValue={this.state.id}/>
+          </Col>
+        </Row>
           
        
           
@@ -80,10 +89,27 @@ class Lecture extends Component {
               </div>
             </div>
           </div>
-      </div>
+        
+        
+        
       </Fragment>
     );
   }
 }
 
-export default Lecture;
+
+const mapStateToProps = (state) => {
+  return {
+    lecture: state.lecture,
+    lectureLoading: state.lecture.loading
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getLecture: (id) => dispatch(getLecture(id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lecture);
+

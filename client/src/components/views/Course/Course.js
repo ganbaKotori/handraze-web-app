@@ -16,7 +16,6 @@ import {
   Row,
   ListGroup
 } from "react-bootstrap";
-import chalkboard from "../../../img/chalkboard.jpg";
 
 const Course = ({ getLectures, getCourse, course: { course, loading }, lectures: { lectures, loading2 }, match }) => {
   useEffect(() => {
@@ -58,6 +57,7 @@ const Course = ({ getLectures, getCourse, course: { course, loading }, lectures:
         <Container>
           <Row>
             {" "}
+            <Link to={`/new-lecture/${course._id}`} className="btn btn-primary btn-lg btn-block btn-margin">Create Lecture</Link>
             <a href="#" class="btn btn-primary btn-lg btn-block btn-margin">
               Join Lecture
             </a>
@@ -67,7 +67,7 @@ const Course = ({ getLectures, getCourse, course: { course, loading }, lectures:
             <br />
           </Row>
           <Row>
-            <Col>
+            {/*<Col>
               <h3>Activity Board</h3>{" "}
               <div class="newsfeed">
                 <div class="list-group activity-board">
@@ -123,52 +123,23 @@ const Course = ({ getLectures, getCourse, course: { course, loading }, lectures:
                   </a>
                 </div>
               </div>
-            </Col>
-            <Col xs={6}>
-              <h3>Lectures</h3>
+            </Col>*/}
+            <Col >
               <LectureList lecture={ lectures ? lectures : []}/>
-              <div class="row">
-                <div class="col">
-                  <img
-                    src="https://via.placeholder.com/50"
-                    class="img-thumbnail lectures "
-                  />
-                </div>
-                <div class="col">
-                  <img
-                    src="https://via.placeholder.com/50"
-                    class="lectures img-thumbnail"
-                  />
-                </div>
-                <div class="w-100"></div>
-                <div class="col">
-                  <img
-                    src="https://via.placeholder.com/50"
-                    class="lectures img-thumbnail"
-                  />
-                </div>
-                <div class="col">
-                  <img
-                    src="https://via.placeholder.com/50"
-                    class="lectures img-thumbnail"
-                  />
-                </div>
-              </div>
             </Col>
           </Row>
           <Row>
             <Col>
               <DiscussionQuestions
                 question={course.discussion ? course.discussion : []}
-              />
-              
-              
-                <Link to={`/new-question/${course._id}`} class="btn btn-danger btn-lg btn-block btn-margin">
-                Ask Question
-                </Link>
+              />              
+              <Link to={`/new-question/${course._id}`} class="btn btn-danger btn-lg btn-block btn-margin">
+              Ask Question
+              </Link>
              
             </Col>
             <Col>
+              <br/>
               <h3>Peer Notes</h3>
               <div class="newsfeed">
                 <div class="list-group notes-board">

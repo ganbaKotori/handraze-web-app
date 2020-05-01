@@ -12,6 +12,7 @@ export class LectureCard extends Component {
   }
 
   render() {
+    var date = new Date(this.props.inputValue.sessionStart);
     return (
       <Link
         className="list-group-item list-group-item-action flex-column align-items-start"
@@ -19,9 +20,10 @@ export class LectureCard extends Component {
         to={`/lecture/${this.props.inputValue._id}`}
       >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{this.props.inputValue.topic}</h5>
+          <h5 class="mb-1">{this.props.inputValue.topic}</h5> {this.props.inputValue.sessionEnd? <span>Live Now!</span>: (<span></span>)}
         </div>
-        <span class="mb-1">{this.props.inputValue.course}</span>
+        <span class="mb-1">{date.toDateString()}</span>
+        
       </Link>
     );
   }

@@ -14,6 +14,7 @@ const DiscussionQuestions = ({ question }) => {
 
   return (
     <Fragment>
+      <br/>
       <h3>Discussion Questions</h3>{" "}
       <div class="newsfeed">
         <div class="list-group notes-board">{questions}</div>
