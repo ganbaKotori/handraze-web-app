@@ -19,24 +19,21 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const authLinks = (
     <Fragment>
-      <Nav.Link to="/profiles">
-        <Button variant="primary">Profiles</Button>
-      </Nav.Link>{" "}
-      <Nav.Link to="/student">
-        <Button variant="primary">Student</Button>
+      <Nav.Link className="navbar-link" to="/student">
+      <Link to="/student"><b>Student</b></Link>
       </Nav.Link>{" "}
       <Nav.Link to="/instructor">
-        <Button variant="primary">Instructor</Button>
+      <Link to="/instructor"><b>Instructor</b></Link>
       </Nav.Link>{" "}
       <Nav.Link to="/" onClick={logout}>
-        Logout
+      <b> Logout</b>
       </Nav.Link  >
     </Fragment>
   );
 
   const guestLinks = (
     <Fragment>
-      <Nav.Link to="/login">Login</Nav.Link> <Nav.Link to="/register">Register</Nav.Link>
+      <Nav.Link to="/login"><b>Login</b></Nav.Link> | <Nav.Link to="/register"><b>Register</b></Nav.Link>
     </Fragment>
   );
   return (
@@ -52,6 +49,9 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       padding: 1rem 1.5rem;
       font-size: 1.5rem;
     }
+    a:hover {
+      color: blue;
+    } 
     `}
       </style>
 
@@ -60,13 +60,14 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         expand="lg"
         bg={profile == "instructor" ? "flat" : "orange"}
         variant="dark"
+        className="navbar-link"
       >
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-        <Navbar.Brand to="/">HandRaze</Navbar.Brand>
+        <Navbar.Brand to="/"> <Link className="navbar-link" to="/instructor"><b>handraze</b></Link></Navbar.Brand>
         <br />
 
-        <Navbar.Collapse id="responsive-navbar-nav">
+        <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
 
         {!loading && (
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>

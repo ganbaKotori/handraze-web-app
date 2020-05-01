@@ -64,6 +64,7 @@ export class ChatPage extends Component {
         return (
             <React.Fragment>
                 {console.log(this.props.inputValue)}
+                <div >
             <div class="newsfeed">
             <div class="list-group notes-board"> {this.renderCards()}
                     <div
@@ -103,6 +104,7 @@ export class ChatPage extends Component {
                 </div>
                     </Form>
                   </div>
+            </div>
             </div>
         </React.Fragment>
         )

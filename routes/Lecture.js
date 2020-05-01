@@ -28,17 +28,17 @@ router.route("/").post((req, res) => {
   });
   newLecture
     .save()
-    .then(() => res.json("Lecture started!"))
+    .then(results => res.json(results))
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// @route   GET api/classes/:id
+// @route   GET api/lecture/:id
 // @desc    Get a class
 // @access  Public
-router.get("/:id", getClassroom, (req, res) => {
-  res.json(res.classroom);
+router.get("/:id", getLecture, (req, res) => {
+  res.json(res.lecture);
 });
-
+  
 // @route   GET api/classes
 // @desc    Get all classes
 // @access  Public
@@ -55,7 +55,7 @@ router.route("/").get((req, res) => {
 // @route   DELETE api/classes/delete/:id
 // @desc    Delete a class
 // @access  Public
-router.delete("/delete/:id", getClassroom, async (req, res) => {
+router.delete("/delete/:id", getLecture, async (req, res) => {
   try {
     await res.classroom.remove();
     res.json({ message: "Successfully deleted classroom!" }); // good
@@ -87,11 +87,11 @@ router.post("/addstudent/:id", (req, res) => {
 // @route   POST api/classes/postRating/:id
 // @desc    Post a new rating for a class
 // @access  Public
-router.post("/postRating/:id", getClassroom, async (req, res) => {
+router.post("/postRating/:id", getLecture, async (req, res) => {
   const rating = req.body.rating;
   //const comment = req.body.comment;
 
-  const classroom = res.classroom; // from getClassroom
+  const classroom = res.classroom; // from getLecture
   const ratingList = classroom.ratings;
 
   try {
@@ -112,8 +112,8 @@ router.post("/postRating/:id", getClassroom, async (req, res) => {
 // @route   POST api/classes/getRatings/:id
 // @desc    Get all ratings for a class
 // @access  Public
-router.get("/getRatings/:id", getClassroom, (req, res) => {
-  const classroom = res.classroom; // from getClassroom
+router.get("/getRatings/:id", getLecture, (req, res) => {
+  const classroom = res.classroom; // from getLecture
 
   try {
     if (classroom) {
@@ -127,18 +127,18 @@ router.get("/getRatings/:id", getClassroom, (req, res) => {
   //const ratingPercentageRounded = `${Math.round(ratingPercentage / 10) * 10}%`;
 });
 
-async function getClassroom(req, res, next) {
-  let classroom;
+async function getLecture(req, res, next) {
+  let lecture;
   try {
-    classroom = await Classroom.findById(req.params.id);
-    if (classroom == null) {
+    lecture = await Lecture.findById(req.params.id);
+    if (lecture == null) {
       return res.status(404).json({ message: "Cannot find classroom." });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 
-  res.classroom = classroom;
+  res.lecture = lecture;
   next();
 }
 

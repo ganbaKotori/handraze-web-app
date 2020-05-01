@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_LECTURES, CREATE_LECTURE, LECTURE_ERROR } from "./types";
+import { GET_LECTURE, GET_LECTURES, CREATE_LECTURE, LECTURE_ERROR } from "./types";
 
 //@usage  PUT /api/questions/answer
 //@desc   Post new discussion question to a course
@@ -25,7 +25,8 @@ export const startLecture = (
         type: CREATE_LECTURE,
         payload: res.data
       });
-      //history.push(`/question/${id}`);
+      console.log(res);
+      history.push(`/lecture/${res.data._id}`);
     } catch (error) {
       console.log(error);
       dispatch({
@@ -51,3 +52,20 @@ export const getLectures = () => async dispatch => {
       });
     }
   };
+
+  //Get all lectures
+export const getLecture = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/lectures/${id}`);
+
+    dispatch({
+      type: GET_LECTURE,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: LECTURE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};

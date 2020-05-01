@@ -616,6 +616,14 @@ table {
   text-decoration: none;
 }
 
+.navbar-link {
+  color: #fff;
+}
+.navbar-link:hover {
+  color: rgb(0, 17, 255);
+  text-decoration: none;
+}
+
 .Logo {
   background-image: url(./img/chalkboard.jpg);
 }
