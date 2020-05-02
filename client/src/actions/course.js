@@ -67,10 +67,7 @@ export const createCourse = (
     });
     history.push("./instructor");
   } catch (error) {
-    const errors = error.response;
-    if (errors) {
-      ///    errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
-    }
+    alert(error.response.data)
 
     if (!edit) {
     }

@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { CourseCard } from "./CourseCard";
-import { Button } from "react-bootstrap";
+import { CourseCard } from "./StudentCourseCard";
+import { Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const StudentCourses = ({ course }) => {
@@ -17,7 +17,7 @@ const StudentCourses = ({ course }) => {
       (count += 1),
       console.log(count),
       func(count),
-      (<CourseCard inputValue={course} />)
+      (<Col><CourseCard inputValue={course} /></Col>)
     )
   ); //create a CourseCard for every course id in the Course array in Student P
 
@@ -28,11 +28,9 @@ const StudentCourses = ({ course }) => {
         <Button variant="outline-primary">Enroll Course</Button>
       </Link>
       <div className="courses">
-        <div className="row">
+        <Row>
           {courses}
-          <div className="col-sm-5"></div>
-        </div>
-        <div className="row"></div>
+          </Row>
       </div>
     </Fragment>
   );
