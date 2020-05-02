@@ -32,14 +32,23 @@ router.post("/", async (req, res, next) => {
   }
   try {
     var user = await User.findOne({ email: req.body.email });
-    if (user) {
-      if (bcrypt.compareSync(req.body.password, user.password)) {
-        const payload = {
+
+    if (!user) {
+      return res
+      .status(400).send("No user found!")
+    }
+      const isMatch = await bcrypt.compareSync(req.body.password, user.password);
+
+      if (!isMatch) {
+        return res
+          .status(400).send("Invalid Credentials")
+      }
+      const payload = {
           user: {
             id: user._id
-          }
-        } 
-        jwt.sign(
+        }
+      } 
+      jwt.sign(
           payload,
           process.env.JWT_SECRET,
           { expiresIn: 360000 }, // optional but recommended
@@ -47,11 +56,8 @@ router.post("/", async (req, res, next) => {
             if (err) throw err;
             res.json({ token });
           }
-        );
-      } else res.status(500).send("Incorrect password!");      
-    } else {
-      res.status(500).send("No user found!");
-    }
+        );   
+    
   } catch (err) {
     console.error(err.message);
     res.status(500).send(err.message);

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import ChatPage from "./ChatPage"
 import {Row , Col ,Jumbotron, Container} from "react-bootstrap";
 import { getLecture } from "../../../actions/lecture";
+import io from "socket.io-client";
 
 class Lecture extends Component {
   constructor(props) {
@@ -12,16 +13,45 @@ class Lecture extends Component {
     this.state = { showPopup: false };
     this.test = this.test.bind(this);
     this.state = {
-      id : this.props.match.params.id
+      id : this.props.match.params.id,
+      pdf_link: "https://www.planetebook.com/free-ebooks/the-great-gatsby.pdf"
   }
 
   }
+
+  setPDF = (e) => {
+    e.preventDefault();
+    {(console.log(this.props))}
+    //let chatMessage = this.state.chatMessage
+    //let userId = this.props.user1.user._id;
+    alert(this.state.pdf_link)
+    var pdf = this.state.pdf_link;
+    this.socket.emit("Set PDF", {
+      pdf
+    });
+    this.setState({ pdf_link: "" })
+}
 
   componentWillMount() {
     const { getLecture } = this.props
      getLecture(this.state.id)
      console.log(this.props)
   }
+
+  componentDidMount() {
+    alert(this.state.pdf_link)
+    let server = "http://localhost:3000";
+    this.socket = io(server);
+    this.socket.on("Get PDF", messageFromBackEnd => {
+        alert(messageFromBackEnd)
+    })
+  }
+
+  handlePDFChange =(e) => {
+    this.setState({
+      pdf_link: e.target.value
+    })
+}
 
   test() {
     // Get the element.
@@ -61,11 +91,33 @@ class Lecture extends Component {
           <h5>Topic</h5>
     <h3>{this.props.lecture.lecture && this.props.lecture.lecture.topic? this.props.lecture.lecture.topic: "loading"} </h3>
         <button onClick={this.test}>Generate PDF</button>
+        <input
+      
+                    class="form-control form-control-lg"
+                    placeholder="Enter a message."
+                    id="message"
+                    prefix={"test"}
+                    type="text"
+                    value={this.state.pdf_link}
+                    onChange={this.handlePDFChange}
+                  />
+        <div class="input-group-prepend">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      id="button-addon1"
+                      type="primary" style={{ width: '100%' }} 
+                      onClick={this.setPDF} 
+                      htmlType="submit"
+                    >
+                      Send {this.state.inputValue}
+                    </button>
+                  </div>
         </Container>
       </Jumbotron>
           <Row>
           <Col>
-          <PDF />
+          <PDF link={this.state.pdf_link}/>
           </Col>
           <Col>
           <ChatPage inputValue={this.state.id}/>

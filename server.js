@@ -103,6 +103,12 @@ io.on("connection", socket => {
       }
     })
   })
+
+  socket.on("Set PDF", msg => {
+    console.log(msg)
+    socket.emit("Get PDF", msg);
+
+  })
 })
 
 port = process.env.PORT || 3000; // go to http://localhost:3000

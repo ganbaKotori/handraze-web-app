@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const DiscussionQuestion = require("../models/discussion.question.model");
+const validateQuestionInput = require("../validation/discussion-validation");
 const Course = require("../models/course.model");
 const User = require("../models/user.model");
 const auth = require("../middleware/auth");
@@ -33,7 +34,10 @@ router.get("/:id", getDiscussionQuestion, (req, res) => {
 // @access  Public
 router.post("/", auth, async (req, res) => {
   try {
-    console.log(req.body.id)
+    const { errors, isValid } = validateQuestionInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
     const course = await Course.findById({
       _id: req.body.id
     })

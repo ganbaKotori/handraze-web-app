@@ -8,13 +8,15 @@ export class PDF extends Component {
     super(props);
   }
 
-  render() {
+  render() {alert(this.props.link)
     return (
+      
       <PDFViewer
         document={{
-          url: pdf
+          url: this.props.link,
+          
         }}
-        scale={1.15}
+        scale={1.15} page={69}
       />
     );
   }
