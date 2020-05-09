@@ -50,13 +50,10 @@ app.use("/api/users", userRouter);
 
 app.use(express.json());
 
-/*const connect = mongoose.connect(config.mongoURI,
-  {
-    useNewUrlParser: true, useUnifiedTopology: true,
-    useCreateIndex: true, useFindAndModify: false
-  })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));*/
+let pages = [];
+
+var pdfPage = 2;
+
 
 // CONNECT TO MONGODB
 const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
@@ -76,13 +73,47 @@ app.get("/", (req, res) => {
   res.send("Handraze Backend Server");
 });
 
+
+io.sockets.on('connection', function(socket) {
+  
+});
 io.on("connection", socket => {
-  var defaultRoom = 'general';
-  var rooms = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
+  socket.on('room', function(room) {
+    socket.join(room);
+});
+  console.log("socket")
+  //socket.join('5e9caeb3b3672a44d4f5c44d');
+  socket.on('room', function(room) {
+      socket.join(room);
+      console.log("JOINED ROOM")
+      console.log(room)
+    });
+    socket.on("Set PDF", msg => {
+      console.log("Set PDF")
+      console.log(msg.page)
+      console.log(msg.pdf_link)
+      pages.push(msg.page);
+      console.log(pages)
+      console.log(msg);
+      //pdfPage = msg.page2;
+      io.in('5e9caeb3b3672a44d4f5c44d').emit("Get PDF", msg);
+      //socket.emit("Get PDF", msg);
+    })
+    console.log("outside")
+    console.log(pages)
+  
+    socket.on("User Join", msg => {
+      console.log("User Join")
+      console.log(pages)
+      console.log("User FUCKING JOINNNNNNNNNNNNNNNNED");
+      io.in('5e9caeb3b3672a44d4f5c44d').emit("User Update", pages);
+      //io.emit("Get PDF", msg);
+      //socket.emit("Get PDF", msg);
+  
+    })
+
   //Emit the rooms array
-  socket.emit('setup', {
-    rooms: rooms
-  });
+
   
   socket.on("Input Chat Message", msg => {
     connect.then(db => {
@@ -104,11 +135,7 @@ io.on("connection", socket => {
     })
   })
 
-  socket.on("Set PDF", msg => {
-    console.log(msg)
-    socket.emit("Get PDF", msg);
 
-  })
 })
 
 port = process.env.PORT || 3000; // go to http://localhost:3000

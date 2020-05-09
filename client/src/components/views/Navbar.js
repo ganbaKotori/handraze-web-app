@@ -33,7 +33,7 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const guestLinks = (
     <Fragment>
-      <Nav.Link to="/login"><b>Login</b></Nav.Link> | <Nav.Link to="/register"><b>Register</b></Nav.Link>
+      <Nav.Link to="/login"><b>Login</b></Nav.Link> <Nav.Link to="/register"><b>Register</b></Nav.Link>
     </Fragment>
   );
   return (
