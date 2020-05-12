@@ -34,4 +34,22 @@ router.post("/file-upload", [auth], async function(req, res) {
   
 });
 
+
+// @route   GET API/Upload/file-upload
+// @desc    Upload a single file to s3 bucket
+// @access  Private (needs to be Public)
+router.post("/file-upload-pdf", async function(req, res) {
+  try {
+
+    await singleUpload(req, res, function(result) {
+      console.log(res.req.file.location);
+      return res.json(res.req.file.location);
+      //return res.json("File Uploaded!"); // can't read the file location
+    });
+  }
+  catch (err){
+    console.log(err.message)
+  }
+});
+
 module.exports = router;

@@ -50,10 +50,7 @@ app.use("/api/users", userRouter);
 
 app.use(express.json());
 
-let pages = [];
-
-var pdfPage = 2;
-
+let rooms = {}
 
 // CONNECT TO MONGODB
 const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
@@ -73,47 +70,35 @@ app.get("/", (req, res) => {
   res.send("Handraze Backend Server");
 });
 
-
-io.sockets.on('connection', function(socket) {
-  
-});
 io.on("connection", socket => {
-  socket.on('room', function(room) {
-    socket.join(room);
-});
-  console.log("socket")
-  //socket.join('5e9caeb3b3672a44d4f5c44d');
-  socket.on('room', function(room) {
+    socket.on('room', function(room) {
+      if(!rooms[room]){
+        rooms[room] = {}
+      }
       socket.join(room);
-      console.log("JOINED ROOM")
-      console.log(room)
+      if(rooms[room]["pdf"]){
+        let pdf = rooms[room]["pdf"]
+        io.in(room).emit("Get PDF", {pdf});
+      }
+      if(rooms[room]["page"]){
+        let page = rooms[room]["page"]
+        io.in(room).emit("Get Page", {page});
+      }
     });
     socket.on("Set PDF", msg => {
-      console.log("Set PDF")
-      console.log(msg.page)
-      console.log(msg.pdf_link)
-      pages.push(msg.page);
-      console.log(pages)
-      console.log(msg);
-      //pdfPage = msg.page2;
-      io.in('5e9caeb3b3672a44d4f5c44d').emit("Get PDF", msg);
-      //socket.emit("Get PDF", msg);
+      if(msg.pdf){
+        rooms[msg.lecture]["pdf"] = msg.pdf
+      }
+      var pdf = msg.pdf;
+      io.in(msg.lecture).emit("Get PDF", {pdf});
     })
-    console.log("outside")
-    console.log(pages)
-  
-    socket.on("User Join", msg => {
-      console.log("User Join")
-      console.log(pages)
-      console.log("User FUCKING JOINNNNNNNNNNNNNNNNED");
-      io.in('5e9caeb3b3672a44d4f5c44d').emit("User Update", pages);
-      //io.emit("Get PDF", msg);
-      //socket.emit("Get PDF", msg);
-  
+    socket.on("Set Page", msg => {
+      if(msg.page){
+        rooms[msg.lecture]["page"] = msg.page
+      }
+      var page = msg.page
+      io.in(msg.lecture).emit("Get Page", {page});
     })
-
-  //Emit the rooms array
-
   
   socket.on("Input Chat Message", msg => {
     connect.then(db => {
@@ -125,7 +110,7 @@ io.on("connection", socket => {
           .populate("sender")
           .exec((err, doc) => {
             socket.join(msg.room);
-            console.log(doc)
+            //console.log(doc)
             return io.to(msg.room).emit("Output Chat Message", doc.slice(-1).pop());
           })
         })

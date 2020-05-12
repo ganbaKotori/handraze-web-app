@@ -11,14 +11,17 @@ export class PDF extends Component {
   render() {//alert(this.props.link)
     //alert(this.props.page)
     return (
-      
+
       <PDFViewer
         document={{
           url: this.props.link,
           
         }}
-        scale={1.15} page={parseInt(this.props.page, 10)}
+        scale={1.2} page={parseInt(this.props.page, 10)}
+
+        //hideNavbar = {true}
       />
+
     );
   }
 }

@@ -673,6 +673,8 @@ table {
 
 .jumbotron_text {
   color: white;
+  margin-left: 8%;
+  margin-right: 8%;
 }
 
 footer {

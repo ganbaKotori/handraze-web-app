@@ -33,7 +33,7 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const guestLinks = (
     <Fragment>
-      <Nav.Link to="/login"><b>Login</b></Nav.Link> <Nav.Link to="/register"><b>Register</b></Nav.Link>
+      <Nav.Link to="/login"><Link className="navbar-link" to="/login"><b>Login</b></Link></Nav.Link> <Nav.Link to="/register"><Link className="navbar-link" to="/register"><b>Register</b></Link></Nav.Link>
     </Fragment>
   );
   return (
@@ -64,7 +64,7 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       >
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-        <Navbar.Brand to="/"> <Link className="navbar-link" to="/instructor"><b>handraze</b></Link></Navbar.Brand>
+        <Navbar.Brand to="/"> <Link className="navbar-link" to="/"><b>handraze</b></Link></Navbar.Brand>
         <br />
 
         <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">

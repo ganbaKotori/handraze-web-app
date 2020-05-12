@@ -1,4 +1,5 @@
 import React, { Fragment,Component } from "react";
+import PDFUpload from "../PDFUpload";
 import { PDF } from "./PDFviewer";
 import htmlpdf from "html2pdf.js";
 import { connect } from "react-redux";
@@ -15,9 +16,11 @@ class Lecture extends Component {
     {(console.log(this.props))}
     this.state = {
       id : this.props.match.params.id,
-      pdf_link: "https://www.planetebook.com/free-ebooks/the-great-gatsby.pdf",
+      value2: "",
+      pdf_link: "https://dev-handraze.s3.amazonaws.com/profilepictures/undefined/1589268500215-Status%20report.pdf",
       page: 1,
-      page_in_viewer: 1
+      page_in_viewer: 1,
+      message: ""
     }
   }
 
@@ -30,47 +33,39 @@ class Lecture extends Component {
     let server = "http://localhost:3000";
     this.socket = io(server);
     this.socket.on('connection', function() {
-      // Connected, let's sign-up for to receive messages for this room
-      this.socket.emit('room', "5e9caeb3b3672a44d4f5c44d");
+      this.socket.emit('room', this.state.id);
    });
-    this.socket.emit('room',"5e9caeb3b3672a44d4f5c44d");
-    this.socket.emit("User Join", {
-      server
-    });
+    this.socket.emit('room',this.state.id);
     
     this.socket.on("Get PDF", messageFromBackEnd => {
-        //alert(messageFromBackEnd.page2)
-        this.setState({
-          pdf_link: messageFromBackEnd.pdf,
-          page: messageFromBackEnd.page
-        })
+        if(messageFromBackEnd){
+          this.setState({
+            pdf_link: messageFromBackEnd.pdf
+          })
+        }
     })
 
-    this.socket.on("User Update", messageFromBackEnd => {
-      console.log(messageFromBackEnd)
-      this.setState({
-        page: parseInt(messageFromBackEnd[messageFromBackEnd.length - 1], 10)
-      })
-      //alert("USER JOINED")
+    this.socket.on("Get Page", messageFromBackEnd => {
+      if(messageFromBackEnd){
+        this.setState({
+          page: messageFromBackEnd.page
+        })
+      }
   })
+
   }
   handlePDFChange =(e) => {
     this.setState({
       pdf_link: e.target.value
     })
 }
-  setPDF = (e) => {
+  setPage = (e) => {
     e.preventDefault();
-
-    let pdf = this.state.pdf_link;
-    alert( this.state.pdf_link)
-    alert(pdf)
     let page = this.state.page;
-
+    let lecture  = this.state.id
     this.setState({ page: page})
-
-    this.socket.emit("Set PDF", {
-      pdf, page
+    this.socket.emit("Set Page", {
+      page, lecture
     }); 
 }
 handlePageChange =(e) => {
@@ -79,31 +74,36 @@ handlePageChange =(e) => {
   })
 }
 
+callbackFunction = (childData) => { 
+  this.setState({pdf_link: childData})
+  this.setState({page: 1})
+  let pdf = this.state.pdf_link;
+  let page = 1;
+  let lecture  = this.state.id;
+  this.socket.emit("Set Page", {
+    page, lecture
+  }); 
+  this.socket.emit("Set PDF", {
+      pdf, lecture
+    });   
+}
+
   render() {
     const { lecture } = this.props.lecture
     return (
       <Fragment>
-          <Jumbotron fluid className="Logo">
-        <Container className="jumbotron_text">
-          
-    <Row><h4>PDF Link</h4></Row>
-    <Row>
-    <Col>
-     <input
-      class="form-control form-control-lg"
-      placeholder="Enter a link to a PDF file"
-      id="pdf"
-      prefix={"test"}
-      type="text"
-      value={this.state.pdf_link}
-      onChange={this.handlePDFChange}
-    />
-    </Col>
-    </Row>
+        <Jumbotron fluid className="Logo">
+        <div className="jumbotron_text">
+        <Row> <h2>{this.props.lecture.lecture && this.props.lecture.lecture.topic? this.props.lecture.lecture.topic: "loading"} </h2> </Row>
+        <Row>
+          <Col xs={3} style={{"text-align": "right"}}><h6>Upload PDF</h6></Col>
+          <Col><PDFUpload parentCallback = {this.callbackFunction}/></Col>
+        </Row>
+    <Row></Row>      
     <br/>
-    <Row><h4>Slide Number</h4></Row>
     <Row>
-      <Col>
+    <Col xs={3} style={{"text-align": "right"}}><h6>Slide Number</h6></Col>
+    <Col xs={3}>
       <input
       class="form-control form-control-lg"
       placeholder="Set Presentation Slide"
@@ -113,24 +113,22 @@ handlePageChange =(e) => {
       value={this.state.page}
       onChange={this.handlePageChange} />
     </Col>
-    <Col xs={4}>
+    <Col xs={3}>
       <Button variant="primary"  type="button"
                       id="button-addon1"
                       type="primary" style={{ width: '100%' }} 
-                      onClick={this.setPDF} 
+                      onClick={this.setPage} 
                       htmlType="submit">Set
       </Button>
-    </Col>
+    </Col>    
     </Row>
-        </Container>
+    </div>
       </Jumbotron>
           <Row>
           <Col>
-    <h3>Topic: {this.props.lecture.lecture && this.props.lecture.lecture.topic? this.props.lecture.lecture.topic: "loading"} </h3>
-    <br/>
           <PDF page={this.state.page} link={this.state.pdf_link}/>
           </Col>
-          <Col>
+          <Col xs={4}>
           <ChatPage inputValue={this.state.id}/>
           </Col>
         </Row>  
