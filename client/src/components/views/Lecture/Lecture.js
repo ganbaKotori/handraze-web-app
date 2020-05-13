@@ -1,20 +1,27 @@
 import React, { Fragment,Component } from "react";
+import PDFUpload from "../PDFUpload";
 import { PDF } from "./PDFviewer";
 import htmlpdf from "html2pdf.js";
 import { connect } from "react-redux";
 import ChatPage from "./ChatPage"
-import {Row , Col ,Jumbotron, Container} from "react-bootstrap";
+import {Row , Col ,Jumbotron, Container, Button} from "react-bootstrap";
 import { getLecture } from "../../../actions/lecture";
+import io from "socket.io-client";
 
 class Lecture extends Component {
+  
   constructor(props) {
+    
     super(props);
-    this.state = { showPopup: false };
-    this.test = this.test.bind(this);
+    {(console.log(this.props))}
     this.state = {
-      id : this.props.match.params.id
-  }
-
+      id : this.props.match.params.id,
+      value2: "",
+      pdf_link: "https://dev-handraze.s3.amazonaws.com/profilepictures/undefined/1589268500215-Status%20report.pdf",
+      page: 1,
+      page_in_viewer: 1,
+      message: ""
+    }
   }
 
   componentWillMount() {
@@ -22,52 +29,106 @@ class Lecture extends Component {
      getLecture(this.state.id)
      console.log(this.props)
   }
-
-  test() {
-    // Get the element.
-    var element = document.getElementById("test");
-
-    // Generate the PDF.
-    htmlpdf()
-      .from(element)
-      .set({
-        margin: 1,
-        filename: "test.pdf",
-        html2canvas: { scale: 2 },
-        jsPDF: {
-          orientation: "portrait",
-          unit: "in",
-          format: "letter",
-          compressPDF: true
+  componentDidMount() {
+    let server = "http://localhost:3000";
+    this.socket = io(server);
+    this.socket.on('connection', function() {
+      this.socket.emit('room', this.state.id);
+   });
+    this.socket.emit('room',this.state.id);
+    
+    this.socket.on("Get PDF", messageFromBackEnd => {
+        if(messageFromBackEnd){
+          this.setState({
+            pdf_link: messageFromBackEnd.pdf
+          })
         }
-      })
-      .save();
+    })
+
+    this.socket.on("Get Page", messageFromBackEnd => {
+      if(messageFromBackEnd){
+        this.setState({
+          page: messageFromBackEnd.page
+        })
+      }
+  })
+
   }
-
-
-
-  togglePopup() {
+  handlePDFChange =(e) => {
     this.setState({
-      showPopup: !this.state.showPopup
-    });
-  }
+      pdf_link: e.target.value
+    })
+}
+  setPage = (e) => {
+    e.preventDefault();
+    let page = this.state.page;
+    let lecture  = this.state.id
+    this.setState({ page: page})
+    this.socket.emit("Set Page", {
+      page, lecture
+    }); 
+}
+handlePageChange =(e) => {
+  this.setState({
+    page: e.target.value
+  })
+}
+
+callbackFunction = (childData) => { 
+  this.setState({pdf_link: childData})
+  this.setState({page: 1})
+  let pdf = this.state.pdf_link;
+  let page = 1;
+  let lecture  = this.state.id;
+  this.socket.emit("Set Page", {
+    page, lecture
+  }); 
+  this.socket.emit("Set PDF", {
+      pdf, lecture
+    });   
+}
+
   render() {
     const { lecture } = this.props.lecture
-    //console.log(this.props.lecture.lecture.topic)
     return (
       <Fragment>
-          <Jumbotron fluid className="Logo">
-        <Container className="jumbotron_text">
-          <h5>Topic</h5>
-    <h3>{this.props.lecture.lecture && this.props.lecture.lecture.topic? this.props.lecture.lecture.topic: "loading"} </h3>
-        <button onClick={this.test}>Generate PDF</button>
-        </Container>
+        <Jumbotron fluid className="Logo">
+        <div className="jumbotron_text">
+        <Row> <h2>{this.props.lecture.lecture && this.props.lecture.lecture.topic? this.props.lecture.lecture.topic: "loading"} </h2> </Row>
+        <Row>
+          <Col xs={3} style={{"text-align": "right"}}><h6>Upload PDF</h6></Col>
+          <Col><PDFUpload parentCallback = {this.callbackFunction}/></Col>
+        </Row>
+    <Row></Row>      
+    <br/>
+    <Row>
+    <Col xs={3} style={{"text-align": "right"}}><h6>Slide Number</h6></Col>
+    <Col xs={3}>
+      <input
+      class="form-control form-control-lg"
+      placeholder="Set Presentation Slide"
+      id="page"
+      prefix={"test"}
+      type="text"
+      value={this.state.page}
+      onChange={this.handlePageChange} />
+    </Col>
+    <Col xs={3}>
+      <Button variant="primary"  type="button"
+                      id="button-addon1"
+                      type="primary" style={{ width: '100%' }} 
+                      onClick={this.setPage} 
+                      htmlType="submit">Set
+      </Button>
+    </Col>    
+    </Row>
+    </div>
       </Jumbotron>
           <Row>
           <Col>
-          <PDF />
+          <PDF page={this.state.page} link={this.state.pdf_link}/>
           </Col>
-          <Col>
+          <Col xs={4}>
           <ChatPage inputValue={this.state.id}/>
           </Col>
         </Row>
@@ -89,19 +150,15 @@ class Lecture extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => {
   return {
     lecture: state.lecture,
     lectureLoading: state.lecture.loading
   }
 }
-
 const mapDispatchToProps = (dispatch) => {
   return {
     getLecture: (id) => dispatch(getLecture(id))
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Lecture);
-

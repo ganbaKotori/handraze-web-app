@@ -4,7 +4,6 @@ const {Chat} = require("../models/chat.model");
 const auth = require("../middleware/auth");
 
 router.get("/getchats/:id",auth, async (req, res) => {
-    console.log("chat router is bneing used")
     await Chat.find({
         "room" : req.params.id
     })

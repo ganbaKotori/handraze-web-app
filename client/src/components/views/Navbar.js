@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-import handraze from "../../img/handrazelogow.png";
+import handraze from "./logo9.png";
 import store from "../../store";
+
 
 const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const [profile, setProfile] = useState(0);
   store.subscribe(() => {
-    console.log("hope this works");
     const state = store.getState();
     if (state.profile.instructorProfile) {
       setProfile("instructor");
@@ -20,12 +20,12 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <Fragment>
       <Nav.Link className="navbar-link" to="/student">
-      <Link to="/student"><b>Student</b></Link>
+      <Link to="/student" className="navbar-link"><b>Student</b></Link>
       </Nav.Link>{" "}
       <Nav.Link to="/instructor">
-      <Link to="/instructor"><b>Instructor</b></Link>
+      <Link to="/instructor" className="navbar-link"><b>Instructor</b></Link>
       </Nav.Link>{" "}
-      <Nav.Link to="/" onClick={logout}>
+      <Nav.Link to="/" onClick={logout} className="navbar-link">
       <b> Logout</b>
       </Nav.Link  >
     </Fragment>
@@ -33,7 +33,7 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const guestLinks = (
     <Fragment>
-      <Nav.Link to="/login"><b>Login</b></Nav.Link> | <Nav.Link to="/register"><b>Register</b></Nav.Link>
+      <Nav.Link to="/login"><Link className="navbar-link" to="/login"><b>Login</b></Link></Nav.Link> <Nav.Link to="/register"><Link className="navbar-link" to="/register"><b>Register</b></Link></Nav.Link>
     </Fragment>
   );
   return (
@@ -63,8 +63,16 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         className="navbar-link"
       >
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        
 
-        <Navbar.Brand to="/"> <Link className="navbar-link" to="/instructor"><b>handraze</b></Link></Navbar.Brand>
+        <Navbar.Brand to="/">
+        <Link className="navbar-link" to="/">
+          <div style={{width:"25px", height:"35px"}} className="d-inline-block align-top"><img
+        src={handraze}
+      /></div>
+        
+        {" "}
+           <b>handraze</b></Link></Navbar.Brand>
         <br />
 
         <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">

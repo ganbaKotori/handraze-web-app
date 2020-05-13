@@ -28,9 +28,9 @@ export class CourseCard extends Component {
             <Link className="link" to={`/course/${this.props.inputValue._id}`}>
                   <div class="card">
                           <div class="card-header bg-primary">
-                            <h5>{this.props.inputValue.title}</h5>
-                            <h5>{this.props.inputValue.description}</h5>
-                            <h5>{this.props.inputValue.dayOfWeek} {this.props.inputValue.classStart}-{this.props.inputValue.classEnd}</h5>
+                            <h6>{this.props.inputValue.title}</h6>
+                            <h6>{this.props.inputValue.description}</h6>
+                            <h6>{this.props.inputValue.dayOfWeek} {this.props.inputValue.classStart}-{this.props.inputValue.classEnd}</h6>
                           </div>
                           <div class="card-body">
                             <p class="card-text text-muted">

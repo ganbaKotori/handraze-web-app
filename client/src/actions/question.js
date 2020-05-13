@@ -70,7 +70,7 @@ export const createQuestion = (
     });
     history.push(`/question/${res.data._id}`);
   } catch (error) {
-    console.log(error);
+    alert(error.response.data)
     dispatch({
       type: QUESTION_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status }

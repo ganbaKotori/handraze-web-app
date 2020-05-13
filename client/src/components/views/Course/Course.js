@@ -58,12 +58,6 @@ const Course = ({ getLectures, getCourse, course: { course, loading }, lectures:
           <Row>
             {" "}
             <Link to={`/new-lecture/${course._id}`} className="btn btn-primary btn-lg btn-block btn-margin">Create Lecture</Link>
-            <a href="#" class="btn btn-primary btn-lg btn-block btn-margin">
-              Join Lecture
-            </a>
-            <a href="#" class="btn btn-primary btn-lg btn-block btn-margin">
-              Ask Lecture Question
-            </a>
             <br />
           </Row>
           <Row>

@@ -12,10 +12,10 @@ export class ChatPage extends Component {
         this.state = { showPopup: false,
           inputValue: "",
           chatMessage: "",
-          chatRoom: ""
+          chatRoom: "",
+          value: "Self"
          }
-         
-
+    this.handleChange = this.handleChange.bind(this);
       }
 
     scrollToBottom = () => {
@@ -67,17 +67,21 @@ export class ChatPage extends Component {
             
         )
     );
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+      }
         
     submitChatMessage = (e) => {
         e.preventDefault();
         {(console.log(this.props))}
         let chatMessage = this.state.chatMessage
         let userId = this.props.user1.user._id;
-        let userName = this.props.user1.user.firstName;
+        let userName =  this.props.user1.user.firstName;
         let userImage = this.props.user1.user.lastName;
         let room = this.props.inputValue;
         let nowTime = moment();
-        let type = "Text"
+        var type =this.state.value ;
 
         this.socket.emit("Input Chat Message", {
             chatMessage,
@@ -89,9 +93,6 @@ export class ChatPage extends Component {
             type
         });
         this.setState({ chatMessage: "" })
-        
-
-
     }
 
     render() {
@@ -142,10 +143,10 @@ export class ChatPage extends Component {
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Send As</label>
                     </div>
-                    <select class="custom-select" id="inputGroupSelect01">
+                    <select class="custom-select" id="inputGroupSelect01" value={this.state.value} onChange={this.handleChange}>
                         <option selected>Choose...</option>
-                        <option value="1">Self</option>
-                        <option value="2">Anonymous</option>
+                        <option value={"Self"}>Self</option>
+                        <option value={"Anonymous"}>Anonymous</option>
                         
                     </select>
                     </div>

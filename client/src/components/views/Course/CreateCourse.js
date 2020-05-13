@@ -5,8 +5,64 @@ import { connect } from "react-redux";
 import { createCourse } from "../../../actions/course";
 import PropTypes from "prop-types";
 import { Redirect, withRouter } from "react-router-dom";
+import TimePicker from 'react-bootstrap-time-picker';
 
 const CreateCourse = ({ createCourse, history }) => {
+
+  function convertToConventionalTime(value){
+    var time = value; // your input
+
+time = time.split(':'); // convert to array
+
+// fetch
+var hours = Number(time[0]);
+var minutes = Number(time[1]);
+
+// calculate
+var timeValue;
+
+if (hours > 0 && hours <= 12) {
+  timeValue= "" + hours;
+} else if (hours > 12) {
+  timeValue= "" + (hours - 12);
+} else if (hours == 0) {
+  timeValue= "12";
+}
+ 
+timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+return timeValue;
+
+  }
+
+  function secondsToHHMM(value){
+    var hours = Math.floor(value / 3600);
+    value = value % 3600;
+    var mins = value / 60;
+
+    if(mins < 10){
+      mins = "0"+ mins;
+    }
+    if(hours < 10){
+      hours = "0" + hours;
+    }
+    
+    var time = hours + ":" +mins;
+    var time2 = convertToConventionalTime(time);
+    alert("time: " + time2)
+    return time2;
+  }
+  //Time picker code
+  const handleTimeChangeStart = value => {
+    
+    formData.classStart = secondsToHHMM(value);
+  }
+  const handleTimeChangeEnd = value => {
+    
+    formData.classEnd = secondsToHHMM(value);
+  }
+
+  
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -49,6 +105,8 @@ const CreateCourse = ({ createCourse, history }) => {
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -195,27 +253,15 @@ const CreateCourse = ({ createCourse, history }) => {
           </div>
           <div className="form-group">
             <label for="password">What time does the class start?</label>
-            <input
-              type="text"
-              className="form-control"
-              id="classStart"
-              placeholder="example: 8:30 AM"
-              name="classStart"
-              value={classStart}
-              onChange={e => onChange(e)}
-            />
+            
+            <TimePicker start="07:00" end="22:00" step={15}  onChange={value => handleTimeChangeStart(value)} value={formData.classStart} />
+
           </div>
           <div className="form-group">
             <label for="password">What time does the class end?</label>
-            <input
-              type="text"
-              className="form-control"
-              id="classEnd"
-              placeholder="example: 8:30 AM"
-              name="classEnd"
-              value={classEnd}
-              onChange={e => onChange(e)}
-            />
+            <TimePicker start="07:00" end="22:00" step={15} onChange={value => handleTimeChangeEnd(value)}  value={formData.classEnd} />
+
+
           </div>
           <div className="form-group">
             <label for="password">Location</label>
