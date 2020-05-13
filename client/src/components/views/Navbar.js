@@ -20,12 +20,12 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <Fragment>
       <Nav.Link className="navbar-link" to="/student">
-      <Link to="/student"><b>Student</b></Link>
+      <Link to="/student" className="navbar-link"><b>Student</b></Link>
       </Nav.Link>{" "}
       <Nav.Link to="/instructor">
-      <Link to="/instructor"><b>Instructor</b></Link>
+      <Link to="/instructor" className="navbar-link"><b>Instructor</b></Link>
       </Nav.Link>{" "}
-      <Nav.Link to="/" onClick={logout}>
+      <Nav.Link to="/" onClick={logout} className="navbar-link">
       <b> Logout</b>
       </Nav.Link  >
     </Fragment>
