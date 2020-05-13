@@ -131,7 +131,20 @@ callbackFunction = (childData) => {
           <Col xs={4}>
           <ChatPage inputValue={this.state.id}/>
           </Col>
-        </Row>  
+        </Row>
+          
+       
+          
+          <div class="row">
+            <div class="col-md-8 col-xs-12">
+              <div class="embed-responsive embed-responsive-16by9 ">
+               
+              </div>
+            </div>
+          </div>
+        
+        
+        
       </Fragment>
     );
   }

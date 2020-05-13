@@ -12,43 +12,76 @@ export class ChatPage extends Component {
         this.state = { showPopup: false,
           inputValue: "",
           chatMessage: "",
-          chatRoom: ""
+          chatRoom: "",
+          value: "Self"
+         }
+    this.handleChange = this.handleChange.bind(this);
       }
-      }
 
+    scrollToBottom = () => {
+        if(this.messageList != undefined){
 
+        
+        const scrollHeight = this.messageList.scrollHeight;
 
+        const height = this.messageList.clientHeight;
+
+        const maxScrollTop = scrollHeight - height;
+        
+        this.messageList.scrollTop = maxScrollTop;
+        }
+    
+    }
     componentDidMount() {
+        this.scrollToBottom();
         let server = "http://localhost:3000";
         this.props.dispatch(getChats(this.props.inputValue));
         this.socket = io(server);
+
         this.socket.on("Output Chat Message", messageFromBackEnd => {
             console.log(messageFromBackEnd)
             this.props.dispatch(afterPostMessage(messageFromBackEnd));
+            this.scrollToBottom();
         })
+
+
+
     }
 
     hanleSearchChange =(e) => {
         this.setState({
             chatMessage: e.target.value
         })
+        this.scrollToBottom();
+
+
+
     }
     renderCards = () =>
+        
         this.props.chats.chats
-        && this.props.chats.chats.map((chat) => (
+        && this.props.chats.chats.map((chat) => 
+        (
+
             <ChatCard key={chat._id}  {...chat} />
-        ));
+            
+        )
+    );
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+      }
         
     submitChatMessage = (e) => {
         e.preventDefault();
         {(console.log(this.props))}
         let chatMessage = this.state.chatMessage
         let userId = this.props.user1.user._id;
-        let userName = this.props.user1.user.firstName;
+        let userName =  this.props.user1.user.firstName;
         let userImage = this.props.user1.user.lastName;
         let room = this.props.inputValue;
         let nowTime = moment();
-        let type = "Text"
+        var type =this.state.value ;
 
         this.socket.emit("Input Chat Message", {
             chatMessage,
@@ -65,21 +98,21 @@ export class ChatPage extends Component {
     render() {
         return (
             <React.Fragment>
-                {console.log(this.props.inputValue)}
+                {console.log(this.props.inputValue) }
                 <div >
             <div class="newsfeed">
-            <div class="list-group notes-board"> {this.renderCards()}
-                    <div
-                        ref={el => {
-                            this.messagesEnd = el;
-                        }}
-                        style={{ float: "left", clear: "both" }}
-                    />
-                    </div>
+            <div class="list-group notes-board" ref={(div) => {
+          this.messageList = div;
+        }}> 
+                    {this.renderCards()}
+                    
+            </div>
                    
                   <div className="list-group-item list-group-item-action flex-column align-items-start">
                   <Form layout="inline" onSubmit={this.submitChatMessage}>
-                  <div class="input-group mb-3">
+                  <div class="input-group ">
+
+                
                   <input
       
                     class="form-control form-control-lg"
@@ -102,8 +135,21 @@ export class ChatPage extends Component {
                     >
                       Send {this.state.inputValue}
                     </button>
+                    
                   </div>
                 </div>
+
+                <div class="input-group input-group-sm mb-3"  style={{width:"90%",margin:"auto", paddingTop:"5px"}}>
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Send As</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" value={this.state.value} onChange={this.handleChange}>
+                        <option selected>Choose...</option>
+                        <option value={"Self"}>Self</option>
+                        <option value={"Anonymous"}>Anonymous</option>
+                        
+                    </select>
+                    </div>
                     </Form>
                   </div>
             </div>
@@ -114,7 +160,9 @@ export class ChatPage extends Component {
 }
 
 const mapStateToProps = state => {
+    
     console.log(state)
+    
     return {
         user1: state.auth,
         chats: state.chat

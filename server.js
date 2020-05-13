@@ -103,7 +103,7 @@ io.on("connection", socket => {
   socket.on("Input Chat Message", msg => {
     connect.then(db => {
       try {
-        let chat = new Chat({message: msg.chatMessage, sender: msg.userId, room: msg.room, type: msg.userName })
+        let chat = new Chat({message: msg.chatMessage, sender: msg.userId, room: msg.room, type: msg.type })
         chat.save((err,doc)=> {
           if(err) return res.json({success: false, err})
           Chat.find({room: msg.room})

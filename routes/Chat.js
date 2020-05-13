@@ -9,7 +9,7 @@ router.get("/getchats/:id",auth, async (req, res) => {
     })
         .populate("sender")
         .exec((err, chats) => {
-            //console.log(chats)
+            console.log(chats)
             if(err) return res.status(400).send(err);
             res.status(200).send(chats)
         })
