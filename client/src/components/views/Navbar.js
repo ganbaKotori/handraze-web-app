@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-import handraze from "../../img/handrazelogow.png";
+import handraze from "./logo9.png";
 import store from "../../store";
+
 
 const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const [profile, setProfile] = useState(0);
   store.subscribe(() => {
-    console.log("hope this works");
     const state = store.getState();
     if (state.profile.instructorProfile) {
       setProfile("instructor");
@@ -63,8 +63,16 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         className="navbar-link"
       >
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        
 
-        <Navbar.Brand to="/"> <Link className="navbar-link" to="/"><b>handraze</b></Link></Navbar.Brand>
+        <Navbar.Brand to="/">
+        <Link className="navbar-link" to="/">
+          <div style={{width:"25px", height:"35px"}} className="d-inline-block align-top"><img
+        src={handraze}
+      /></div>
+        
+        {" "}
+           <b>handraze</b></Link></Navbar.Brand>
         <br />
 
         <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
