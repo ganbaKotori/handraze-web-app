@@ -31,7 +31,7 @@ class Lecture extends Component {
   }
   componentDidMount() {
     let server = "http://localhost:3000";
-    this.socket = io(server);
+    this.socket = io();
     this.socket.on('connection', function() {
       this.socket.emit('room', this.state.id);
    });

@@ -53,7 +53,7 @@ app.use(express.json());
 let rooms = {}
 
 // CONNECT TO MONGODB
-const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
+const uri = "mongodb://alex:alex123@ds235378.mlab.com:35378/handraze-beta";
 const connect = mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -66,9 +66,14 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-app.get("/", (req, res) => {
-  res.send("Handraze Backend Server");
-});
+// Server static assets if in production
+if (process.env.NODE_ENV === "production") {  // Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 io.on("connection", socket => {
     socket.on('room', function(room) {
