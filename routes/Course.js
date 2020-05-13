@@ -19,11 +19,11 @@ router.route("/").post(async (req, res) => {
   const location = req.body.location;
   const sectionNumber = req.body.sectionNumber;
 
-  // const { errors, isValid } = validateCourseInput(req.body);
+  const { errors, isValid } = validateCourseInput(req.body);
 
-  //if (!isValid) {
-  // return res.status(400).json(errors);
-  //}
+  if (!isValid) {
+   return res.status(400).json(errors);
+  }
   var code = "";
   var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var charactersLength = characters.length;

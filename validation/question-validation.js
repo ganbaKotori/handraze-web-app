@@ -9,7 +9,7 @@ module.exports = function validateRegisterInput(data) {
     data.answer = !isEmpty(data.answer) ? data.answer : "";
 
     if (!Validator.isLength(data.question, { min: 10, max: 150 })) {
-        errors = "Question must not exceed 150 characters";
+        errors = "Question must be between 10 to 150 characters";
     }
 
     if (Validator.isEmpty(data.dateSubmitted)) {

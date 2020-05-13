@@ -50,13 +50,7 @@ app.use("/api/users", userRouter);
 
 app.use(express.json());
 
-/*const connect = mongoose.connect(config.mongoURI,
-  {
-    useNewUrlParser: true, useUnifiedTopology: true,
-    useCreateIndex: true, useFindAndModify: false
-  })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));*/
+let rooms = {}
 
 // CONNECT TO MONGODB
 const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
@@ -77,12 +71,34 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", socket => {
-  var defaultRoom = 'general';
-  var rooms = ["General", "angular", "socket.io", "express", "node", "mongo", "PHP", "laravel"];
-  //Emit the rooms array
-  socket.emit('setup', {
-    rooms: rooms
-  });
+    socket.on('room', function(room) {
+      if(!rooms[room]){
+        rooms[room] = {}
+      }
+      socket.join(room);
+      if(rooms[room]["pdf"]){
+        let pdf = rooms[room]["pdf"]
+        io.in(room).emit("Get PDF", {pdf});
+      }
+      if(rooms[room]["page"]){
+        let page = rooms[room]["page"]
+        io.in(room).emit("Get Page", {page});
+      }
+    });
+    socket.on("Set PDF", msg => {
+      if(msg.pdf){
+        rooms[msg.lecture]["pdf"] = msg.pdf
+      }
+      var pdf = msg.pdf;
+      io.in(msg.lecture).emit("Get PDF", {pdf});
+    })
+    socket.on("Set Page", msg => {
+      if(msg.page){
+        rooms[msg.lecture]["page"] = msg.page
+      }
+      var page = msg.page
+      io.in(msg.lecture).emit("Get Page", {page});
+    })
   
   socket.on("Input Chat Message", msg => {
     connect.then(db => {
@@ -94,7 +110,7 @@ io.on("connection", socket => {
           .populate("sender")
           .exec((err, doc) => {
             socket.join(msg.room);
-            console.log(doc)
+            //console.log(doc)
             return io.to(msg.room).emit("Output Chat Message", doc.slice(-1).pop());
           })
         })
@@ -103,6 +119,8 @@ io.on("connection", socket => {
       }
     })
   })
+
+
 })
 
 port = process.env.PORT || 3000; // go to http://localhost:3000

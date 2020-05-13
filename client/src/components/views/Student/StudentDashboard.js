@@ -34,23 +34,23 @@ const Dashboard = ({
             <Row>
               <Col xs={7}>
                 {" "}
-                <div className="row ">
-                  <div className="col-12 col-md-8">
-                    <div className="row col-md-8">
+                <Row>
+                  <Col>
+                    <Col>
                       <h3>
                         <a href="#" className="btn btn-primary">
                           EDIT
                         </a>
                       </h3>
-                    </div>
-                    <div className="row prof-profile">
-                      <div className="col-4">
+                    </Col>
+                    <Row>
+                      <Col>
                         <img
                           src={user && user.avatar ? user && user.avatar : "https://via.placeholder.com/100"}
                           className="profpic"
                         />
-                      </div>
-                      <div className="col-6">
+                      </Col>
+                      <Col>
                         <p className="lead">Student</p>
                         <p className="lead">
                           {user && user.firstName ? user && user.firstName : ""}{" "}
@@ -68,11 +68,10 @@ const Dashboard = ({
                             ? user && studentProfile.institution
                             : ""}
                         </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="car"></div>
-                </div>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
                 <FileUpload />
               </Col>
               <Col>
@@ -112,7 +111,7 @@ const Dashboard = ({
             </Row>
             <br />
             <Row>
-              <Col xs={9}>
+              <Col>
                 <StudentCourses
                   course={studentProfile.course ? studentProfile.course : []}
                 />
