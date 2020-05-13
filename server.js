@@ -1,34 +1,27 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const { Chat } = require("./models/chat.model");
 const app = express();
 const cors = require('cors')
 const path = require("path");
 
-
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-
 const server = require("http").createServer(app);
 const io = require("socket.io")(server)
-
-const { Chat } = require("./models/chat.model");
 
 app.use(cors());
 
 // DEFINE ROUTES HERE
-
+const authRouter = require("./routes/Auth");
 const chatRouter = require("./routes/Chat");
-const userRouter = require("./routes/User");
-const studentRouter = require("./routes/Student");
-const instructorRouter = require("./routes/Instructor");
 const courseRouter = require("./routes/Course");
-const classroomRouter = require("./routes/Classroom");
 const discussionQuestionRouter = require("./routes/DiscussionQuestion");
-//const lqRouter = require("./routes/LectureQuestion");
-//const dqRouter = require("./routes/DiscussionQuestion");
-//const answerRouter = require("./routes/Answer");
-const authRouter = require("./routes/auth");
 const fileRouter = require("./routes/FileUpload");
+const instructorRouter = require("./routes/Instructor");
+const lectureRouter = require("./routes/Lecture");
+const studentRouter = require("./routes/Student");
+const userRouter = require("./routes/User");
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:5000"); // update to match the domain you will make the request from
@@ -39,37 +32,25 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-
-
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());    
 
 // SETUP ROUTES HERE
-app.use("/api/chats", chatRouter);
-app.use("/api/users", userRouter);
-app.use("/api/instructors", instructorRouter);
-app.use("/api/students", studentRouter);
-app.use("/api/courses", courseRouter);
-app.use("/api/classes", classroomRouter);
-app.use("/api/questions", discussionQuestionRouter);
-//app.use("/api/lecture", lqRouter);
-//app.use("/api/discussion", dqRouter);
-//app.use("/api/answer", answerRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/courses", courseRouter);
+app.use("/api/chats", chatRouter);
+app.use("/api/instructors", instructorRouter);
+app.use("/api/lectures", lectureRouter);
+app.use("/api/students", studentRouter);
+app.use("/api/questions", discussionQuestionRouter);
 app.use("/api/upload", fileRouter);
+app.use("/api/users", userRouter);
 
 app.use(express.json());
 
-/*const connect = mongoose.connect(config.mongoURI,
-  {
-    useNewUrlParser: true, useUnifiedTopology: true,
-    useCreateIndex: true, useFindAndModify: false
-  })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));*/
+let rooms = {}
 
 // CONNECT TO MONGODB
 const uri = "mongodb://alex:alex123@ds117145.mlab.com:17145/handraze-dev";
@@ -90,18 +71,47 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", socket => {
+    socket.on('room', function(room) {
+      if(!rooms[room]){
+        rooms[room] = {}
+      }
+      socket.join(room);
+      if(rooms[room]["pdf"]){
+        let pdf = rooms[room]["pdf"]
+        io.in(room).emit("Get PDF", {pdf});
+      }
+      if(rooms[room]["page"]){
+        let page = rooms[room]["page"]
+        io.in(room).emit("Get Page", {page});
+      }
+    });
+    socket.on("Set PDF", msg => {
+      if(msg.pdf){
+        rooms[msg.lecture]["pdf"] = msg.pdf
+      }
+      var pdf = msg.pdf;
+      io.in(msg.lecture).emit("Get PDF", {pdf});
+    })
+    socket.on("Set Page", msg => {
+      if(msg.page){
+        rooms[msg.lecture]["page"] = msg.page
+      }
+      var page = msg.page
+      io.in(msg.lecture).emit("Get Page", {page});
+    })
+  
   socket.on("Input Chat Message", msg => {
     connect.then(db => {
       try {
-        let chat = new Chat({message: msg.chatMessage, sender: msg.userId, type: msg.userName })
-
+        let chat = new Chat({message: msg.chatMessage, sender: msg.userId, room: msg.room, type: msg.userName })
         chat.save((err,doc)=> {
           if(err) return res.json({success: false, err})
-
-          Chat.find({"_id": doc._id})
+          Chat.find({room: msg.room})
           .populate("sender")
           .exec((err, doc) => {
-            return io.emit("Output Chat Message", doc);
+            socket.join(msg.room);
+            //console.log(doc)
+            return io.to(msg.room).emit("Output Chat Message", doc.slice(-1).pop());
           })
         })
       } catch (error) {
@@ -109,6 +119,8 @@ io.on("connection", socket => {
       }
     })
   })
+
+
 })
 
 port = process.env.PORT || 3000; // go to http://localhost:3000

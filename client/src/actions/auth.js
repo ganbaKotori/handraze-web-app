@@ -1,6 +1,6 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
-//import { setAlert } from "./alert";
+import { setAlert } from "./alert";
 
 import {
   REGISTER_SUCCESS,
@@ -11,8 +11,6 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
   CLEAR_PROFILE,
-  COURSE_CREATED,
-  COURSE_CREATED_FAILED
 } from "./types";
 
 //axios.defaults.proxy = "http://localhost:3000";
@@ -31,6 +29,11 @@ export const loadUser = () => async dispatch => {
       payload: res.data
     });
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
     dispatch({
       type: AUTH_ERROR
     });
@@ -69,9 +72,7 @@ export const register = ({
     dispatch(loadUser());
   } catch (err) {
     console.log(err.response);
-    for (var property in err.response.data) {
-      alert(err.response.data[property]);
-    }
+    alert(err.response.data)
 
     dispatch({
       type: REGISTER_FAIL
@@ -102,10 +103,7 @@ export const login = (email, password) => async dispatch => {
 
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response;
-    if (errors) {
-      ///    errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
-    }
+    alert(err.response.data)
     dispatch({
       type: LOGIN_FAIL
     });

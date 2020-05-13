@@ -82,7 +82,7 @@ router.route("/register").post(async (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-  const avatar = req.body.avatar; // avatar image url
+  const avatar = ""; // avatar image url
 
   try {
     let user = await User.findOne({ email });
@@ -90,7 +90,13 @@ router.route("/register").post(async (req, res) => {
     if (user) {
       return res
         .status(400)
-        .json({ errors: [{ message: "User already exists!" }] });
+        .json("User already exists!");
+    }
+
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
     }
 
     const newUser = new User({
@@ -133,7 +139,7 @@ router.route("/register").post(async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send(err.message);
   }
 });
 

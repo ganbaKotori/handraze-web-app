@@ -7,9 +7,33 @@ import PropTypes from "prop-types";
 import { Redirect, withRouter } from "react-router-dom";
 import TimePicker from 'react-bootstrap-time-picker';
 
-
-
 const CreateCourse = ({ createCourse, history }) => {
+
+  function convertToConventionalTime(value){
+    var time = value; // your input
+
+time = time.split(':'); // convert to array
+
+// fetch
+var hours = Number(time[0]);
+var minutes = Number(time[1]);
+
+// calculate
+var timeValue;
+
+if (hours > 0 && hours <= 12) {
+  timeValue= "" + hours;
+} else if (hours > 12) {
+  timeValue= "" + (hours - 12);
+} else if (hours == 0) {
+  timeValue= "12";
+}
+ 
+timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+return timeValue;
+
+  }
 
   function secondsToHHMM(value){
     var hours = Math.floor(value / 3600);
@@ -23,16 +47,17 @@ const CreateCourse = ({ createCourse, history }) => {
       hours = "0" + hours;
     }
     
-    var time = hours + "" +mins;
-    alert("time: " + time)
-    return time;
+    var time = hours + ":" +mins;
+    var time2 = convertToConventionalTime(time);
+    alert("time: " + time2)
+    return time2;
   }
   //Time picker code
   const handleTimeChangeStart = value => {
     
     formData.classStart = secondsToHHMM(value);
   }
-  const handleTimeChangeEnd= value => {
+  const handleTimeChangeEnd = value => {
     
     formData.classEnd = secondsToHHMM(value);
   }
@@ -229,12 +254,12 @@ const CreateCourse = ({ createCourse, history }) => {
           <div className="form-group">
             <label for="password">What time does the class start?</label>
             
-            <TimePicker start="08:00" end="21:00" step={15}  onChange={value => handleTimeChangeStart(value)} value={formData.classStart} />
+            <TimePicker start="07:00" end="22:00" step={15}  onChange={value => handleTimeChangeStart(value)} value={formData.classStart} />
 
           </div>
           <div className="form-group">
             <label for="password">What time does the class end?</label>
-            <TimePicker start="08:00" end="21:00" step={15}  onChange={value => handleTimeChangeEnd(value)} value={formData.classEnd} />
+            <TimePicker start="07:00" end="22:00" step={15} onChange={value => handleTimeChangeEnd(value)}  value={formData.classEnd} />
 
 
           </div>

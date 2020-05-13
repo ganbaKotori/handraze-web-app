@@ -13,6 +13,7 @@ export class DiscussionQuestionCard extends Component {
 
   render() {
     var date = new Date(this.props.inputValue.dateSubmitted);
+    //var lectureStart = date.getMonth()+1 + " " + date.getDate() + " " + date.getFullYear();
     return (
       <Link
         className="list-group-item list-group-item-action flex-column align-items-start"

@@ -2,9 +2,9 @@ import axios from "axios";
 
 import { GET_CHATS,AFTER_POST_MESSAGE } from "./types";
 
-export const getChats = () => async dispatch => {
+export const getChats = name => async dispatch => {
     try {
-        const res = await axios.get("/api/chats/getChats");
+        const res = await axios.get(`/api/chats/getChats/${name}`);
         console.log(res.data);
     
         dispatch({

@@ -36,7 +36,7 @@ router.route("/me").get(auth, async (req, res) => {
       user: req.user.id
     })
       .populate("user", ["firstName", "lastName"])
-      .populate("course", ["title", "description", "code"]);
+      .populate("course", ["title", "description", "code",  "classStart", "classEnd","dayOfWeek"]);
 
     if (!profile) {
       return res
@@ -76,7 +76,7 @@ router.route("/user/:user_id").get(async (req, res) => {
       user: req.params.user_id
     })
       .populate("user", ["firstName", "lastName", "avatar"])
-      .populate("course", ["title", "description"]);
+      .populate("course", ["title", "description",  "classStart", "classEnd","dayOfWeek"]);
     console.log(instructorProfiles);
     res.json(instructorProfiles);
   } catch (error) {

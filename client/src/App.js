@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import Alert from "./components/views/Alert";
 import ChatPage from "./components/views/Lecture/ChatPage";
 import Course from "./components/views/Course/Course";
 import CreateAccount from "./components/views/Auth/CreateAccount";
@@ -20,6 +21,7 @@ import PostAnswer from "./components/views/Course/DiscusssionQuestion/PostAnswer
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Profiles from "./components/views/Profiles";
 import Questions from "./components/views/Course/Questions";
+import StartLecture from "./components/views/Lecture/StartLecture";
 import StudentDashboard from "./components/views/Student/StudentDashboard";
 import StudentProfile from "./components/views/Student/StudentProfile";
 import DiscussionQuestionPage from "./components/views/Course/DiscusssionQuestion/DiscussionQuestionPage";
@@ -46,10 +48,12 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
+          <Alert/>
           <Route exact path="/" component={Landing} />
+          
           <Switch>
             <PrivateRoute exact path="/course/:id" component={Course} />
-            <Route exact path="/lecture" component={Lecture} />
+            <Route exact path="/lecture/:id" component={Lecture} />
             <Fragment>
               <div className="container">
               
@@ -89,6 +93,7 @@ const App = () => {
                 />
                 <Route exact path="/new-question/:id" component={PostQuestion} />
                 <Route exact path="/new-answer/:id" component={PostAnswer} />
+                <Route exact path="/new-lecture/:id" component={StartLecture} />
                 <Route exact path="/student/:id" component={StudentProfile} />
                 <Route exact path="/profiles" component={Profiles} />
                 <Route exact path="/questions" component={Questions} />

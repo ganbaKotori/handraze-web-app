@@ -2,23 +2,26 @@ const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
 module.exports = function validateRegisterInput(data) {
-    let errors = {};
+    let errors = "";
 
     data.description = !isEmpty(data.description) ? data.description : "";
     data.question = !isEmpty(data.question) ? data.question : "";
 
-    if (!Validator.isLength(data.question, { min: 10, max: 150 })) {
-        errors.question = "Question must not exceed 150 characters";
+    if (!Validator.isLength(data.question, { min: 5, max: 150 })) {
+        errors = "Question must be between 5 and 150 characters";
     }
 
-    if (Validator.isEmpty(data.dateSubmitted)) {
-        errors.dateSubmitted = "Date submitted is required";
+    if (Validator.isEmpty(data.question)) {
+        errors = "Enter your question";
     }
-    
+
+    if (Validator.isEmpty(data.description)) {
+        errors = "Enter your description";
     }
+
 
     return {
         errors,
-        isValid: isEmpty(errors)
+        isValid: errors == ""
     };
 };

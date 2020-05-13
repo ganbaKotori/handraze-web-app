@@ -4,18 +4,38 @@ const Schema = mongoose.Schema;
 
 const lectureSchema = new Schema(
   {
-    question: {
-      type: Schema.Types.ObjectID,
-      required: true,
-      ref: "Question"
+    topic: {
+      type: String
     },
-    dateLecture: {
+    studentsAttending: [
+      {
+        type: Schema.Types.ObjectID,
+        required: false,
+        ref: "Student"
+      }
+    ],
+    course: {
+        type: String,
+        required: true,
+    },
+    /*inSession: {
+      type: Boolean,
+      required: true
+    },*/
+    sessionStart: {
       type: Date,
       default: Date.now
     },
-    liveAnswer: {
-      type: String
-    }
+    sessionEnd: {
+      type: Date,
+      default: Date.now
+    },
+    ratings: [
+      {
+      type: Number,
+      required: false
+      }
+    ]
   },
   {
     timestamps: true

@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-import handraze from "../../img/handrazelogow.png";
+import handraze from "./logo9.png";
 import store from "../../store";
+
 
 const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const [profile, setProfile] = useState(0);
   store.subscribe(() => {
-    console.log("hope this works");
     const state = store.getState();
     if (state.profile.instructorProfile) {
       setProfile("instructor");
@@ -19,24 +19,21 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const authLinks = (
     <Fragment>
-      <Nav.Link to="/profiles">
-        <Button variant="primary">Profiles</Button>
-      </Nav.Link>{" "}
-      <Nav.Link to="/student">
-        <Button variant="primary">Student</Button>
+      <Nav.Link className="navbar-link" to="/student">
+      <Link to="/student" className="navbar-link"><b>Student</b></Link>
       </Nav.Link>{" "}
       <Nav.Link to="/instructor">
-        <Button variant="primary">Instructor</Button>
+      <Link to="/instructor" className="navbar-link"><b>Instructor</b></Link>
       </Nav.Link>{" "}
-      <Nav.Link to="/" onClick={logout}>
-        Logout
+      <Nav.Link to="/" onClick={logout} className="navbar-link">
+      <b> Logout</b>
       </Nav.Link  >
     </Fragment>
   );
 
   const guestLinks = (
     <Fragment>
-      <Nav.Link to="/login">Login</Nav.Link> <Nav.Link to="/register">Register</Nav.Link>
+      <Nav.Link to="/login"><Link className="navbar-link" to="/login"><b>Login</b></Link></Nav.Link> <Nav.Link to="/register"><Link className="navbar-link" to="/register"><b>Register</b></Link></Nav.Link>
     </Fragment>
   );
   return (
@@ -52,6 +49,9 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       padding: 1rem 1.5rem;
       font-size: 1.5rem;
     }
+    a:hover {
+      color: blue;
+    } 
     `}
       </style>
 
@@ -60,13 +60,22 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         expand="lg"
         bg={profile == "instructor" ? "flat" : "orange"}
         variant="dark"
+        className="navbar-link"
       >
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        
 
-        <Navbar.Brand to="/">HandRaze</Navbar.Brand>
+        <Navbar.Brand to="/">
+        <Link className="navbar-link" to="/">
+          <div style={{width:"25px", height:"35px"}} className="d-inline-block align-top"><img
+        src={handraze}
+      /></div>
+        
+        {" "}
+           <b>handraze</b></Link></Navbar.Brand>
         <br />
 
-        <Navbar.Collapse id="responsive-navbar-nav">
+        <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
 
         {!loading && (
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>

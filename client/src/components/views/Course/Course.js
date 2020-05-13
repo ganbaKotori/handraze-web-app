@@ -2,8 +2,10 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCourse } from "../../../actions/course";
+import { getLectures } from "../../../actions/lecture";
 import { Link } from "react-router-dom";
 import DiscussionQuestions from "./DiscusssionQuestion/DiscussionQuestions";
+import LectureList from "../Lecture/LectureList";
 import {
   Col,
   Spinner,
@@ -14,14 +16,16 @@ import {
   Row,
   ListGroup
 } from "react-bootstrap";
-import chalkboard from "../../../img/chalkboard.jpg";
 
-const Course = ({ getCourse, course: { course, loading }, match }) => {
+const Course = ({ getLectures, getCourse, course: { course, loading }, lectures: { lectures, loading2 }, match }) => {
   useEffect(() => {
     getCourse(match.params.id);
-  }, [getCourse]);
+    getLectures();
+  }, [getCourse, getLectures]);
   console.log("course info should appear here");
   console.log(course);
+  console.log(lectures);
+  
   var dayOfWeek;
   if (course !== null) {
     dayOfWeek = course.dayOfWeek.map(day => (
@@ -53,16 +57,11 @@ const Course = ({ getCourse, course: { course, loading }, match }) => {
         <Container>
           <Row>
             {" "}
-            <a href="#" class="btn btn-primary btn-lg btn-block btn-margin">
-              Join Lecture
-            </a>
-            <a href="#" class="btn btn-primary btn-lg btn-block btn-margin">
-              Ask Lecture Question
-            </a>
+            <Link to={`/new-lecture/${course._id}`} className="btn btn-primary btn-lg btn-block btn-margin">Create Lecture</Link>
             <br />
           </Row>
           <Row>
-            <Col>
+            {/*<Col>
               <h3>Activity Board</h3>{" "}
               <div class="newsfeed">
                 <div class="list-group activity-board">
@@ -118,51 +117,23 @@ const Course = ({ getCourse, course: { course, loading }, match }) => {
                   </a>
                 </div>
               </div>
-            </Col>
-            <Col xs={6}>
-              <h3>Lectures</h3>
-              <div class="row">
-                <div class="col">
-                  <img
-                    src="https://via.placeholder.com/50"
-                    class="img-thumbnail lectures "
-                  />
-                </div>
-                <div class="col">
-                  <img
-                    src="https://via.placeholder.com/50"
-                    class="lectures img-thumbnail"
-                  />
-                </div>
-                <div class="w-100"></div>
-                <div class="col">
-                  <img
-                    src="https://via.placeholder.com/50"
-                    class="lectures img-thumbnail"
-                  />
-                </div>
-                <div class="col">
-                  <img
-                    src="https://via.placeholder.com/50"
-                    class="lectures img-thumbnail"
-                  />
-                </div>
-              </div>
+            </Col>*/}
+            <Col >
+              <LectureList lecture={ lectures ? lectures : []}/>
             </Col>
           </Row>
           <Row>
             <Col>
               <DiscussionQuestions
                 question={course.discussion ? course.discussion : []}
-              />
-              
-              
-                <Link to={`/new-question/${course._id}`} class="btn btn-danger btn-lg btn-block btn-margin">
-                Ask Question
-                </Link>
+              />              
+              <Link to={`/new-question/${course._id}`} class="btn btn-danger btn-lg btn-block btn-margin">
+              Ask Question
+              </Link>
              
             </Col>
             <Col>
+              <br/>
               <h3>Peer Notes</h3>
               <div class="newsfeed">
                 <div class="list-group notes-board">
@@ -236,11 +207,14 @@ const Course = ({ getCourse, course: { course, loading }, match }) => {
 
 Course.propTypes = {
   getCourse: PropTypes.func.isRequired,
-  course: PropTypes.object.isRequired
+  course: PropTypes.object.isRequired,
+  getLectures: PropTypes.func.isRequired,
+  lectures: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  course: state.course
+  course: state.course,
+  lectures: state.lecture
 });
 
-export default connect(mapStateToProps, { getCourse })(Course);
+export default connect(mapStateToProps, { getCourse,getLectures })(Course);

@@ -7,12 +7,20 @@ import { getChats, afterPostMessage  } from "../../../actions/chat";
 import  ChatCard  from "./ChatCard";
 
 export class ChatPage extends Component {
-    state= {
-        chatMessage: "",
-    }
+    constructor(props) {
+        super(props);
+        this.state = { showPopup: false,
+          inputValue: "",
+          chatMessage: "",
+          chatRoom: ""
+      }
+      }
+
+
+
     componentDidMount() {
         let server = "http://localhost:3000";
-        this.props.dispatch(getChats());
+        this.props.dispatch(getChats(this.props.inputValue));
         this.socket = io(server);
         this.socket.on("Output Chat Message", messageFromBackEnd => {
             console.log(messageFromBackEnd)
@@ -25,7 +33,6 @@ export class ChatPage extends Component {
             chatMessage: e.target.value
         })
     }
-
     renderCards = () =>
         this.props.chats.chats
         && this.props.chats.chats.map((chat) => (
@@ -39,6 +46,7 @@ export class ChatPage extends Component {
         let userId = this.props.user1.user._id;
         let userName = this.props.user1.user.firstName;
         let userImage = this.props.user1.user.lastName;
+        let room = this.props.inputValue;
         let nowTime = moment();
         let type = "Text"
 
@@ -48,6 +56,7 @@ export class ChatPage extends Component {
             userName,
             userImage,
             nowTime,
+            room,
             type
         });
         this.setState({ chatMessage: "" })
@@ -56,6 +65,8 @@ export class ChatPage extends Component {
     render() {
         return (
             <React.Fragment>
+                {console.log(this.props.inputValue)}
+                <div >
             <div class="newsfeed">
             <div class="list-group notes-board"> {this.renderCards()}
                     <div
@@ -89,12 +100,13 @@ export class ChatPage extends Component {
                       onClick={this.submitChatMessage} 
                       htmlType="submit"
                     >
-                      Send
+                      Send {this.state.inputValue}
                     </button>
                   </div>
                 </div>
                     </Form>
                   </div>
+            </div>
             </div>
         </React.Fragment>
         )
