@@ -7,8 +7,8 @@ const path = require("path");
 
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-const server = require("http").createServer(app);
-const io = require("socket.io")(server)
+const io = require("socket.io")(app)
+
 
 app.use(cors());
 
@@ -131,6 +131,6 @@ io.on("connection", socket => {
 })
 
 port = process.env.PORT || 3000; // go to http://localhost:3000
-server.listen(port, function() {
+app.listen(port, function() {
   console.log(`Handraze Express Server listening on port ${port}`);
 });
