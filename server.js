@@ -7,7 +7,7 @@ const path = require("path");
 
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-const io = require("socket.io")(app)
+
 
 
 app.use(cors());
@@ -67,6 +67,10 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
   // Set static folder
@@ -75,6 +79,11 @@ if (process.env.NODE_ENV === "production") {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build'))
 })
+  
+  const PORT = process.env.PORT || 3000; // go to http://localhost:3000
+  const io = require("socket.io")(server);
+  
+  
 }
 
 io.on("connection", socket => {
@@ -130,7 +139,7 @@ io.on("connection", socket => {
 
 })
 
-const PORT = process.env.PORT || 3000; // go to http://localhost:3000
-app.listen(PORT, function() {
+
+//app.listen(PORT, function() {
  
-});
+//});
