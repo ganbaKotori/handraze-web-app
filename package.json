@@ -34,7 +34,6 @@
     "mongoose-schema-extend": "^0.2.2",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
-    "nodejs": "0.0.0",
     "nodemon": "^2.0.2",
     "save": "^2.4.0",
     "socket.io": "^2.3.0",
