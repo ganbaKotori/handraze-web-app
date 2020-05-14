@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./server.js localhost 3000",
-    "server": "nodemon server.js",
+    "start": "node server",
+    "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
@@ -19,9 +19,9 @@
     "aws-sdk": "^2.636.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
+    "client": "file:client",
     "config": "^3.2.5",
     "cookie-parser": "^1.4.5",
-    "concurrently": "^3.5.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -41,6 +41,8 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
-    "http-proxy-middleware": "^0.21.0"
+    "http-proxy-middleware": "^0.21.0",
+    "nodemon": "^2.0.2",
+    "concurrently": "^3.5.1"
   }
 }
