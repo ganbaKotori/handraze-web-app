@@ -5,7 +5,7 @@
   "main": "server.js",
   "engines": {
         "node": "10.16.0"
-    }
+    },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dstart": "node server",
