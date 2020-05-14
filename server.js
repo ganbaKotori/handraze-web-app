@@ -130,7 +130,7 @@ io.on("connection", socket => {
 
 })
 
-port = process.env.PORT || 3000; // go to http://localhost:3000
-app.listen(port, function() {
-  console.log(`Handraze Express Server listening on port ${port}`);
+const PORT = process.env.PORT || 3000; // go to http://localhost:3000
+app.listen(PORT, function() {
+ 
 });
