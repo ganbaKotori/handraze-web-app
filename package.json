@@ -8,14 +8,11 @@
     },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dstart": "node server",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && npm run client/build",
-    "dheroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-    "start": "nodemon ./server.js localhost 3000"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
