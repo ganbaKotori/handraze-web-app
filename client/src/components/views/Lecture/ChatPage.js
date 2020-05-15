@@ -30,21 +30,20 @@ export class ChatPage extends Component {
         
         this.messageList.scrollTop = maxScrollTop;
         }
+
     
     }
     componentDidMount() {
         this.scrollToBottom();
         let server = "http://localhost:3000";
         this.props.dispatch(getChats(this.props.inputValue));
-        this.socket = io(server);
+        this.socket = io();
 
         this.socket.on("Output Chat Message", messageFromBackEnd => {
             console.log(messageFromBackEnd)
             this.props.dispatch(afterPostMessage(messageFromBackEnd));
             this.scrollToBottom();
         })
-
-
 
     }
 
