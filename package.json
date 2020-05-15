@@ -15,6 +15,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && npm run client/build",
     "dheroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "start": "nodemon ./server.js localhost 3000"
   },
   "keywords": [],
   "author": "",
