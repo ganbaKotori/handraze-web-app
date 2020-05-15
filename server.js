@@ -12,7 +12,7 @@ const cookieParser = require("cookie-parser");
 app.use(cors());
 
 // DEFINE ROUTES HERE
-const authRouter = require("./routes/Auth");
+const authRouter = require("./routes/auth");
 const chatRouter = require("./routes/Chat");
 const courseRouter = require("./routes/Course");
 const discussionQuestionRouter = require("./routes/DiscussionQuestion");
