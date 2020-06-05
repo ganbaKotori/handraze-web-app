@@ -5,7 +5,7 @@ import { getCurrentInstructorProfile } from "../../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "../FileUpload";
 import InstructorCourses from "./InstructorCourses";
-import { Button, Spinner, Col, Row } from "react-bootstrap";
+import { Container, Button, Spinner, Col, Row } from "react-bootstrap";
 
 const Dashboard = ({
   getCurrentInstructorProfile,
@@ -30,13 +30,9 @@ const Dashboard = ({
     <Fragment>
       <div>
         {instructorProfile !== null ? (
-          <Fragment>    
-            <br/>    
+          <Container>       
             <Row>
-              <Col>
-                  <Row>
-                    <h3>Dashboard</h3>  
-                  </Row>
+              <Col xs={7}>
                   <Row>
                   <Col>
                       <img
@@ -45,26 +41,26 @@ const Dashboard = ({
                       />
                     </Col>
                     <Col xs={8}>
-                    
-                      <p className="lead"> Instructor </p>
+                    <h5>Instructor Dashboard</h5>
+                        <b>Name</b>
                       <p className="lead">
                         {user && user.firstName} {user && user.lastName}
                       </p>
+                      <b>Department</b>
                       <p className="lead">
-                        Department: {user && instructorProfile.department}
+                        {user && instructorProfile.department}
                       </p>
+                      <b>Institution</b>
                       <p className="lead">
                         {" "}
-                        institution: {user && instructorProfile.institution}
+                        {user && instructorProfile.institution}
                       </p>
-                      
                       </Col>
-                      
                     </Row>
-                    <Row><FileUpload user={user._id} /></Row>
-                    
-                    </Col>
-              
+                      <Row>
+                      <FileUpload />
+                      </Row>
+                    </Col>      
             </Row>
             <Row>
             <Col >
@@ -85,7 +81,7 @@ const Dashboard = ({
                </div>
             </Col>
             </Row>
-          </Fragment>
+          </Container>
         ) : (
           <Fragment>
             You have not setup a instructor profile

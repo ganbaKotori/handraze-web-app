@@ -33,16 +33,8 @@ const Dashboard = ({
           <Container>
             <Row>
               <Col xs={7}>
-                {" "}
                 <Row>
                   <Col>
-                    <Col>
-                      <h3>
-                        <a href="#" className="btn btn-primary">
-                          EDIT
-                        </a>
-                      </h3>
-                    </Col>
                     <Row>
                       <Col>
                         <img
@@ -50,20 +42,21 @@ const Dashboard = ({
                           className="profpic"
                         />
                       </Col>
-                      <Col>
-                        <p className="lead">Student</p>
+                      <Col xs={8}>
+                        <h5>Student Dashboard</h5>
+                        <b>Name</b>
                         <p className="lead">
                           {user && user.firstName ? user && user.firstName : ""}{" "}
                           {user && user.lastName ? user && user.lastName : ""}
                         </p>
+                        <b>Year</b>
                         <p className="lead">
-                          Year:{" "}
                           {user && studentProfile.year
                             ? user && studentProfile.year
                             : ""}
                         </p>
+                        <b>Attends</b>
                         <p className="lead">
-                          Goes to:{" "}
                           {user && studentProfile.institution
                             ? user && studentProfile.institution
                             : ""}
@@ -72,11 +65,11 @@ const Dashboard = ({
                     </Row>
                   </Col>
                 </Row>
+                <Row>
                 <FileUpload />
-              </Col>
-              
+                </Row>       
+              </Col> 
             </Row>
-            <br />
             <Row>
               <Col>
                 <StudentCourses

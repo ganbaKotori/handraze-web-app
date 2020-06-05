@@ -39,6 +39,7 @@ export class FileUpload extends Component {
 
   render() {
     return (
+      <div>
         <form onSubmit={this.submitFile} >
           <input
             label="Change Profile Picture"
@@ -47,6 +48,12 @@ export class FileUpload extends Component {
           />       
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+        <div style={{
+          textAlign: "left",
+      }}>
+        <i>Upload Your Profile Picture Above</i>
+      </div>
+      </div>
     );
   }
 }
