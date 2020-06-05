@@ -74,40 +74,7 @@ const Dashboard = ({
                 </Row>
                 <FileUpload />
               </Col>
-              <Col>
-                <h3> News Feed</h3>
-                <div className="newsfeed">
-                  <div className="list-group">
-                    <a
-                      href="#"
-                      className="list-group-item list-group-item-action flex-column align-items-start "
-                    >
-                      <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-1">New Notes: Chapter 3</h5>
-                      </div>
-                      <p className="mb-1">Advanced Basket Weaving.</p>
-                    </a>
-                    <a
-                      href="#"
-                      className="list-group-item list-group-item-action flex-column align-items-start "
-                    >
-                      <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-1">New Notes: Chapter 2</h5>
-                      </div>
-                      <p className="mb-1">Introduction to Political Science.</p>
-                    </a>
-                    <a
-                      href="#"
-                      className="list-group-item list-group-item-action flex-column align-items-start "
-                    >
-                      <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-1">New Question: Chapter 1</h5>
-                      </div>
-                      <p className="mb-1">Advanced Basketweaving</p>
-                    </a>
-                  </div>
-                </div>
-              </Col>
+              
             </Row>
             <br />
             <Row>
