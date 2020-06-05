@@ -16,7 +16,7 @@ const Dashboard = ({
   }, []);
   console.log(studentProfile);
   {
-    document.title = "Student";
+    document.title = "Student Dashboard";
   }
   return loading ? (
     <div>

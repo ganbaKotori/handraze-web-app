@@ -16,7 +16,7 @@ const Dashboard = ({
     getCurrentInstructorProfile();
   }, []);
   {
-    document.title = "Instructor";
+    document.title = "Instructor Dashboard";
   }
   return loading ? (
     <div>
