@@ -98,6 +98,8 @@ router.put("/courses", auth, async (req, res) => {
     if (course) {
       studentProfile.course.unshift(course._id);
       await studentProfile.save();
+      course.students.unshift(studentProfile._id);
+      course.save();
     }
     res.json(studentProfile);
   } catch (error) {

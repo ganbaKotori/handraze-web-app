@@ -104,6 +104,7 @@ router.delete("/delete/:id", getCourse, async (req, res) => {
 // @route   POST api/courses/student/:studentid
 // @desc    Add a student to a course by the student id
 // @access  Public
+/*
 router.put("/student/:id", async (req, res) => {
   try {
     const course = await Course.findOne({ _id: req.params.id });
@@ -116,6 +117,7 @@ router.put("/student/:id", async (req, res) => {
     res.status(400).json("Error adding student: " + error);
   }
 });
+*/
 
 //------------------------------------------------------------------------------
 // getCourse module: sorts through courses to find on by its id
