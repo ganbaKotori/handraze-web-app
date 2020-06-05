@@ -69,7 +69,7 @@ router.route("/").post(async (req, res) => {
 // @desc    Get list of users
 // @access  Public
 router.route("/").get((req, res) => {
-  User.find()
+  User.find().select("-password")
     .then(users => res.json(users))
     .catch(err => res.status(400).json("Error: " + err));
 });

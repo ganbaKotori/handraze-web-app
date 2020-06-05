@@ -5,22 +5,24 @@ const auth = require("../middleware/auth");
 const validateStudentInput = require("../validation/student-validation"); // Load Input Validation
 
 // @route   POST api/students
-// @desc    Create a student profile
+// @desc    Create or update a student profile
 // @access  Private
 router.route("/").post([auth], async (req, res) => {
   const { errors, isValid } = validateStudentInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  const newStudentProfile = new StudentProfile({
+  const profileFields = {
     year: req.body.year,
     institution: req.body.institution,
     user: req.user.id
-  });
-  newStudentProfile
-    .save()
-    .then(() => res.json("Student profile added!"))
-    .catch(err => res.status(400).json(err.message));
+  }
+  let profile = await StudentProfile.findOneAndUpdate(
+    { user: req.user.id },
+    { $set: profileFields },
+    { new: true, upsert: true }
+  ).then(() => res.json("Student profile added/updated!"))
+  .catch(err => res.status(400).json(err.message));
 });
 
 // @route   GET api/students
