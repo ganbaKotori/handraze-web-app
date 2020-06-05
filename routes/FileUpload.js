@@ -12,28 +12,22 @@ const singleUpload = upload.single("file");
 // @access  Private (needs to be Public)
 router.post("/file-upload", [auth], async function(req, res) {
   try {
-    console.log("user start")
-    console.log(req.user.id)
-    console.log("user end")
-    var user = await User.findById({
-      _id: req.user.id
-    })
-    await singleUpload(req, res, function(result) {
-      console.log(res.req.file.location);
-      user.avatar = res.req.file.location;
-        user.save();
-        console.log(user)
-        console.log("profile pic added to user!")
-      return res.json('imageUrl');
-      //return res.json("File Uploaded!"); // can't read the file location
+    await singleUpload(req, res, async function(result) {
+      const profilePicture = {
+        avatar: res.req.file.location,
+      }
+      await User.findOneAndUpdate(
+        { _id: req.user.id },
+        { $set: profilePicture },
+        { new: true, upsert: true }
+      ).then(() => res.json("Profile picture updated!"))
+      .catch(err => res.status(400).json(err.message));
     });
   }
   catch (err){
     console.log(err.message)
   }
-  
 });
-
 
 // @route   GET API/Upload/file-upload
 // @desc    Upload a single file to s3 bucket

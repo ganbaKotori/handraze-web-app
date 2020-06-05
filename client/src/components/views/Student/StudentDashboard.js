@@ -16,7 +16,7 @@ const Dashboard = ({
   }, []);
   console.log(studentProfile);
   {
-    document.title = "Student";
+    document.title = "Student Dashboard";
   }
   return loading ? (
     <div>
@@ -33,16 +33,8 @@ const Dashboard = ({
           <Container>
             <Row>
               <Col xs={7}>
-                {" "}
                 <Row>
                   <Col>
-                    <Col>
-                      <h3>
-                        <a href="#" className="btn btn-primary">
-                          EDIT
-                        </a>
-                      </h3>
-                    </Col>
                     <Row>
                       <Col>
                         <img
@@ -50,20 +42,21 @@ const Dashboard = ({
                           className="profpic"
                         />
                       </Col>
-                      <Col>
-                        <p className="lead">Student</p>
+                      <Col xs={8}>
+                        <h5>Student Dashboard</h5>
+                        <b>Name</b>
                         <p className="lead">
                           {user && user.firstName ? user && user.firstName : ""}{" "}
                           {user && user.lastName ? user && user.lastName : ""}
                         </p>
+                        <b>Year</b>
                         <p className="lead">
-                          Year:{" "}
                           {user && studentProfile.year
                             ? user && studentProfile.year
                             : ""}
                         </p>
+                        <b>Attends</b>
                         <p className="lead">
-                          Goes to:{" "}
                           {user && studentProfile.institution
                             ? user && studentProfile.institution
                             : ""}
@@ -72,44 +65,11 @@ const Dashboard = ({
                     </Row>
                   </Col>
                 </Row>
+                <Row>
                 <FileUpload />
-              </Col>
-              <Col>
-                <h3> News Feed</h3>
-                <div className="newsfeed">
-                  <div className="list-group">
-                    <a
-                      href="#"
-                      className="list-group-item list-group-item-action flex-column align-items-start "
-                    >
-                      <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-1">New Notes: Chapter 3</h5>
-                      </div>
-                      <p className="mb-1">Advanced Basket Weaving.</p>
-                    </a>
-                    <a
-                      href="#"
-                      className="list-group-item list-group-item-action flex-column align-items-start "
-                    >
-                      <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-1">New Notes: Chapter 2</h5>
-                      </div>
-                      <p className="mb-1">Introduction to Political Science.</p>
-                    </a>
-                    <a
-                      href="#"
-                      className="list-group-item list-group-item-action flex-column align-items-start "
-                    >
-                      <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-1">New Question: Chapter 1</h5>
-                      </div>
-                      <p className="mb-1">Advanced Basketweaving</p>
-                    </a>
-                  </div>
-                </div>
-              </Col>
+                </Row>       
+              </Col> 
             </Row>
-            <br />
             <Row>
               <Col>
                 <StudentCourses

@@ -69,7 +69,7 @@ router.route("/").post(async (req, res) => {
 // @desc    Get list of users
 // @access  Public
 router.route("/").get((req, res) => {
-  User.find()
+  User.find().select("-password")
     .then(users => res.json(users))
     .catch(err => res.status(400).json("Error: " + err));
 });
@@ -209,24 +209,6 @@ router.post("/update/:id", (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// @route   POST api/users/update-avatar/:id
-// @desc    Update a user's profile avatar
-// @access  Public
-router.post("/update-avatar/:id", getUser, async (req, res) => {
-  if (req.body.avatar != null) {
-    // if user enters data to change avatar
-    res.user.avatar = req.body.avatar; // change the avatar
-
-    // Check if image exists in s3
-  }
-
-  try {
-    const upatedUser = await res.user.save(); // give updated version
-    res.json(upatedUser);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 /* TODO: MERGE WITH UPPER CODE
 // @route   PATCH api/users/multi-update/:id
