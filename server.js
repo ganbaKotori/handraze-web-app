@@ -16,7 +16,7 @@ const authRouter = require("./routes/auth");
 const chatRouter = require("./routes/Chat");
 const courseRouter = require("./routes/Course");
 const discussionQuestionRouter = require("./routes/DiscussionQuestion");
-//const fileRouter = require("./routes/FileUpload");
+const fileRouter = require("./routes/FileUpload");
 const instructorRouter = require("./routes/Instructor");
 const lectureRouter = require("./routes/Lecture");
 const studentRouter = require("./routes/Student");
@@ -44,7 +44,7 @@ app.use("/api/instructors", instructorRouter);
 app.use("/api/lectures", lectureRouter);
 app.use("/api/students", studentRouter);
 app.use("/api/questions", discussionQuestionRouter);
-//app.use("/api/upload", fileRouter);
+app.use("/api/upload", fileRouter);
 app.use("/api/users", userRouter);
 
 app.use(express.json());
