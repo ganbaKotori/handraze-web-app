@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CourseCard } from "./StudentCourseCard";
-import { Button, Row, Col } from "react-bootstrap";
+import { CardDeck, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const StudentCourses = ({ course }) => {
@@ -23,15 +23,15 @@ const StudentCourses = ({ course }) => {
 
   return (
     <Fragment>
+      <hr/>
       <h3>Courses</h3>{" "}
+      <CardDeck>
+      {courses}
+      </CardDeck>
       <Link to="/enroll">
         <Button variant="outline-primary">Enroll Course</Button>
       </Link>
-      <div className="courses">
-        <Row>
-          {courses}
-          </Row>
-      </div>
+      <hr/>
     </Fragment>
   );
 };
