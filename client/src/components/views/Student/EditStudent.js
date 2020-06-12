@@ -1,65 +1,72 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createProfile2 } from "../../../actions/profile";
+import { Link, withRouter } from "react-router-dom";
+import { FileUpload } from "../FileUpload";
 
-const EditStudent = () => {
+const EditStudent = ({ createProfile2, history}) => {
+
+    const [formData, setFormData] = useState({
+      year: "",
+      institution: ""
+    });
+  
+    const { year, institution } = formData;
+
+    const onChange = e =>
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+
+  const onSubmit = e => {
+    e.preventDefault();
+    createProfile2(formData, history);
+  };
   return (
     <div class="container">
-      <h2> Edit Instructor Profile </h2>
+      <h2>Edit Profile Picture</h2>
+      <FileUpload />
+      <h2> Edit Student Profile </h2>
       <p>
         {" "}
         Enter updated information below to make a change to your account.
       </p>
-      <form>
-
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
+      <form className="form" onSubmit={e => onSubmit(e)}>
+        <div className="form-group">
+          <label for="year">Year</label>
+          <select
+            type="year"
+            className="form-control"
+            id="year"
             aria-describedby="emailHelp"
-            placeholder="Enter email"
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Phone Number</label>
+            placeholder="Enter your Year"
+            name="year"
+            value={year}
+            onChange={e => onChange(e)}
+          >
+            <option value="">--Please choose an option--</option>
+            <option value="freshman">Freshman</option>
+            <option value="sophmore">Sophmore</option>
+            <option value="junior">Junior</option>
+            <option value="senior">Senior</option>
+          </select>
+
+          <label for="institution">Institution</label>
           <input
-            type="email"
-            class="form-control"
-            id="email"
+            type="institution"
+            className="form-control"
+            id="institution"
             aria-describedby="emailHelp"
-            placeholder="Enter Phone"
+            placeholder="Where do you attend school?"
+            name="institution"
+            value={institution}
+            onChange={e => onChange(e)}
           />
         </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            placeholder="Password"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="confirmPassword"
-            placeholder="Password"
-          />
-        </div>
-
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Graduation Year</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option><option>2031</option><option>2032</option><option>2033</option><option>2034</option><option>2035</option><option>2036</option><option>2037</option><option>2038</option><option>2039</option>
-            
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>
@@ -67,4 +74,18 @@ const EditStudent = () => {
   );
 };
 
-export default EditStudent;
+EditStudent.propTypes = {
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  createProfile2: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  profile: state.profile
+});
+
+
+export default connect(null, { createProfile2 })(
+  withRouter(EditStudent)
+);

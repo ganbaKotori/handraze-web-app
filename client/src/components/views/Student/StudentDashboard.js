@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentStudentProfile } from "../../../actions/profile";
 import { Link } from "react-router-dom";
-import { FileUpload } from "../FileUpload";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+
+import { Button, Container, Row, Col, Spinner } from "react-bootstrap";
 import StudentCourses from "./StudentCourses";
 const Dashboard = ({
   getCurrentStudentProfile,
@@ -41,32 +41,43 @@ const Dashboard = ({
                           src={user && user.avatar ? user && user.avatar : "https://via.placeholder.com/100"}
                           className="profpic"
                         />
+                        
                       </Col>
                       <Col xs={8}>
                         <h5>Student Dashboard</h5>
-                        <b>Name</b>
-                        <p className="lead">
-                          {user && user.firstName ? user && user.firstName : ""}{" "}
-                          {user && user.lastName ? user && user.lastName : ""}
-                        </p>
-                        <b>Year</b>
-                        <p className="lead">
-                          {user && studentProfile.year
-                            ? user && studentProfile.year
-                            : ""}
-                        </p>
-                        <b>Attends</b>
-                        <p className="lead">
-                          {user && studentProfile.institution
-                            ? user && studentProfile.institution
-                            : ""}
-                        </p>
+                        <Row>
+                          <Col><b>Name</b>
+                            <p className="lead">
+                              {user && user.firstName ? user && user.firstName : ""}{" "}
+                              {user && user.lastName ? user && user.lastName : ""}
+                            </p>
+                          </Col>
+                          <Col>
+                          <b>Year</b>
+                            <p className="lead">
+                              {user && studentProfile.year ? user && studentProfile.year : ""}
+                            </p> 
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <b>Attends</b>
+                            <p className="lead">
+                            {user && studentProfile.institution ? user && studentProfile.institution : ""}
+                            </p>
+                          </Col>
+                          <Col>
+                            <Link to="/edit-student">
+                            <Button variant="outline-primary">Edit Profile</Button>
+                            </Link>
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
                   </Col>
                 </Row>
                 <Row>
-                <FileUpload />
+                
                 </Row>       
               </Col> 
             </Row>
