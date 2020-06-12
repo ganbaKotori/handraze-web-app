@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentStudentProfile } from "../../../actions/profile";
 import { Link } from "react-router-dom";
-
 import { Button, Container, Row, Col, Spinner } from "react-bootstrap";
 import StudentCourses from "./StudentCourses";
+
 const Dashboard = ({
   getCurrentStudentProfile,
   auth: { user },
@@ -88,11 +88,15 @@ const Dashboard = ({
                 />
               </Col>
             </Row>
+            
           </Container>
         ) : (
           <Fragment>
+            <Container>
             You have not setup a student profile
             <Link to="/createstudentprofile"> Create Student Profile </Link>
+            </Container>
+            
           </Fragment>
         )}
         <br />

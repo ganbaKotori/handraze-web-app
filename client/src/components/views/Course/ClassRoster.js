@@ -1,27 +1,27 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { LectureCard } from "./LectureCard";
+import { ClassRosterCard } from "./ClassRosterCard";
 import { Button } from "react-bootstrap";
 
-const ClassRoster = ({ lecture }) => {
-  var lectures;
-  console.log(lecture);
-  if (lecture) {
-    lectures = lecture.map((lecture) => <LectureCard inputValue={lecture} />); //create a CourseCard for every course id in the Course array in Student P
+const ClassRoster = ({ students }) => {
+  var classRoster;
+  if (students) {
+    classRoster = students.map((students) => <ClassRosterCard classRoster={students} />); //create a CourseCard for every course id in the Course array in Student P
   }
 
   return (
     <Fragment>
-      <h3>Lectures</h3>{" "}
+      <br/>
+      <h3>Class Roster</h3>{" "}
       <div class="newsfeed">
-        <div class="list-group notes-board">{lectures}</div>
+        <div class="list-group notes-board">{classRoster}</div>
       </div>
     </Fragment>
   );
 };
 
 ClassRoster.propTypes = {
-  lecture: PropTypes.array.isRequired,
+  students: PropTypes.array.isRequired,
 };
 
 export default ClassRoster;

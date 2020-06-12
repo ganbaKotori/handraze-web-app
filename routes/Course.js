@@ -123,7 +123,7 @@ router.put("/student/:id", async (req, res) => {
 // getCourse module: sorts through courses to find on by its id
 async function getCourse(req, res, next) {
   var course;
-  try {
+  try {  
     course = await Course.findById({
       _id: req.params.id
     }).populate("discussion", [
@@ -132,11 +132,20 @@ async function getCourse(req, res, next) {
       "dateSubmitted",
       "name",
       "_id"
-    ]);
+    ]).populate({ 
+      path: 'students',
+      populate: {
+        path: 'user',
+        model: 'User'
+      } 
+   })
     if (course == null) {
       return res.status(404).json({ message: "Cannot find course." });
     }
+
+    console.log(course.students)
   } catch (err) {
+    console.log(err.message)
     return res.status(500).json({ message: err.message });
   }
 

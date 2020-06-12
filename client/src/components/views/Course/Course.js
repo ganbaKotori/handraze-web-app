@@ -5,6 +5,7 @@ import { getCourse } from "../../../actions/course";
 import { getLectures } from "../../../actions/lecture";
 import { Link } from "react-router-dom";
 import DiscussionQuestions from "./DiscusssionQuestion/DiscussionQuestions";
+import ClassRoster from "./ClassRoster";
 import LectureList from "../Lecture/LectureList";
 import {
   Col,
@@ -43,17 +44,15 @@ const Course = ({ getLectures, getCourse, course: { course, loading }, lectures:
   ) : (
     <Fragment>
       {(document.title = course.title)}
-
       <Jumbotron fluid className="Logo">
-        <Container className="jumbotron_text">
+        <div className="jumbotron_text">
           <h1>{course.title}</h1>
           <p>{course.description}</p>
           <p>Section {course.sectionNumber}</p>
           Lectures: {dayOfWeek} from <b>{course.classStart}</b> to{" "}
           <b>{course.classEnd}</b>
-        </Container>
+        </div>
       </Jumbotron>
-      <div className="container">
         <Container>
           <Row>
             {" "}
@@ -61,63 +60,6 @@ const Course = ({ getLectures, getCourse, course: { course, loading }, lectures:
             <br />
           </Row>
           <Row>
-            {/*<Col>
-              <h3>Activity Board</h3>{" "}
-              <div class="newsfeed">
-                <div class="list-group activity-board">
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Lecture 10/27/19</h5>
-                    </div>
-                    <p class="mb-1">6 Questions</p>
-                    <p class="mb-1">6 Solved</p>
-                  </a>
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Lecture 11/27/19</h5>
-                    </div>
-                    <p class="mb-1">5 Questions</p>
-                    <p class="mb-1">3 Solved</p>
-                  </a>
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Lecture 10/12/19</h5>
-                    </div>
-                    <p class="mb-1">6 Questions</p>
-                    <p class="mb-1">2 Solved</p>
-                  </a>
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Lecture 1/27/19</h5>
-                    </div>
-                    <p class="mb-1">6 Questions</p>
-                    <p class="mb-1">2 Solved</p>
-                  </a>
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Lecture 9/27/19</h5>
-                    </div>
-                    <p class="mb-1">7 Questions</p>
-                    <p class="mb-1">4 Solved</p>
-                  </a>
-                </div>
-              </div>
-            </Col>*/}
             <Col >
               <LectureList lecture={ lectures ? lectures : []}/>
             </Col>
@@ -130,77 +72,13 @@ const Course = ({ getLectures, getCourse, course: { course, loading }, lectures:
               <Link to={`/new-question/${course._id}`} class="btn btn-danger btn-lg btn-block btn-margin">
               Ask Question
               </Link>
-             
             </Col>
             <Col>
-              <br/>
-              <h3>Peer Notes</h3>
-              <div class="newsfeed">
-                <div class="list-group notes-board">
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Chapter 4 Notes</h5>
-                    </div>
-                    <p class="mb-1">Diego Gonzalez</p>
-                  </a>
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Chapter 4 Notes</h5>
-                    </div>
-                    <p class="mb-1">Matt Pfiefer</p>
-                  </a>
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Chapter 4 Notes</h5>
-                    </div>
-                    <p class="mb-1">Joe Furt</p>
-                  </a>
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Chapter 4 Notes</h5>
-                    </div>
-                    <p class="mb-1">Sarah Poster</p>
-                  </a>
-                  <a
-                    href="#"
-                    class="list-group-item list-group-item-action flex-column align-items-start "
-                  >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">Chapter 4 Notes</h5>
-                    </div>
-                    <p class="mb-1">Diego Gonzalez</p>
-                  </a>
-                </div>
-                <a href="#" class="btn btn-danger btn-lg btn-block btn-margin">
-                  Add Notes
-                </a>
-              </div>
+            <ClassRoster students={ course.students ? course.students : []}/>
+            
             </Col>
           </Row>
         </Container>
-      </div>
-      <div class="container">
-        <div class="row dashboard"></div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-2 col-md-4"></div>
-        </div>
-      </div>
-      <br />
-      <br />
     </Fragment>
   );
 };

@@ -673,9 +673,19 @@ table {
 
 .jumbotron_text {
   color: white;
-  margin-left: 8%;
-  margin-right: 8%;
+  margin-left: 4em;
+  margin-right: 4em;
 }
+
+@media (min-width: 700px) {
+  .jumbotron_text {
+    color: white;
+    margin-left: 17em;
+    margin-right: 17em;
+  }
+
+}
+
 
 footer {
   position: absolute;
