@@ -58,7 +58,7 @@ const App = () => {
               <div className="container">
               
               <Route exact path="/chat" component={ChatPage} />
-                <Route exact path="/edit" component={EditStudent} />
+                <PrivateRoute exact path="/edit-student" component={EditStudent} />
                 <PrivateRoute
                   exact
                   path="/newcourse"
