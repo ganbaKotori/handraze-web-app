@@ -55,10 +55,10 @@ const App = () => {
             <PrivateRoute exact path="/course/:id" component={Course} />
             <Route exact path="/lecture/:id" component={Lecture} />
             <Fragment>
-              <div className="container">
+ 
               
               <Route exact path="/chat" component={ChatPage} />
-                <Route exact path="/edit" component={EditStudent} />
+                <PrivateRoute exact path="/edit-student" component={EditStudent} />
                 <PrivateRoute
                   exact
                   path="/newcourse"
@@ -103,7 +103,7 @@ const App = () => {
                   path="/student"
                   component={StudentDashboard}
                 />
-              </div>
+
             </Fragment>
           </Switch>
         </Fragment>

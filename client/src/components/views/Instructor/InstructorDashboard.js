@@ -84,8 +84,10 @@ const Dashboard = ({
           </Container>
         ) : (
           <Fragment>
+            <Container>
             You have not setup a instructor profile
             <Link to="/createinstructorprofile"> Create Profile </Link>
+            </Container>
           </Fragment>
         )}
         <br />
