@@ -20,7 +20,7 @@ const peerSchema = new Schema({
   timestamps: true,
 });
 
-const Peer = mongoose.model('Peer', peerSchema);
+const PeerNote = mongoose.model('PeerNote', peerSchema);
 
 module.exports = Peer;
 
