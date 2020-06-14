@@ -6,5 +6,5 @@ module.exports = {
     jwtSecret: process.env.JWT_SECRET,
     sendGridAPIKey: process.env.SENDGRID_API_KEY,
     AWSAccessKey: process.env.AWS_ACCESS_KEY,
-    AWSSecretAccessKey: process.env.S3_BUCKET
+    AWSSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   };
