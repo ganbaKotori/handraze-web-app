@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const sender = require("../services/mailer");
-require("dotenv").config();
 
 const User = require("../models/user.model");
 const Student = require("../models/student.model");
