@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const sender = require("../services/mailer");
+const keys = require("../config/keys")
 
 const User = require("../models/user.model");
 const Student = require("../models/student.model");

@@ -2,7 +2,7 @@ const aws = require("aws-sdk");
 const express = require("express");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const keys = require("../config")
+const keys = require("../config/keys")
 
 //process.env.AWS_SECRET_ACCESS_KEY
 //process.env.AWS_ACCESS_KEY
