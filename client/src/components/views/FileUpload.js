@@ -26,7 +26,8 @@ export class FileUpload extends Component {
       })
       .then(response => {
         // handle your response;
-        window.location.reload(false);
+        alert("Profile Picture Updated!")
+        //window.location.reload(false);
       })
       .catch(error => {
         // handle your error
