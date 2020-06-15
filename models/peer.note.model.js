@@ -1,26 +1,29 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const peerSchema = new Schema({
-	classTitle: {
-		type: Schema.Types.ObjectID,
-		required: true,
-		ref: 'Course'
-	},
-	noteDate:{
-		type: date,
-		default: Date.now
-	},
-	notes:{
-		type: string,
-		required : true,
-		maxlength : 500
-}, {
-  timestamps: true,
+const peerNoteSchema = new Schema({
+  course: {
+    type: Schema.Types.ObjectID,
+    required: false,
+    ref: "Course",
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  text: {
+    type: String,
+    required: true,
+    maxlength: 500,
+  },
+  user: {
+    type: Schema.Types.ObjectID,
+    required: true,
+    ref: "User",
+  },
 });
 
-const PeerNote = mongoose.model('PeerNote', peerSchema);
+const PeerNote = mongoose.model("PeerNote", peerNoteSchema);
 
-module.exports = Peer;
-
+module.exports = PeerNote;
