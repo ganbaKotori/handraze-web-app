@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import student from "../../img/handrazelogow.png";
+import {Row, Col, Container} from "react-bootstrap"
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -12,6 +13,7 @@ const Landing = ({ isAuthenticated }) => {
     document.title = "Handraze";
   }
   return (
+    <React.Fragment>
     <section className="landing">
       <div className="dark-overlay">
         <div className="landing-inner">
@@ -41,6 +43,38 @@ const Landing = ({ isAuthenticated }) => {
         </div>
       </div>
     </section>
+    <section className="whatIsHandraze" >
+      <Container fluid>
+  <Row>
+    <Col xs={12} md={6}><span><h1 className="large" style={{"text-align": "center", "margin-top": "1rem"}}>What is handraze?</h1>
+    <p className="lead">
+      Hi this is a testsdf opsdkif[ds jfpodsj fposedgfpo ajfd[p wbg;oaf[pb[pwe fgi[p oep[ofp;o[g jqwf [po qjg]] ]] ]]]] asdd asd asd asd asd  asd asd
+    </p>
+    </span></Col>
+    <Col xs={12} md={6}>
+    <span><h1 className="large" style={{"text-align": "center", "margin-top": "1rem"}}>Who is handraze for?</h1>
+    <p className="lead">
+      Hi this is a test
+    </p>
+    </span>
+    </Col>
+  </Row>
+  </Container>
+      </section>
+    <section className="whatIsHandraze2" >
+    <Container fluid>
+  <Row>
+    <Col><span><h1 className="large" style={{"text-align": "center", "margin-top": "1rem"}}>how we run handraze</h1>
+    <p className="lead">
+      Hi this is a test
+    </p>
+    </span></Col>
+    <Col>1 of 1</Col>
+  </Row>
+</Container>
+
+    </section>
+    </React.Fragment>
   );
 };
 
