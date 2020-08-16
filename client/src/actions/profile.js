@@ -11,11 +11,11 @@ import {
   GET_ENROLLED_COURSES,
   GET_PROFILE2,
   PROFILE_ERROR,
-  PROFILE_ERROR2
+  PROFILE_ERROR2,
 } from "./types";
 
 //Get profiles
-export const getProfiles = () => async dispatch => {
+export const getProfiles = () => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
 
   try {
@@ -36,18 +36,21 @@ export const getProfiles = () => async dispatch => {
 
     dispatch({
       type: GET_PROFILES,
-      payload: profiles3
+      payload: profiles3,
     });
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 //Get Enrolled Courses
-export const getEnrolledCourses = username => async dispatch => {
+export const getEnrolledCourses = (username) => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
 
   try {
@@ -60,18 +63,21 @@ export const getEnrolledCourses = username => async dispatch => {
 
     dispatch({
       type: GET_ENROLLED_COURSES,
-      payload: res.data
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 //Get profile by ID
-export const getStudentProfileById = userId => async dispatch => {
+export const getStudentProfileById = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/students/user/${userId}`);
     // const profile2 = { instructor: res.data, student: res2.data };
@@ -79,162 +85,178 @@ export const getStudentProfileById = userId => async dispatch => {
 
     dispatch({
       type: GET_STUDENT_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 //Get profile by ID
-export const getInstructorProfileById = userId => async dispatch => {
+export const getInstructorProfileById = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/instructors/user/${userId}`);
     console.log(res);
 
     dispatch({
       type: GET_INSTRUCTOR_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 //Get current users profile
-export const getCurrentInstructorProfile = () => async dispatch => {
+export const getCurrentInstructorProfile = () => async (dispatch) => {
   dispatch({ type: CLEAR_STUDENT_PROFILE });
   try {
     const res = await axios.get("/api/instructors/me");
 
     dispatch({
       type: GET_INSTRUCTOR_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 //Get current users profile
-export const getCurrentStudentProfile = () => async dispatch => {
+export const getCurrentStudentProfile = () => async (dispatch) => {
   dispatch({ type: CLEAR_INSTRUCTOR_PROFILE });
   try {
     const res = await axios.get("/api/students/me");
     dispatch({
       type: GET_STUDENT_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 //Create or Update profile
-export const createProfile = (
-  formData,
-  history,
-  edit = false
-) => async dispatch => {
+export const createProfile = (formData, history, edit = false) => async (
+  dispatch
+) => {
   try {
     const config = {
       header: {
-        "Content-type": "application/json"
-      }
+        "Content-type": "application/json",
+      },
     };
 
     const res = await axios.post("/api/instructors", formData, config);
 
     dispatch({
       type: GET_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
 
     if (!edit) {
       history.push("./instructor");
     }
   } catch (error) {
-    alert(error.response.data)
+    alert(error.response.data);
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 
 //@usage  /createinstructorprofile
 //@desc   Use Enrollment Code to gain access to Course
-export const createProfile2 = (
-  formData,
-  history,
-  edit = false
-) => async dispatch => {
+export const createProfile2 = (formData, history, edit = false) => async (
+  dispatch
+) => {
   try {
     const config = {
       header: {
-        "Content-type": "application/json"
-      }
+        "Content-type": "application/json",
+      },
     };
 
     const res = await axios.post("/api/students", formData, config);
 
     dispatch({
       type: GET_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
 
     if (!edit) {
       history.push("./student");
     }
   } catch (error) {
-    alert(error.response.data)
+    alert(error.response.data);
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
 //@usage  /enroll
 //@desc   Use Enrollment Code to gain access to Course
-export const enrollCourse = (
-  { code },
-  history,
-  edit = false
-) => async dispatch => {
+export const enrollCourse = ({ code }, history, edit = false) => async (
+  dispatch
+) => {
   try {
     const config = {
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     };
     const body = JSON.stringify({
-      code
+      code,
     });
     console.log(body);
     const res = await axios.put("/api/students/courses", body, config);
     console.log(res.data);
     dispatch({
       type: GET_ENROLLED_COURSES,
-      payload: res.data
+      payload: res.data,
     });
     history.push("./student");
   } catch (error) {
+    alert(error.response.data);
     console.log(error);
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: error.response.statusText, status: error.response.status }
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };

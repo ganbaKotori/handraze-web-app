@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let StudentProfile = require("../models/student.model");
+let InstructorProfile = require("../models/instructor.model");
 let Course = require("../models/course.model");
 const auth = require("../middleware/auth");
 const validateStudentInput = require("../validation/student-validation"); // Load Input Validation
@@ -15,14 +16,15 @@ router.route("/").post([auth], async (req, res) => {
   const profileFields = {
     year: req.body.year,
     institution: req.body.institution,
-    user: req.user.id
-  }
+    user: req.user.id,
+  };
   let profile = await StudentProfile.findOneAndUpdate(
     { user: req.user.id },
     { $set: profileFields },
     { new: true, upsert: true }
-  ).then(() => res.json("Student profile added/updated!"))
-  .catch(err => res.status(400).json(err.message));
+  )
+    .then(() => res.json("Student profile added/updated!"))
+    .catch((err) => res.status(400).json(err.message));
 });
 
 // @route   GET api/students
@@ -32,7 +34,13 @@ router.route("/").get(async (req, res) => {
   try {
     const studentProfiles = await StudentProfile.find()
       .populate("user", ["firstName", "lastName"])
-      .populate("course", ["title", "description", "classStart", "classEnd","dayOfWeek"]);
+      .populate("course", [
+        "title",
+        "description",
+        "classStart",
+        "classEnd",
+        "dayOfWeek",
+      ]);
     res.json(studentProfiles);
   } catch (error) {
     res.status(400).json("Error: " + error);
@@ -57,10 +65,16 @@ router.delete("/delete/:id", getStudent, async (req, res) => {
 router.route("/me").get(auth, async (req, res) => {
   try {
     const profile = await StudentProfile.findOne({
-      user: req.user.id
+      user: req.user.id,
     })
       .populate("user", ["firstName", "lastName"])
-      .populate("course", ["title", "description","classStart", "classEnd","dayOfWeek"]);
+      .populate("course", [
+        "title",
+        "description",
+        "classStart",
+        "classEnd",
+        "dayOfWeek",
+      ]);
     if (!profile) {
       return res
         .status(400)
@@ -78,9 +92,9 @@ router.route("/me").get(auth, async (req, res) => {
 router.route("/user/:user_id").get(async (req, res) => {
   try {
     const studentProfiles = await StudentProfile.findOne({
-      user: req.params.user_id
+      user: req.params.user_id,
     })
-      .populate("user", ["firstName", "lastName","avatar"])
+      .populate("user", ["firstName", "lastName", "avatar"])
       .populate("course", ["title", "description"]);
     res.json(studentProfiles);
   } catch (error) {
@@ -96,11 +110,20 @@ router.put("/courses", auth, async (req, res) => {
     const studentProfile = await StudentProfile.findOne({ user: req.user.id });
     const course = await Course.findOne({ code: req.body.code });
     if (course) {
+      const instructorProfile = await InstructorProfile.findOne({
+        user: req.user.id,
+      });
+      if (instructorProfile && instructorProfile.course.includes(course._id)) {
+        return res
+          .status(400)
+          .json("You cannot enroll in a course that you created!");
+      }
       studentProfile.course.unshift(course._id);
       await studentProfile.save();
       course.students.unshift(studentProfile._id);
       course.save();
-    }
+    } else
+      return res.status(400).json("No course found with this enrollment code!");
     res.json(studentProfile);
   } catch (error) {
     res.json(error.message);
