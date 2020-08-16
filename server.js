@@ -4,7 +4,9 @@ const { Chat } = require("./models/chat.model");
 const app = express();
 const cors = require("cors");
 const path = require("path");
+mongoose.Promise  = require("bluebird");
 const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
@@ -56,7 +58,7 @@ let rooms = {};
 // CONNECT TO MONGODB
 const uri = "mongodb://alex:alex123@ds235378.mlab.com:35378/handraze-beta";
 
-mongoose.connect(uri, {
+const  connect  =  mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -82,7 +84,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const io = require("socket.io")(server);
+
 
 io.on("connection", (socket) => {
   socket.on("room", function (room) {
@@ -115,7 +117,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("Input Chat Message", (msg) => {
-    connect.then((db) => {
+    connect.then(db => {
       try {
         let chat = new Chat({
           message: msg.chatMessage,
