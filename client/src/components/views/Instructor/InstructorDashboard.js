@@ -10,7 +10,7 @@ import { Container, Button, Spinner, Col, Row } from "react-bootstrap";
 const Dashboard = ({
   getCurrentInstructorProfile,
   auth: { user },
-  profile: { instructorProfile, loading }
+  profile: { instructorProfile, loading },
 }) => {
   useEffect(() => {
     getCurrentInstructorProfile();
@@ -30,63 +30,90 @@ const Dashboard = ({
     <Fragment>
       <div>
         {instructorProfile !== null ? (
-          <Container>       
+          <Container>
             <Row>
               <Col xs={7}>
-                  <Row>
+                <Row>
                   <Col>
-                      <img
-                        src={user && user.avatar ? user && user.avatar : "https://via.placeholder.com/100"}
-                        className="profpic"
-                      />
-                    </Col>
-                    <Col xs={8}>
-                    <h5>Instructor Dashboard</h5>
-                        <b>Name</b>
-                      <p className="lead">
-                        {user && user.firstName} {user && user.lastName}
-                      </p>
-                      <b>Department</b>
-                      <p className="lead">
-                        {user && instructorProfile.department}
-                      </p>
-                      <b>Institution</b>
-                      <p className="lead">
-                        {" "}
-                        {user && instructorProfile.institution}
-                      </p>
+                    <Row>
+                      <Col>
+                        <img
+                          src={
+                            user && user.avatar
+                              ? user && user.avatar
+                              : "https://via.placeholder.com/100"
+                          }
+                          className="profpic"
+                        />
+                      </Col>
+                      <Col xs={8}>
+                        <h5>Student Dashboard</h5>
+                        <Row>
+                          <Col>
+                            <b>Name</b>
+                            <p className="lead">
+                              {user && user.firstName
+                                ? user && user.firstName
+                                : ""}{" "}
+                              {user && user.lastName
+                                ? user && user.lastName
+                                : ""}
+                            </p>
+                          </Col>
+                          <Col>
+                            <b>Department</b>
+                            <p className="lead">
+                              {user && instructorProfile.department
+                                ? user && instructorProfile.department
+                                : ""}
+                            </p>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <b>Institution</b>
+                            <p className="lead">
+                              {user && instructorProfile.institution
+                                ? user && instructorProfile.institution
+                                : ""}
+                            </p>
+                          </Col>
+                          <Col>
+                            <Link to="/edit-student">
+                              <Button variant="outline-primary">
+                                Edit Profile
+                              </Button>
+                            </Link>
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
-                      <Row>
-                      <FileUpload />
-                      </Row>
-                    </Col>      
+                  </Col>
+                </Row>
+              </Col>
             </Row>
+
             <Row>
-            <Col >
-              <h3>Courses You're Teaching</h3>
-              <Link to="/newcourse">
-              <Button variant="outline-primary">
-                 Start a new Course
-              </Button>
-              </Link>
-              <div className="courses">
-                 <InstructorCourses
+              <Col>
+                <h3>Courses You're Teaching</h3>
+                <Link to="/newcourse">
+                  <Button variant="outline-primary">Start a new Course</Button>
+                </Link>
+                <div className="courses">
+                  <InstructorCourses
                     course={
-                    instructorProfile.course
-                    ? instructorProfile.course
-                    : []
+                      instructorProfile.course ? instructorProfile.course : []
                     }
-                    />
-               </div>
-            </Col>
+                  />
+                </div>
+              </Col>
             </Row>
           </Container>
         ) : (
           <Fragment>
             <Container>
-            You have not setup a instructor profile
-            <Link to="/createinstructorprofile"> Create Profile </Link>
+              You have not setup a instructor profile
+              <Link to="/createinstructorprofile"> Create Profile </Link>
             </Container>
           </Fragment>
         )}
@@ -99,14 +126,14 @@ const Dashboard = ({
 Dashboard.propTypes = {
   getCurrentInstructorProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps, {
-  getCurrentInstructorProfile
+  getCurrentInstructorProfile,
 })(Dashboard);

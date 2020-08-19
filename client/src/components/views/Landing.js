@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import student from "../../img/handrazelogow.png";
@@ -33,9 +33,12 @@ const Landing = ({ isAuthenticated }) => {
               <a href="http://docs.handraze.org" className="btn btn-dark">
                 Documents
               </a>
-              <a href="http://docs.handraze.org" className="btn btn-danger">
+              <Link
+                to="/lecture/5f3c7939150eb40a7cb94d88"
+                className="btn btn-danger"
+              >
                 Demo
-              </a>
+              </Link>
             </div>
           </div>
         </div>
