@@ -1,4 +1,4 @@
-/* CSS For Student and Instructor Course Cards START*/ 
+/* CSS For Student and Instructor Course Cards START*/
 * {
   box-sizing: border-box;
 }
@@ -24,7 +24,6 @@
   text-align: center;
 }
 
-
 /* Float four columns side by side */
 .card-column {
   float: left;
@@ -33,7 +32,9 @@
 }
 
 /* Remove extra left and right margins, due to padding in columns */
-.card-row {margin: 0 -5px;}
+.card-row {
+  margin: 0 -5px;
+}
 
 /* Clear floats after the columns */
 .card-row:after {
@@ -59,10 +60,7 @@
   }
 }
 
-
-
-
- /*CSS For Student and Instructor Course Cards END */
+/*CSS For Student and Instructor Course Cards END */
 
 .App {
   text-align: center;
@@ -452,7 +450,6 @@ button {
   background: var(--light-color);
 }
 
-
 /* Landing Page */
 .landing-logo {
   width: 50%;
@@ -465,7 +462,7 @@ table {
 .landing {
   position: relative;
   background: url("./img/pyramid.jpeg") no-repeat center center/cover;
-  height: 900px;
+  height: 450px;
 }
 
 .landing-inner {
@@ -673,9 +670,7 @@ table {
     margin-left: 17em;
     margin-right: 17em;
   }
-
 }
-
 
 footer {
   position: absolute;
@@ -787,7 +782,6 @@ footer {
   }
 }
 
-
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
@@ -815,7 +809,7 @@ footer {
 .logo {
   height: auto;
   width: 100px;
-  float:left;
+  float: left;
   padding-bottom: 0.5%;
   padding-top: 0.5%;
 }
