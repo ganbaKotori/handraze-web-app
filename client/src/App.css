@@ -17,6 +17,13 @@
   padding-bottom: 2em;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
 .whatIsHandraze span {
 }
 
@@ -635,7 +642,7 @@ table {
 }
 
 .container {
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 
 .link {
@@ -680,7 +687,7 @@ footer {
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-    margin-top: 5rem;
+    margin-top: 3rem;
   }
 
   .hide-sm {

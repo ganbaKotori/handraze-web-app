@@ -25,7 +25,7 @@ import StartLecture from "./components/views/Lecture/StartLecture";
 import StudentDashboard from "./components/views/Student/StudentDashboard";
 import StudentProfile from "./components/views/Student/StudentProfile";
 import DiscussionQuestionPage from "./components/views/Course/DiscusssionQuestion/DiscussionQuestionPage";
-import EditInstructor from "./components/views/Student/EditStudent";
+import EditInstructor from "./components/views/Instructor/EditInstructor";
 import EditStudent from "./components/views/Student/EditStudent";
 
 import "./App.css";
@@ -46,19 +46,21 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Fragment>
+        <Fragment >
           <Navbar />
           <Alert/>
-          <Route exact path="/" component={Landing} />
+          
           
           <Switch>
+          <Route exact path="/" component={Landing} />
             <PrivateRoute exact path="/course/:id" component={Course} />
-            <Route exact path="/lecture/:id" component={Lecture} />
+            <PrivateRoute exact path="/lecture/:id" component={Lecture} />
             <Fragment>
  
               
               <Route exact path="/chat" component={ChatPage} />
                 <PrivateRoute exact path="/edit-student" component={EditStudent} />
+                <PrivateRoute exact path="/edit-instructor" component={EditInstructor} />
                 <PrivateRoute
                   exact
                   path="/newcourse"

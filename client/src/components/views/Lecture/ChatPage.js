@@ -75,9 +75,9 @@ export class ChatPage extends Component {
         e.preventDefault();
         {(console.log(this.props))}
         let chatMessage = this.state.chatMessage
-        let userId = this.props.user1.user._id;
-        let userName =  this.props.user1.user.firstName;
-        let userImage = this.props.user1.user.lastName;
+        let userId = (this.props.user1.user !=null ? this.props.user1.user._id : "0");
+        let userName =  (this.props.user1.user !=null ? this.props.user1.user.firstName : "guest");
+        let userImage = (this.props.user1.user !=null? this.props.user1.user.lastName : "guest2");
         let room = this.props.inputValue;
         let nowTime = moment();
         var type =this.state.value ;

@@ -20,11 +20,22 @@ const Dashboard = ({
   }
   return loading ? (
     <div>
-      <Fragment>
-        <Spinner animation="border" role="status">
+      <Container className="center">
+        <Row>
+          <Col>
+        <h1 className="large">Loading!</h1>{"  "}
+        </Col>
+        </Row>
+        <br/>
+        <Row>
+          <Col>
+        <Spinner  animation="border" role="status" >
           <span className="sr-only">Loading...</span>
         </Spinner>
-      </Fragment>
+        </Col>
+        </Row>
+      
+      </Container>
     </div>
   ) : (
     <Fragment>

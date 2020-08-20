@@ -5,7 +5,7 @@ import { getCurrentInstructorProfile } from "../../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "../FileUpload";
 import InstructorCourses from "./InstructorCourses";
-import { Container, Button, Spinner, Col, Row } from "react-bootstrap";
+import { Container, Button, Spinner, Col, Row, Image } from "react-bootstrap";
 
 const Dashboard = ({
   getCurrentInstructorProfile,
@@ -19,13 +19,12 @@ const Dashboard = ({
     document.title = "Instructor Dashboard";
   }
   return loading ? (
-    <div>
-      <Fragment>
-        <Spinner animation="border" role="status">
+      <Container className="center">
+        <h1 className="large">Loading!</h1>{"  "}
+      <Spinner  animation="border" role="status" >
           <span className="sr-only">Loading...</span>
         </Spinner>
-      </Fragment>
-    </div>
+      </Container>
   ) : (
     <Fragment>
       <div>
@@ -37,17 +36,14 @@ const Dashboard = ({
                   <Col>
                     <Row>
                       <Col>
-                        <img
-                          src={
+                      <Image src={
                             user && user.avatar
                               ? user && user.avatar
                               : "https://via.placeholder.com/100"
-                          }
-                          className="profpic"
-                        />
+                          } rounded /> 
                       </Col>
                       <Col xs={8}>
-                        <h5>Student Dashboard</h5>
+                        <h5>Instructor Dashboard</h5>
                         <Row>
                           <Col>
                             <b>Name</b>
@@ -79,7 +75,7 @@ const Dashboard = ({
                             </p>
                           </Col>
                           <Col>
-                            <Link to="/edit-student">
+                            <Link to="/edit-instructor">
                               <Button variant="outline-primary">
                                 Edit Profile
                               </Button>
@@ -95,19 +91,12 @@ const Dashboard = ({
 
             <Row>
               <Col>
-                <h3>Courses You're Teaching</h3>
-                <Link to="/newcourse">
-                  <Button variant="outline-primary">Start a new Course</Button>
-                </Link>
-                <div className="courses">
-                  <InstructorCourses
-                    course={
-                      instructorProfile.course ? instructorProfile.course : []
-                    }
-                  />
-                </div>
+                <InstructorCourses
+                  course={instructorProfile.course ? instructorProfile.course : []}
+                />
               </Col>
             </Row>
+
           </Container>
         ) : (
           <Fragment>
