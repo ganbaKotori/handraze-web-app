@@ -11,7 +11,7 @@
 }
 
 .whatIsHandraze2 {
-  background-color: #d8d8d8;
+  background-color: #ffffff;
   color: #000000;
   padding-top: 2em;
   padding-bottom: 2em;
@@ -469,7 +469,7 @@ table {
 .landing {
   position: relative;
   background: url("./img/pyramid.jpeg") no-repeat center center/cover;
-  height: 450px;
+  height: 600px;
 }
 
 .landing-inner {

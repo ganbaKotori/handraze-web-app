@@ -104,8 +104,8 @@ const Dashboard = ({
         ) : (
           <Fragment>
             <Container>
-            You have not setup a student profile
-            <Link to="/createstudentprofile"> Create Student Profile </Link>
+            <h2 className="medium" style={{"text-align" : "center"}}>You have not setup a Student Profile!</h2>
+            <Link to="/createstudentprofile" ><p style={{"text-align" : "center"}}>Create Student Profile</p></Link>
             </Container>
             
           </Fragment>

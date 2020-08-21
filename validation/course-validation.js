@@ -21,7 +21,7 @@ module.exports = function validateRegisterInput(data) {
     "Sunday"
   ];
 
-  if (!Validator.isLength(data.title, { min: 1, max: 50 })) {
+  if (!Validator.isLength(data.title, { min: 1, max: 100 })) {
     errors = "Class title must be between 1 and 50 characters";
   }
 

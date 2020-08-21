@@ -3,7 +3,9 @@ import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import student from "../../img/handrazelogow.png";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Image } from "react-bootstrap";
+import mern from "../../img/mern.jpg"
+import instructorImage from "../../img/instructorDashboard.png"
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -37,7 +39,7 @@ const Landing = ({ isAuthenticated }) => {
                 to="/lecture/5f3c7939150eb40a7cb94d88"
                 className="btn btn-danger"
               >
-                Demo
+                Lecture Demo
               </Link>
             </div>
           </div>
@@ -60,11 +62,11 @@ const Landing = ({ isAuthenticated }) => {
                   courses for students to enroll via an enrollment code. Within
                   these onlines courses, students can ask discussion questions
                   and join an online lecture with synchronized slides and live
-                  chat.
+                  chat. Accounts are designed so you can be a student, an instructor, or both without creating a second account.
                 </p>
               </span>
-            </Col>
-            <Col xs={12} md={6}>
+              <br/>
+              <br/>
               <span>
                 <h1
                   className="large"
@@ -74,10 +76,15 @@ const Landing = ({ isAuthenticated }) => {
                 </h1>
                 <p className="lead">
                   The production of handraze was handled by Team LBP which
-                  consists of Alexander Ramirez, David Garza, Diego Gonzalez,
-                  Luis Rodriguez, and Skylar Fido
+                  consists of Alexander Ramirez (fullstack), David Garza(backend), Diego Gonzalez(frontend),
+                  Luis Rodriguez(backend), and Skylar Fido(backend). 
                 </p>
               </span>
+            </Col>
+            <Col xs={12} md={6}>
+            <Image src={instructorImage} style={{"height" : "auto" , "width" : "80%", "display": "block",
+  "margin-left": "auto",
+  "margin-right": "auto"}} />
             </Col>
           </Row>
         </Container>
@@ -85,7 +92,7 @@ const Landing = ({ isAuthenticated }) => {
       <section className="whatIsHandraze2">
         <Container fluid>
           <Row>
-            <Col>
+            <Col xs={12} md={6}>
               <span>
                 <h1
                   className="large"
@@ -97,14 +104,26 @@ const Landing = ({ isAuthenticated }) => {
                   className="lead"
                   style={{ "text-align": "center", "margin-top": "1rem" }}
                 >
-                  handraze was built using the MERN stack. This tech stack
-                  involves the usage of MongoDB, Express, React, and NodeJS.
+                  <b>handraze</b> was built using the <b>MERN stack</b>. This tech stack
+                  involves the usage of <b>MongoDB, Express, React, and NodeJS</b>. A build from the Master branch is pushed to a server on Heroku with a Hobby Dyno so the server is running 24/7.
                 </p>
               </span>
             </Col>
+            <Col xs={12} md={6}>
+            <Image src={mern} style={{"height" : "auto" , "width" : "40%", "display": "block",
+  "margin-left": "auto",
+  "margin-right": "auto"}} />
+            </Col>
           </Row>
+          <Row >
+          
+            </Row>
+            
         </Container>
       </section>
+      <div style={{"height" : "200px", "background-color" : "black"}}>
+            <p style={{"color" : "gray" , "text-align" : "center", "padding": "20px"}}>&#169;LBP 2020</p>
+            </div>
     </React.Fragment>
   );
 };

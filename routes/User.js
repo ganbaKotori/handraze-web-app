@@ -68,11 +68,11 @@ router.route("/").post(async (req, res) => {
 // @route   GET api/users/
 // @desc    Get list of users
 // @access  Public
-router.route("/").get((req, res) => {
+/*router.route("/").get((req, res) => {
   User.find().select("-password")
     .then(users => res.json(users))
     .catch(err => res.status(400).json("Error: " + err));
-});
+});*/
 
 // @route   POST API/Users/Register
 // @desc    Register user
