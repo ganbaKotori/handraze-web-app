@@ -21,24 +21,18 @@ export class InstructorCourseCard extends Component {
   render() {
     return (
       <div>
-            <Link className="link" to={`/course/${this.props.inputValue._id}`}>
-                  <div class="card">
-                          <div class="card-header bg-primary">
-                            <h5>{this.props.inputValue.title}</h5>
-                            <h5>{this.props.inputValue.description}</h5>
-                            <h5>Enrollment Code: {this.props.inputValue.code}</h5>
-                            <h5>{this.props.inputValue.dayOfWeek} {this.props.inputValue.classStart}-{this.props.inputValue.classEnd}</h5>
-                          </div>
-                          <div class="card-body">
-                            <p class="card-text text-muted">
-                              No New Questions | No New Answer | No New Notes
-                            </p>
-                          </div>
-                          <div class="card-footer text-muted"></div>
-                  </div>
-              </Link>
-                <br/>
-        </div>
+<Card border="primary" style={{ width: '18rem' }}>
+<Card.Header><b>{this.props.inputValue.title}</b></Card.Header>
+<Card.Body>
+<Card.Subtitle className="mb-2 text-muted">{this.props.inputValue.description}</Card.Subtitle>
+  <Card.Text>{this.props.inputValue.dayOfWeek} {this.props.inputValue.classStart}-{this.props.inputValue.classEnd}<br/>Enrollment Code: <b>{this.props.inputValue.code}</b></Card.Text>  
+  <Link className="link" to={`/course/${this.props.inputValue._id}`}>
+    <Button variant="primary">View</Button>
+    </Link>
+</Card.Body>
+</Card>
+<br/>
+</div>
     );
   }
 }

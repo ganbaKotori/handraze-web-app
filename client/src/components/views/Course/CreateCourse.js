@@ -6,6 +6,7 @@ import { createCourse } from "../../../actions/course";
 import PropTypes from "prop-types";
 import { Redirect, withRouter } from "react-router-dom";
 import TimePicker from 'react-bootstrap-time-picker';
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 const CreateCourse = ({ createCourse, history }) => {
 
@@ -66,10 +67,14 @@ return timeValue;
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    classStart: "",
-    classEnd: "",
     location: "",
-    sectionNumber: ""
+    sectionNumber: "",
+    startHour : "",
+    startMinute : "",
+    startAMPM : "",
+    endHour : "",
+    endMinute : "",
+    endAMPM : ""
   });
 
   const [formData2, setFormData2] = useState({
@@ -79,10 +84,14 @@ return timeValue;
   const {
     title,
     description,
-    classStart,
-    classEnd,
     location,
-    sectionNumber
+    sectionNumber,
+    startHour,
+    startMinute,
+    startAMPM,
+    endHour,
+    endMinute,
+    endAMPM
   } = formData;
 
   const { dayOfWeek } = formData2;
@@ -111,6 +120,10 @@ return timeValue;
   const onSubmit = async e => {
     e.preventDefault();
     {
+      var classStart = startHour + ":" + startMinute + startAMPM
+      var classEnd = endHour + ":" + endMinute + endAMPM
+      console.log(classStart)
+      console.log(classEnd)
       console.log(dayOfWeek);
       console.log(formData);
       console.log(classEnd);
@@ -131,167 +144,241 @@ return timeValue;
 
   return (
     <Fragment>
-      <div className="container">
-        <h2> Create Course </h2>
-        <p> Enter course info</p>
-        <form className="form" onSubmit={e => onSubmit(e)}>
-          <div className="form-group">
-            <label for="email">Title</label>
-            <input
-              type="text"
-              className="form-control"
-              id="title"
-              aria-describedby="emailHelp"
-              name="title"
-              value={title}
-              onChange={e => onChange(e)}
-              placeholder="name of course"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label for="email">Description</label>​
-            <textarea
-              type="textarea"
-              className="form-control"
-              id="description"
-              aria-describedby="emailHelp"
-              name="description"
-              value={description}
-              onChange={e => onChange(e)}
-              placeholder="brief description of course"
-              required
-              rows="3"
-            ></textarea>
-          </div>
-          <div className="form-group">
-            <label for="email">Day of Week</label>
-            <br />
-            <br />
-            <table>
-              <tr>
-                <td className="dayOfWeek">
-                  {" "}
-                  <div className="input-group ">
-                    <input
-                      type="checkbox"
+      <Container fluid="md">
+        <Row>
+          <Col xs={12} md={12}>
+          <h2 className="large" style={{ "text-align": "center", "margin-top": "1rem" }}>
+          Create A New Course
+          </h2>
+          <h4 className="medium" style={{ "text-align": "center", "margin-top": "1rem" }}>
+          Enter course info
+          </h4>
+          </Col>
+        </Row>
+        <Form onSubmit={e => onSubmit(e)}>
+  <Form.Group controlId="formBasicEmail">
+    <Form.Label>Title</Form.Label>
+    <Form.Control 
+        type="text" 
+        placeholder="course title" 
+        value={title}
+        id="title"
+        aria-describedby="emailHelp"
+        name="title"
+        onChange={e => onChange(e)} />
+    <Form.Text className="text-muted">
+      Max 50 characters
+    </Form.Text>
+  </Form.Group>
+
+  <Form.Group controlId="formBasicPassword">
+    <Form.Label>Course Description</Form.Label>
+    <Form.Control 
+        type="text" 
+        placeholder="a brief overview"
+        id="description"
+        name="description"
+        value={description}
+        onChange={e => onChange(e)} />
+  </Form.Group>
+
+  <Form.Group controlId="formBasicPassword">
+    <Form.Label>Location</Form.Label>
+    <Form.Control         
+        type="text"
+        id="location"
+        placeholder="building, room number, etc."
+        name="location"
+        value={location}
+        onChange={e => onChange(e)}
+        />
+  </Form.Group>
+
+  <Form.Group controlId="formBasicPassword">
+    <Form.Label>Section Number</Form.Label>
+    <Form.Control 
+         type="text"
+         id="sectionNumber"
+         placeholder="optional"
+         name="sectionNumber"
+         value={sectionNumber}
+         onChange={e => onChange(e)} />
+  </Form.Group>
+  <Form.Label>Lecture Start</Form.Label>
+  <Form.Row>
+  <Form.Group as={Col} controlId="formGridState">
+      <Form.Label>Hour</Form.Label>
+      <Form.Control as="select" defaultValue="Choose..." onChange={e => onChange(e)} value={formData.startHour}
+      
+      type="startHour"
+      className="form-control"
+      id="startHour"
+      aria-describedby="emailHelp"
+      name="startHour"
+      >
+        <option>Choose...</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </Form.Control>
+    </Form.Group>
+
+    <Form.Group as={Col} controlId="formGridState">
+      <Form.Label>Minute</Form.Label>
+      <Form.Control as="select" defaultValue="Choose..." name="startMinute" ype="startMinute" id="startMinute" onChange={e => onChange(e)} value={formData.startMinute}>
+        <option>Choose...</option>
+        <option value="00">00</option>
+        <option value="05">05</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+        <option value="30">30</option>
+        <option value="35">35</option>
+        <option value="40">40</option>
+        <option value="45">45</option>
+        <option value="50">50</option>
+        <option value="55">55</option>
+      </Form.Control>
+    </Form.Group>
+
+    <Form.Group as={Col} controlId="formGridState">
+      <Form.Label>AM/PM</Form.Label>
+      <Form.Control as="select" defaultValue="Choose..." onChange={e => onChange(e)} name="startAMPM" value={formData.startAMPM}>
+        <option>Choose...</option>
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </Form.Control>
+    </Form.Group>
+    </Form.Row>
+    <Form.Label>Lecture End</Form.Label>
+    <Form.Row>
+    
+    <Form.Group as={Col} controlId="formGridState">
+      <Form.Label>Hour</Form.Label>
+      <Form.Control as="select" defaultValue="Choose..." onChange={e => onChange(e)} name="endHour" value={formData.endHour}>
+        <option>Choose...</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </Form.Control>
+    </Form.Group>
+
+    <Form.Group as={Col} controlId="formGridState">
+      <Form.Label>Minute</Form.Label>
+      <Form.Control as="select" defaultValue="Choose..." onChange={e => onChange(e)} name="endMinute" value={formData.endMinute}>
+        <option>Choose...</option>
+        <option value="00">00</option>
+        <option value="05">05</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+        <option value="30">30</option>
+        <option value="35">35</option>
+        <option value="40">40</option>
+        <option value="45">45</option>
+        <option value="50">50</option>
+        <option value="55">55</option>
+      </Form.Control>
+    </Form.Group>
+
+    <Form.Group as={Col} controlId="formGridState">
+      <Form.Label>AM/PM</Form.Label>
+      <Form.Control as="select" defaultValue="Choose..." onChange={e => onChange(e)} name="endAMPM" value={formData.endAMPM}>
+        <option>Choose...</option>
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </Form.Control>
+    </Form.Group>
+  </Form.Row>
+
+
+  <Form.Group as={Row} controlId="formHorizontalCheck">
+    <Col sm={{ span: 10}} xs={12} md={1}>
+      <Form.Check label="Mon"  type="checkbox"
                       value={"Monday"}
-                      onClick={e => onClick(e)}
-                    />
-                    <label>Monday</label>
-                  </div>
-                </td>
-                <td className="dayOfWeek">
-                  {" "}
-                  <div className="input-group">
-                    <input
-                      type="checkbox"
+                      onClick={e => onClick(e)}/>
+    </Col>
+    <Col sm={{ span: 10}} xs={12} md={1}>
+      <Form.Check label="Tues"  type="checkbox"
                       value={"Tuesday"}
-                      onClick={e => onClick(e)}
-                    />
-                    <label>Tuesday</label>
-                  </div>
-                </td>
-                <td className="dayOfWeek">
-                  {" "}
-                  <div className="input-group">
-                    <input
-                      type="checkbox"
+                      onClick={e => onClick(e)}/>
+    </Col>
+    <Col sm={{ span: 10}} xs={12} md={1}>
+      <Form.Check label="Wed"  type="checkbox"
                       value={"Wednesday"}
-                      onClick={e => onClick(e)}
-                    />
-                    <label>Wednesday</label>
-                  </div>
-                </td>
-                <td className="dayOfWeek">
-                  {" "}
-                  <div className="input-group">
-                    <input
-                      type="checkbox"
+                      onClick={e => onClick(e)}/>
+    </Col>
+    <Col sm={{ span: 10}} xs={12} md={1}>
+      <Form.Check label="Thurs"  type="checkbox"
                       value={"Thursday"}
-                      onClick={e => onClick(e)}
-                    />
-                    <label>Thursday</label>
-                  </div>
-                </td>
-                <td className="dayOfWeek">
-                  {" "}
-                  <div className="input-group">
-                    <input
-                      type="checkbox"
+                      onClick={e => onClick(e)}/>
+    </Col>
+    <Col sm={{ span: 10}} xs={12} md={1}>
+      <Form.Check label="Fri" type="checkbox"
                       value={"Friday"}
-                      onClick={e => onClick(e)}
-                    />
-                    <label>Friday</label>
-                  </div>
-                </td>
-                <td className="dayOfWeek">
-                  {"  "}
-                  <div className="input-group">
-                    <input
-                      type="checkbox"
+                      onClick={e => onClick(e)}/>
+    </Col>
+    <Col sm={{ span: 10}} xs={12} md={1}>
+      <Form.Check label="Sat"  type="checkbox"
                       value={"Saturday"}
-                      onClick={e => onClick(e)}
-                    />
-                    <label> Saturday </label>
-                  </div>
-                </td>
-                <td className="dayOfWeek">
-                  {" "}
-                  <div className="input-group">
-                    <input
-                      type="checkbox"
+                      onClick={e => onClick(e)}/>
+    </Col>
+    <Col sm={{ span: 10}} xs={12} md={1}>
+      <Form.Check label="Sun"  type="checkbox"
                       value={"Sunday"}
-                      onClick={e => onClick(e)}
-                    />
-                    <label>Sunday</label>
-                  </div>
-                </td>
-              </tr>
-            </table>
-            <br />
-          </div>
+                      onClick={e => onClick(e)}/>
+    </Col>
+  </Form.Group>
+
+  <Button variant="primary" type="submit">
+    Submit
+  </Button>
+</Form>
+
+        <Row>
+        <Col xs={12} md={12}>
+
+
           <div className="form-group">
             <label for="password">What time does the class start?</label>
+
+
             
-            <TimePicker start="07:00" end="22:00" step={15}  onChange={value => handleTimeChangeStart(value)} value={formData.classStart} />
+            
 
           </div>
-          <div className="form-group">
-            <label for="password">What time does the class end?</label>
-            <TimePicker start="07:00" end="22:00" step={15} onChange={value => handleTimeChangeEnd(value)}  value={formData.classEnd} />
 
 
-          </div>
-          <div className="form-group">
-            <label for="password">Location</label>
-            <input
-              type="text"
-              className="form-control"
-              id="location"
-              placeholder="building, room number, etc."
-              name="location"
-              value={location}
-              onChange={e => onChange(e)}
-            />
-          </div>
-          <div className="form-group">
-            <label for="password">Section Number</label>
-            <input
-              type="text"
-              className="form-control"
-              id="sectionNumber"
-              placeholder="optional"
-              name="sectionNumber"
-              value={sectionNumber}
-              onChange={e => onChange(e)}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
-      </div>
+
+          </Col>
+        </Row>
+        <Row>
+        
+        
+        </Row>
+        
+        
+        </Container>
     </Fragment>
   );
 };

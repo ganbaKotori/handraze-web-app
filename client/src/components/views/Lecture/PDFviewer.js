@@ -8,8 +8,7 @@ export class PDF extends Component {
     super(props);
   }
 
-  render() {//alert(this.props.link)
-    //alert(this.props.page)
+  render() {
     return (
 
       <PDFViewer
@@ -17,9 +16,7 @@ export class PDF extends Component {
           url: this.props.link,
           
         }}
-        scale={1.2} page={parseInt(this.props.page, 10)}
-
-        //hideNavbar = {true}
+        scale={1} page={parseInt(this.props.page, 10)}
       />
 
     );

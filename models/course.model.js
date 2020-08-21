@@ -29,7 +29,6 @@ const courseSchema = new Schema(
     },
     description: {
       type: String,
-      maxlength: 50,
       required: true
     },
     classEnd: {

@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile2 } from "../../../actions/profile";
 import { Link, withRouter } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 const CreateStudentProfile = ({ createProfile2, history }) => {
   const [formData, setFormData] = useState({
     year: "",
-    institution: ""
+    institution: "",
   });
 
   const { year, institution } = formData;
@@ -22,29 +23,27 @@ const CreateStudentProfile = ({ createProfile2, history }) => {
     { label: "Student or Learning", value: "Student or Learning" },
     { label: "Instructor or Teacher", value: "Instructor or Teacher" },
     { label: "Intern", value: "Intern" },
-    { label: "Other", value: "Other" }
+    { label: "Other", value: "Other" },
   ];
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     createProfile2(formData, history);
   };
   return (
-    <Fragment>
-      <br />
-      <br />
-      <br />
-      <br />
-      <h2> Create Student Profile </h2>
-      <p> Enter your information below to create a Student Profile!</p>
-
-      <form className="form" onSubmit={e => onSubmit(e)}>
+    <Container>
+      <h2 className="large"> Create Student Profile </h2>
+      <p className="lead">
+        {" "}
+        Enter your information below to create a Student Profile!
+      </p>
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <label for="year">Year</label>
           <select
@@ -55,7 +54,7 @@ const CreateStudentProfile = ({ createProfile2, history }) => {
             placeholder="Enter your Year"
             name="year"
             value={year}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           >
             <option value="">--Please choose an option--</option>
             <option value="freshman">Freshman</option>
@@ -73,20 +72,20 @@ const CreateStudentProfile = ({ createProfile2, history }) => {
             placeholder="Where do you attend school?"
             name="institution"
             value={institution}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Submit
+          Create Profile
         </button>
       </form>
-    </Fragment>
+    </Container>
   );
 };
 
 CreateStudentProfile.propTypes = {
-  createProfile2: PropTypes.func.isRequired
+  createProfile2: PropTypes.func.isRequired,
 };
 
 export default connect(null, { createProfile2 })(

@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { InstructorCourseCard } from "./InstructorCourseCard";
+import { CardDeck, Button, Row, Col } from "react-bootstrap";
+import {Link} from "react-router-dom"
 
 const InstructorCourses = ({ course }) => {
   var max = 3;
@@ -10,24 +12,29 @@ const InstructorCourses = ({ course }) => {
     console.log(number);
     return <InstructorCourseCard inputValue={course} />;
   }
+
+
   const courses = course.map(
     course => (
       (count += 1),
       console.log(count),
       func(count),
-      (<InstructorCourseCard inputValue={course} />)
+      (<Col><InstructorCourseCard inputValue={course} /></Col>)
     )
-  ); //create a CourseCard for every course id in the Course array in Student P
+  );
 
   return (
     <Fragment>
-      <div className="courses">
-        <div className="row">
-          {courses}
-          <div className="col-sm-5"></div>
-        </div>
-        <div className="row"></div>
-      </div>
+       <hr/>
+       <h3>Course You're Teaching</h3>{" "}
+       <CardDeck>
+      {courses}
+      </CardDeck>
+      <Link to="/newcourse">
+        <Button variant="outline-primary">Start a new Course</Button>
+      </Link>
+      <hr/>
+
     </Fragment>
   );
 };

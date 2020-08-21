@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile } from "../../../actions/profile";
 import { Link, withRouter } from "react-router-dom";
+import {Container} from "react-bootstrap"
 
 const CreateProfile = ({ createProfile, history }) => {
   const [formData, setFormData] = useState({
@@ -23,13 +24,9 @@ const CreateProfile = ({ createProfile, history }) => {
     createProfile(formData, history);
   };
   return (
-    <Fragment>
-      <br />
-      <br />
-      <br />
-      <br />
-      <h2> Create Instructor Profile </h2>
-      <p>
+    <Container>
+      <h2 className="large"> Create Instructor Profile </h2>
+      <p className="lead">
         {" "}
         Enter your information below to make an account and get started with
         Handraze.
@@ -43,7 +40,7 @@ const CreateProfile = ({ createProfile, history }) => {
             className="form-control"
             id="department"
             aria-describedby="emailHelp"
-            placeholder="Enter your Department"
+            placeholder="enter your department"
             name="department"
             value={department}
             onChange={e => onChange(e)}
@@ -56,17 +53,17 @@ const CreateProfile = ({ createProfile, history }) => {
             className="form-control"
             id="institution"
             aria-describedby="emailHelp"
-            placeholder="Where do you teach?"
+            placeholder="where do you teach?"
             name="institution"
             value={institution}
             onChange={e => onChange(e)}
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Submit
+          Create Profile
         </button>
       </form>
-    </Fragment>
+    </Container>
   );
 };
 

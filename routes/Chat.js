@@ -3,7 +3,7 @@ const router = express.Router();
 const {Chat} = require("../models/chat.model");
 const auth = require("../middleware/auth");
 
-router.get("/getchats/:id",auth, async (req, res) => {
+router.get("/getchats/:id", async (req, res) => {
     await Chat.find({
         "room" : req.params.id
     })

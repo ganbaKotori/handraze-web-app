@@ -14,17 +14,20 @@ router.route("/").post([auth], async (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  const profileFields = {};
-  profileFields.department = req.body.department;
-  profileFields.institution = req.body.institution;
-  profileFields.user = req.user.id;
 
-  const newInstructorProfile = new InstructorProfile(profileFields);
+  const profileFields = {
+    department: req.body.department,
+    institution: req.body.institution,
+    user: req.user.id,
+  };
 
-  newInstructorProfile
-    .save()
-    .then(() => res.json("Instructor profile added!"))
-    .catch(err => res.status(400).json("Error: " + err));
+  let profile = await InstructorProfile.findOneAndUpdate(
+    { user: req.user.id },
+    { $set: profileFields },
+    { new: true, upsert: true }
+  )
+    .then(() => res.json("Instructor profile added/updated!"))
+    .catch((err) => res.status(400).json(err.message));
 });
 
 // @route   GET api/instructors/me

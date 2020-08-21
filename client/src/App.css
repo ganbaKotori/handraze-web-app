@@ -1,8 +1,35 @@
-/* CSS For Student and Instructor Course Cards START*/ 
+/* CSS For Student and Instructor Course Cards START*/
 * {
   box-sizing: border-box;
 }
 
+.whatIsHandraze {
+  background-color: #2e2e2e;
+  color: #ffffff;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.whatIsHandraze2 {
+  background-color: #ffffff;
+  color: #000000;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.whatIsHandraze span {
+}
+
+.whatIsHandraze p {
+  text-align: center;
+}
 
 /* Float four columns side by side */
 .card-column {
@@ -12,7 +39,9 @@
 }
 
 /* Remove extra left and right margins, due to padding in columns */
-.card-row {margin: 0 -5px;}
+.card-row {
+  margin: 0 -5px;
+}
 
 /* Clear floats after the columns */
 .card-row:after {
@@ -38,10 +67,7 @@
   }
 }
 
-
-
-
- /*CSS For Student and Instructor Course Cards END */
+/*CSS For Student and Instructor Course Cards END */
 
 .App {
   text-align: center;
@@ -431,38 +457,6 @@ button {
   background: var(--light-color);
 }
 
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.01rem 1rem;
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  top: 0;
-
-  opacity: 1;
-}
-
-.navbar ul {
-  display: flex;
-}
-
-.navbar a {
-  color: #fff;
-  padding: 0.45rem;
-  margin: 0 0.25rem;
-}
-
-.navbar a:hover {
-  color: var(--primary-color);
-}
-
-.navbar .welcome span {
-  margin-right: 0.6rem;
-}
-
 /* Landing Page */
 .landing-logo {
   width: 50%;
@@ -475,7 +469,7 @@ table {
 .landing {
   position: relative;
   background: url("./img/pyramid.jpeg") no-repeat center center/cover;
-  height: 100vh;
+  height: 600px;
 }
 
 .landing-inner {
@@ -648,7 +642,7 @@ table {
 }
 
 .container {
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 
 .link {
@@ -683,9 +677,7 @@ table {
     margin-left: 17em;
     margin-right: 17em;
   }
-
 }
-
 
 footer {
   position: absolute;
@@ -695,7 +687,7 @@ footer {
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-    margin-top: 5rem;
+    margin-top: 3rem;
   }
 
   .hide-sm {
@@ -797,7 +789,6 @@ footer {
   }
 }
 
-
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
@@ -825,7 +816,7 @@ footer {
 .logo {
   height: auto;
   width: 100px;
-  float:left;
+  float: left;
   padding-bottom: 0.5%;
   padding-top: 0.5%;
 }

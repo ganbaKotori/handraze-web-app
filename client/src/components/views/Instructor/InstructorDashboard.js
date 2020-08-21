@@ -5,12 +5,12 @@ import { getCurrentInstructorProfile } from "../../../actions/profile";
 import { Link } from "react-router-dom";
 import { FileUpload } from "../FileUpload";
 import InstructorCourses from "./InstructorCourses";
-import { Container, Button, Spinner, Col, Row } from "react-bootstrap";
+import { Container, Button, Spinner, Col, Row, Image } from "react-bootstrap";
 
 const Dashboard = ({
   getCurrentInstructorProfile,
   auth: { user },
-  profile: { instructorProfile, loading }
+  profile: { instructorProfile, loading },
 }) => {
   useEffect(() => {
     getCurrentInstructorProfile();
@@ -19,74 +19,90 @@ const Dashboard = ({
     document.title = "Instructor Dashboard";
   }
   return loading ? (
-    <div>
-      <Fragment>
-        <Spinner animation="border" role="status">
+      <Container className="center">
+        <h1 className="large">Loading!</h1>{"  "}
+      <Spinner  animation="border" role="status" >
           <span className="sr-only">Loading...</span>
         </Spinner>
-      </Fragment>
-    </div>
+      </Container>
   ) : (
     <Fragment>
       <div>
         {instructorProfile !== null ? (
-          <Container>       
+          <Container>
             <Row>
               <Col xs={7}>
-                  <Row>
+                <Row>
                   <Col>
-                      <img
-                        src={user && user.avatar ? user && user.avatar : "https://via.placeholder.com/100"}
-                        className="profpic"
-                      />
-                    </Col>
-                    <Col xs={8}>
-                    <h5>Instructor Dashboard</h5>
-                        <b>Name</b>
-                      <p className="lead">
-                        {user && user.firstName} {user && user.lastName}
-                      </p>
-                      <b>Department</b>
-                      <p className="lead">
-                        {user && instructorProfile.department}
-                      </p>
-                      <b>Institution</b>
-                      <p className="lead">
-                        {" "}
-                        {user && instructorProfile.institution}
-                      </p>
+                    <Row>
+                      <Col>
+                      <Image src={
+                            user && user.avatar
+                              ? user && user.avatar
+                              : "https://via.placeholder.com/100"
+                          } rounded /> 
+                      </Col>
+                      <Col xs={8}>
+                        <h5>Instructor Dashboard</h5>
+                        <Row>
+                          <Col>
+                            <b>Name</b>
+                            <p className="lead">
+                              {user && user.firstName
+                                ? user && user.firstName
+                                : ""}{" "}
+                              {user && user.lastName
+                                ? user && user.lastName
+                                : ""}
+                            </p>
+                          </Col>
+                          <Col>
+                            <b>Department</b>
+                            <p className="lead">
+                              {user && instructorProfile.department
+                                ? user && instructorProfile.department
+                                : ""}
+                            </p>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <b>Institution</b>
+                            <p className="lead">
+                              {user && instructorProfile.institution
+                                ? user && instructorProfile.institution
+                                : ""}
+                            </p>
+                          </Col>
+                          <Col>
+                            <Link to="/edit-instructor">
+                              <Button variant="outline-primary">
+                                Edit Profile
+                              </Button>
+                            </Link>
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
-                      <Row>
-                      <FileUpload />
-                      </Row>
-                    </Col>      
+                  </Col>
+                </Row>
+              </Col>
             </Row>
+
             <Row>
-            <Col >
-              <h3>Courses You're Teaching</h3>
-              <Link to="/newcourse">
-              <Button variant="outline-primary">
-                 Start a new Course
-              </Button>
-              </Link>
-              <div className="courses">
-                 <InstructorCourses
-                    course={
-                    instructorProfile.course
-                    ? instructorProfile.course
-                    : []
-                    }
-                    />
-               </div>
-            </Col>
+              <Col>
+                <InstructorCourses
+                  course={instructorProfile.course ? instructorProfile.course : []}
+                />
+              </Col>
             </Row>
+
           </Container>
         ) : (
           <Fragment>
             <Container>
-            You have not setup a instructor profile
-            <Link to="/createinstructorprofile"> Create Profile </Link>
+            <h2 className="medium" style={{"text-align" : "center"}}>You have not setup an Instructor Profile!</h2>
+              <Link to="/createinstructorprofile" style={{"text-align" : "center"}}><p style={{"text-align" : "center"}}> Create Profile</p> </Link>
             </Container>
           </Fragment>
         )}
@@ -99,14 +115,14 @@ const Dashboard = ({
 Dashboard.propTypes = {
   getCurrentInstructorProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps, {
-  getCurrentInstructorProfile
+  getCurrentInstructorProfile,
 })(Dashboard);
