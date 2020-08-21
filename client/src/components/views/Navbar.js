@@ -19,6 +19,12 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const authLinks = (
     <Fragment>
+      <Link
+                to="/lecture/5f3c7939150eb40a7cb94d88"
+                className="btn btn-danger"
+              >
+                Lecture Demo
+              </Link>
       <Nav.Link className="navbar-link" to="/student">
       <Link to="/student" className="navbar-link"><b>Student</b></Link>
       </Nav.Link>{" "}
