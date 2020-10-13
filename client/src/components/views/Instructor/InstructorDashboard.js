@@ -30,6 +30,7 @@ const Dashboard = ({
       <div>
         {instructorProfile !== null ? (
           <Container>
+            
             <Row>
               <Col xs={7}>
                 <Row>
@@ -91,6 +92,7 @@ const Dashboard = ({
 
             <Row>
               <Col>
+              
                 <InstructorCourses
                   course={instructorProfile.course ? instructorProfile.course : []}
                 />

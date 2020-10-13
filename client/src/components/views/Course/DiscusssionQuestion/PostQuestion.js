@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createQuestion } from "../../../../actions/question";
 import PropTypes from "prop-types";
 import { Redirect, withRouter } from "react-router-dom";
-import question from "../../../../reducers/question";
+import {Container} from "react-bootstrap"
 
 const NewQuestion = ({ history, createQuestion, match }) => { 
   const [id, setId] = useState(2);
@@ -35,11 +35,10 @@ const NewQuestion = ({ history, createQuestion, match }) => {
   };
 
   return (
-    <Fragment>
-      <div className="container">
-        <h2> Ask a Question </h2>
-        {id}
-        <p>Fill in the form</p>
+    <Container>
+
+        <h2 className="large"> Ask a Question </h2>
+        <p className="lead">Fill in the form</p>
         <form className="form" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
             <label for="question">Question</label>
@@ -72,8 +71,8 @@ const NewQuestion = ({ history, createQuestion, match }) => {
             Submit Question
           </button>
         </form>
-      </div>
-    </Fragment>
+
+    </Container>
   );
 };
 

@@ -35,28 +35,28 @@ router.get("/:id", getDiscussionQuestion, (req, res) => {
 router.post("/", auth, async (req, res) => {
   try {
     const { errors, isValid } = validateQuestionInput(req.body);
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
     const course = await Course.findById({
-      _id: req.body.id
-    })
-    console.log(req.user)
+      _id: req.body.id,
+    });
+    console.log(req.user);
     const user = await User.findOne({ _id: req.user.id });
     const name = user.firstName + " " + user.lastName;
     const discussionQuestion = new DiscussionQuestion({
       question: req.body.question, // in POST - "question": "/question/[question]"
       description: req.body.description,
       user: req.user.id,
-      name: name
+      name: name,
     });
-    console.log(course)
-    console.log("discussion part where course is found")
+    console.log(course);
+    console.log("discussion part where course is found");
     if (course) {
-      await discussionQuestion.save().then(question => {
+      await discussionQuestion.save().then((question) => {
         course.discussion.unshift(question._id);
         course.save();
-        console.log("question added!")
+        console.log("question added!");
         res.json(question);
       });
     }
@@ -65,7 +65,6 @@ router.post("/", auth, async (req, res) => {
     res.status(400).json({ message: err.message }); // user input error
   }
 });
-
 
 // @route   PUT api/questions/answer
 // @desc    Post an answer to a question
@@ -77,9 +76,9 @@ router.put("/answer", auth, async (req, res) => {
     const answer1 = {
       user: req.user.id,
       text: req.body.text,
-      name: name
-    }
-    await DiscussionQuestion.findOne({ _id: req.body.id }).then(question => {
+      name: name,
+    };
+    await DiscussionQuestion.findOne({ _id: req.body.id }).then((question) => {
       question.answer.unshift(answer1);
       question.save();
       res.json(question);
@@ -147,7 +146,7 @@ async function getDiscussionQuestion(req, res, next) {
   let discussionQuestion;
   try {
     discussionQuestion = await DiscussionQuestion.findById({
-      _id: req.params.id
+      _id: req.params.id,
     });
     if (discussionQuestion == null) {
       return res

@@ -9,7 +9,7 @@ import StudentCourses from "./StudentCourses";
 const Dashboard = ({
   getCurrentStudentProfile,
   auth: { user },
-  profile: { studentProfile, loading }
+  profile: { studentProfile, loading },
 }) => {
   useEffect(() => {
     getCurrentStudentProfile();
@@ -23,18 +23,18 @@ const Dashboard = ({
       <Container className="center">
         <Row>
           <Col>
-        <h1 className="large">Loading!</h1>{"  "}
-        </Col>
+            <h1 className="large">Loading!</h1>
+            {"  "}
+          </Col>
         </Row>
-        <br/>
+        <br />
         <Row>
           <Col>
-        <Spinner  animation="border" role="status" >
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-        </Col>
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </Col>
         </Row>
-      
       </Container>
     </div>
   ) : (
@@ -49,37 +49,51 @@ const Dashboard = ({
                     <Row>
                       <Col>
                         <img
-                          src={user && user.avatar ? user && user.avatar : "https://via.placeholder.com/100"}
+                          src={
+                            user && user.avatar
+                              ? user && user.avatar
+                              : "https://via.placeholder.com/100"
+                          }
                           className="profpic"
                         />
-                        
                       </Col>
                       <Col xs={8}>
                         <h5>Student Dashboard</h5>
                         <Row>
-                          <Col><b>Name</b>
+                          <Col>
+                            <b>Name</b>
                             <p className="lead">
-                              {user && user.firstName ? user && user.firstName : ""}{" "}
-                              {user && user.lastName ? user && user.lastName : ""}
+                              {user && user.firstName
+                                ? user && user.firstName
+                                : ""}{" "}
+                              {user && user.lastName
+                                ? user && user.lastName
+                                : ""}
                             </p>
                           </Col>
                           <Col>
-                          <b>Year</b>
+                            <b>Year</b>
                             <p className="lead">
-                              {user && studentProfile.year ? user && studentProfile.year : ""}
-                            </p> 
+                              {user && studentProfile.year
+                                ? user && studentProfile.year
+                                : ""}
+                            </p>
                           </Col>
                         </Row>
                         <Row>
                           <Col>
                             <b>Attends</b>
                             <p className="lead">
-                            {user && studentProfile.institution ? user && studentProfile.institution : ""}
+                              {user && studentProfile.institution
+                                ? user && studentProfile.institution
+                                : ""}
                             </p>
                           </Col>
                           <Col>
                             <Link to="/edit-student">
-                            <Button variant="outline-primary">Edit Profile</Button>
+                              <Button variant="outline-primary">
+                                Edit Profile
+                              </Button>
                             </Link>
                           </Col>
                         </Row>
@@ -87,10 +101,7 @@ const Dashboard = ({
                     </Row>
                   </Col>
                 </Row>
-                <Row>
-                
-                </Row>       
-              </Col> 
+              </Col>
             </Row>
             <Row>
               <Col>
@@ -99,15 +110,17 @@ const Dashboard = ({
                 />
               </Col>
             </Row>
-            
           </Container>
         ) : (
           <Fragment>
             <Container>
-            <h2 className="medium" style={{"text-align" : "center"}}>You have not setup a Student Profile!</h2>
-            <Link to="/createstudentprofile" ><p style={{"text-align" : "center"}}>Create Student Profile</p></Link>
+              <h2 className="medium" style={{ "text-align": "center" }}>
+                You have not setup a Student Profile!
+              </h2>
+              <Link to="/createstudentprofile">
+                <p style={{ "text-align": "center" }}>Create Student Profile</p>
+              </Link>
             </Container>
-            
           </Fragment>
         )}
         <br />
@@ -119,14 +132,14 @@ const Dashboard = ({
 Dashboard.propTypes = {
   getCurrentStudentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  profile: state.profile
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps, {
-  getCurrentStudentProfile
+  getCurrentStudentProfile,
 })(Dashboard);

@@ -6,19 +6,11 @@ import { CardDeck, Button, Row, Col } from "react-bootstrap";
 import {Link} from "react-router-dom"
 
 const InstructorCourses = ({ course }) => {
-  var max = 3;
-  var count = 0;
-  function func(number) {
-    console.log(number);
-    return <InstructorCourseCard inputValue={course} />;
-  }
 
-
+  console.log(course)
   const courses = course.map(
     course => (
-      (count += 1),
-      console.log(count),
-      func(count),
+      
       (<Col><InstructorCourseCard inputValue={course} /></Col>)
     )
   );

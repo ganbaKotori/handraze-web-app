@@ -22,7 +22,7 @@ router.route("/").post(async (req, res) => {
   const { errors, isValid } = validateCourseInput(req.body);
 
   if (!isValid) {
-   return res.status(400).json(errors);
+    return res.status(400).json(errors);
   }
   var code = "";
   var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -40,18 +40,18 @@ router.route("/").post(async (req, res) => {
     sectionNumber,
     code,
     classEnd,
-    classStart
+    classStart,
   });
   newCourse
     .save()
-    .then(async result => {
+    .then(async (result) => {
       try {
         console.log(newCourse._id);
         const instructorProfile = await Instructor.findOne({
-          _id: req.body.instructor
+          _id: req.body.instructor,
         });
         instructorProfile.course.unshift(newCourse._id);
-        await instructorProfile.save().then(result => {
+        await instructorProfile.save().then((result) => {
           console.log(result);
           console.log("course added to instructor profile");
           console.log("course added!");
@@ -62,7 +62,7 @@ router.route("/").post(async (req, res) => {
         res.json(error.message);
       }
     })
-    .catch(err => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // @route   GET api/courses/:id
@@ -77,8 +77,8 @@ router.get("/:id", getCourse, (req, res) => {
 // @access  Public
 router.route("/").get((req, res) => {
   Course.find()
-    .then(courses => res.json(courses))
-    .catch(err => res.status(400).json("Error: " + err));
+    .then((courses) => res.json(courses))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // Update a course
@@ -91,12 +91,14 @@ router.route("/").get((req, res) => {
 router.delete("/delete/:id", getCourse, async (req, res) => {
   const course = res.course;
 
-    const student = Student.deleteOne({_id: course.id});
-    const root = Course.deleteOne({_id: course.id});
+  const student = Student.deleteOne({ _id: course.id });
+  const root = Course.deleteOne({ _id: course.id });
 
-    Promise.all([student, root]).then(() => {
-      res.status(200).json({message: 'Course deleted!'});
-    }).catch(err => {
+  Promise.all([student, root])
+    .then(() => {
+      res.status(200).json({ message: "Course deleted!" });
+    })
+    .catch((err) => {
       res.status(500).json("Error: " + err);
     });
 });
@@ -123,29 +125,32 @@ router.put("/student/:id", async (req, res) => {
 // getCourse module: sorts through courses to find on by its id
 async function getCourse(req, res, next) {
   var course;
-  try {  
+  try {
     course = await Course.findById({
-      _id: req.params.id
-    }).populate("discussion", [
-      "question",
-      "description",
-      "dateSubmitted",
-      "name",
-      "_id"
-    ]).populate({ 
-      path: 'students',
-      populate: {
-        path: 'user',
-        model: 'User'
-      } 
-   })
+      _id: req.params.id,
+    })
+      .populate("discussion", [
+        "question",
+        "description",
+        "dateSubmitted",
+        "name",
+        "_id",
+      ])
+      .populate({
+        path: "students",
+        populate: {
+          path: "user",
+          model: "User",
+        },
+      })
+      .populate("lecture", ["topic", "sessionStart"]);
     if (course == null) {
       return res.status(404).json({ message: "Cannot find course." });
     }
 
-    console.log(course.students)
+    console.log(course.students);
   } catch (err) {
-    console.log(err.message)
+    console.log(err.message);
     return res.status(500).json({ message: err.message });
   }
 

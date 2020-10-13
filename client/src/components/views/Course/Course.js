@@ -10,12 +10,11 @@ import LectureList from "../Lecture/LectureList";
 import {
   Col,
   Spinner,
-  Nav,
-  Button,
   Row,
-  ListGroup,
   Container,
   Card,
+  Jumbotron,
+  Badge
 } from "react-bootstrap";
 
 const Course = ({
@@ -29,10 +28,7 @@ const Course = ({
     getCourse(match.params.id);
     getLectures();
   }, [getCourse, getLectures]);
-  console.log("course info should appear here");
   console.log(course);
-  console.log(lectures);
-
   var dayOfWeek;
   if (course !== null) {
     dayOfWeek = course.dayOfWeek.map((day) => (
@@ -45,25 +41,50 @@ const Course = ({
 
   return course === null ? (
     <div>
-      <Spinner animation="border" />
+      <Container className="center">
+        <Row>
+          <Col>
+            <h1 className="large">Loading!</h1>
+            {"  "}
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col>
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </Col>
+        </Row>
+      </Container>
     </div>
   ) : (
     // /document.title = course.titledocument.title = course.title
     <Fragment>
+      <Jumbotron>
+        <Container>
+          <h1>{course.title}  </h1><span><Badge variant="secondary">Section {course.sectionNumber}</Badge></span>
+          <p className="lead">
+          {course.description}
+          </p>
+          <hr />
+          <Row>
+            <Col>
+            <p className="lead">Lectures every {dayOfWeek} from <b>{course.classStart}</b> to{" "}
+                  <b>{course.classEnd}</b></p>
+            
+            </Col>
+            <Col>
+            <p className="lead"></p>
+            </Col>
+          </Row>
+          
+                  
+        </Container>
+      </Jumbotron>
       <Container>
         <Row>
           <Col xs="12">
-            <Card  bg='info' text="white">
-              <Card.Header as="h5">{course.title}</Card.Header>
-              <Card.Body>
-                <Card.Title>{course.description}</Card.Title>
-                <Card.Text>
-                  <p>Section {course.sectionNumber}</p>
-                  Lectures every {dayOfWeek} from <b>{course.classStart}</b> to{" "}
-                  <b>{course.classEnd}</b>
-                </Card.Text>
-              </Card.Body>
-            </Card>
           </Col>
         </Row>
         <Row>
@@ -75,12 +96,11 @@ const Course = ({
             Create Lecture
           </Link>
         </Col>
-         
           <br />
         </Row>
         <Row>
           <Col md="8" xs="12">
-            <LectureList lecture={lectures ? lectures : []} />
+            <LectureList lecture={course.lecture ? course.lecture : []} />
           </Col>
           <Col md="4" xs="12">
             <ClassRoster students={course.students ? course.students : []} />
@@ -98,7 +118,6 @@ const Course = ({
               Ask Question
             </Link>
           </Col>
-          
         </Row>
       </Container>
     </Fragment>

@@ -49,15 +49,16 @@ const App = () => {
         <Fragment >
           <Navbar />
           <Alert/>
-          
-          
           <Switch>
           <Route exact path="/" component={Landing} />
             <PrivateRoute exact path="/course/:id" component={Course} />
             <PrivateRoute exact path="/lecture/:id" component={Lecture} />
-            <Fragment>
- 
-              
+            <Route
+                  exact
+                  path="/question/:id"
+                  component={DiscussionQuestionPage}
+                />
+            <Fragment>              
               <Route exact path="/chat" component={ChatPage} />
                 <PrivateRoute exact path="/edit-student" component={EditStudent} />
                 <PrivateRoute exact path="/edit-instructor" component={EditInstructor} />
@@ -88,11 +89,7 @@ const App = () => {
                   component={InstructorProfile}
                 />
                 <Route exact path="/login" component={Login} />
-                <Route
-                  exact
-                  path="/question/:id"
-                  component={DiscussionQuestionPage}
-                />
+                
                 <Route exact path="/new-question/:id" component={PostQuestion} />
                 <Route exact path="/new-answer/:id" component={PostAnswer} />
                 <Route exact path="/new-lecture/:id" component={StartLecture} />
@@ -105,7 +102,6 @@ const App = () => {
                   path="/student"
                   component={StudentDashboard}
                 />
-
             </Fragment>
           </Switch>
         </Fragment>

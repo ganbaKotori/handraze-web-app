@@ -15,12 +15,12 @@ app.use(cors());
 
 // DEFINE ROUTES HERE
 const authRouter = require("./routes/auth");
-const chatRouter = require("./routes/Chat");
+const chatRouter = require("./routes/chat");
 const courseRouter = require("./routes/Course");
-const discussionQuestionRouter = require("./routes/DiscussionQuestion");
+const discussionQuestionRouter = require("./routes/discussionQuestion");
 const fileRouter = require("./routes/FileUpload");
 const instructorRouter = require("./routes/Instructor");
-const lectureRouter = require("./routes/Lecture");
+const lectureRouter = require("./routes/lecture");
 const peerNoteRouter = require("./routes/PeerNote");
 const studentRouter = require("./routes/Student");
 const userRouter = require("./routes/User");

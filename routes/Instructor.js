@@ -40,6 +40,7 @@ router.route("/me").get(auth, async (req, res) => {
     })
       .populate("user", ["firstName", "lastName"])
       .populate("course", ["title", "description", "code",  "classStart", "classEnd","dayOfWeek"]);
+      console.log(profile.course[0].dayOfWeek)
 
     if (!profile) {
       return res
