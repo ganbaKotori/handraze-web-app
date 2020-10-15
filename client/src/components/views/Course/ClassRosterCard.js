@@ -18,8 +18,8 @@ export class ClassRosterCard extends Component {
         target="_blank"
         to={`/student/${this.props.classRoster.user._id}`}
       >
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{this.props.classRoster.user.firstName}  {this.props.classRoster.user.lastName}</h5> {this.props.classRoster.sessionEnd? <span>Live Now!</span>: (<span></span>)}
+        <div className="d-flex w-100 justify-content-between">
+          <h5 className="mb-1">{this.props.classRoster.user.firstName}  {this.props.classRoster.user.lastName}</h5> {this.props.classRoster.department? <span style={{"color": "red"}}>(Instructor)</span>: (<span></span>)}
         </div>
         
       </Link>

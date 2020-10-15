@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { Row, Col, Container, Button, Card } from "react-bootstrap";
 
 export class FileUpload extends Component {
   constructor(props) {
@@ -45,18 +46,20 @@ export class FileUpload extends Component {
 
   render() {
     return (
-      <div>
+
         <form onSubmit={this.submitFile} >
-          <input
+        <Col>
+        <input
             label="Change Profile Picture"
             type="file"
             onChange={this.handleFileUpload}
-          />       
-          <button type="submit" className="btn btn-primary">Submit</button>
-          
-          
+          />      
+        </Col>
+        <br/>
+        <Col>
+        <button type="submit" className="btn btn-primary">Submit</button>
+        </Col>     
         </form>
-        </div>
     );
   }
 }

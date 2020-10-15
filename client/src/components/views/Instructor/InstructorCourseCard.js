@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Accordion, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export class InstructorCourseCard extends Component {
   constructor(props) {
-    console.log(props);
     if (props.inputValue.dayOfWeek != null) {
     }
-
     super(props);
     this.state = {
       inputValue: [],
@@ -18,7 +16,6 @@ export class InstructorCourseCard extends Component {
   formatDayOfWeek(dayOfWeek) {
     var dayOfWeekShortened = "";
     for (var key in dayOfWeek) {
-      console.log(dayOfWeek[key]);
       switch (dayOfWeek[key]) {
         case "Monday":
           dayOfWeekShortened = dayOfWeekShortened + "M";
@@ -41,6 +38,9 @@ export class InstructorCourseCard extends Component {
         case "Sunday":
           dayOfWeekShortened = dayOfWeekShortened + " Sn";
           break;
+        default:
+          dayOfWeekShortened = dayOfWeekShortened + "NULL";
+          break;
       }
     }
 
@@ -54,9 +54,19 @@ export class InstructorCourseCard extends Component {
             <b>{this.props.inputValue.title}</b>
           </Card.Header>
           <Card.Body>
-            <Card.Subtitle className="mb-2 text-muted">
-              {this.props.inputValue.description}
+          <Accordion>
+      <Accordion.Toggle as={Badge} variant="secondary" eventKey="0">
+        More Info
+      </Accordion.Toggle>
+      <br/>
+    <Accordion.Collapse eventKey="0">
+    <Card.Subtitle className="mb-2 text-muted">
+              <br/>{this.props.inputValue.description}
             </Card.Subtitle>
+    </Accordion.Collapse>
+
+</Accordion>
+            
             <Card.Text>
               <b>{this.formatDayOfWeek(this.props.inputValue.dayOfWeek)}</b>{" "}
               {this.props.inputValue.classStart}-

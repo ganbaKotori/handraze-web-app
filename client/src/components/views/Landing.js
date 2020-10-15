@@ -11,9 +11,9 @@ const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to="/student" />;
   }
-  {
+  
     document.title = "Handraze";
-  }
+  
   return (
     <React.Fragment>
       <section className="landing">

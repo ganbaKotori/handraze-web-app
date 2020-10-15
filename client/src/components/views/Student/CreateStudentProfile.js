@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile2 } from "../../../actions/profile";
-import { Link, withRouter } from "react-router-dom";
+import {  withRouter } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 const CreateStudentProfile = ({ createProfile2, history }) => {
@@ -12,19 +12,6 @@ const CreateStudentProfile = ({ createProfile2, history }) => {
   });
 
   const { year, institution } = formData;
-
-  // Select options for status
-  const options = [
-    { label: "* Select Professional Status", value: 0 },
-    { label: "Developer", value: "Developer" },
-    { label: "Junior Developer", value: "Junior Developer" },
-    { label: "Senior Developer", value: "Senior Developer" },
-    { label: "Manager", value: "Manager" },
-    { label: "Student or Learning", value: "Student or Learning" },
-    { label: "Instructor or Teacher", value: "Instructor or Teacher" },
-    { label: "Intern", value: "Intern" },
-    { label: "Other", value: "Other" },
-  ];
 
   const onChange = (e) =>
     setFormData({

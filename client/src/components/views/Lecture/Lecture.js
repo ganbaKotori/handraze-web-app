@@ -7,6 +7,9 @@ import ChatPage from "./ChatPage";
 import { Row, Col, Jumbotron, Container, Button, Card } from "react-bootstrap";
 import { getLecture } from "../../../actions/lecture";
 import io from "socket.io-client";
+import { degrees, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
+
 
 class Lecture extends Component {
   constructor(props) {
@@ -17,11 +20,12 @@ class Lecture extends Component {
     this.state = {
       id: this.props.match.params.id,
       value2: "",
-      pdf_link:
-        "https://dev-handraze.s3.amazonaws.com/profilepictures/undefined/1589268500215-Status%20report.pdf",
+      //pdf_link: "https://dev-handraze.s3.amazonaws.com/profilepictures/undefined/1589268500215-Status%20report.pdf",
+      pdf_link: null,
       page: 1,
       page_in_viewer: 1,
       message: "",
+      numOfPages: null
     };
   }
 
@@ -42,6 +46,7 @@ class Lecture extends Component {
         this.setState({
           pdf_link: messageFromBackEnd.pdf,
         });
+        this.getNumOfPages(this.state.pdf_link)
       }
     });
 
@@ -69,10 +74,22 @@ class Lecture extends Component {
     });
   };
   handlePageChange = (e) => {
-    this.setState({
-      page: e.target.value,
-    });
+    if(e.target.value <= this.state.numOfPages){
+      this.setState({
+        page: e.target.value,
+      });
+    }
+    
   };
+
+  async getNumOfPages (pdfLink) {
+    const existingPdfBytes = await fetch(pdfLink).then(res => res.arrayBuffer())
+    const pdfDoc = await PDFDocument.load(existingPdfBytes)
+ 
+    const pages = pdfDoc.getPages()
+    console.log(pages.length)
+    this.setState({numOfPages: pages.length})
+  }
 
   callbackFunction = (childData) => {
     this.setState({ pdf_link: childData });
@@ -94,29 +111,68 @@ class Lecture extends Component {
     const { lecture } = this.props.lecture;
     return (
       <Fragment>
-        <Container >
-          <Row >
-            <Col xs="12">
-              <Card bg="dark" text="white">
-                <Card.Header as="h5">
+         <Row style={{"color":"white","backgroundColor":"#262626","padding":"10px"}}>
+                <Col
+            style={{
+            
+              margin: "auto",
+            }}
+          >
+            
+            <Card.Header as="h5">
                   Topic:{" "}
                   {this.props.lecture.lecture &&
                   this.props.lecture.lecture.topic
                     ? this.props.lecture.lecture.topic
                     : "loading"}
                 </Card.Header>
+          </Col>
+                    
+        </Row>
+       
+        <Row
+          style={{
+            backgroundColor: "#EDEDED",
+            paddingTop: "20px",
+            paddingBottom: "20px",
+          }}
+        >
+          <br />
+          <br />
+          <Col
+            style={{
+              maxWidth: "800px",
+              float: "right",
+              margin: "auto",
+              marginRight: "0px",
+            }}
+          >
+            {this.state.pdf_link ? <PDF page={this.state.page} link={this.state.pdf_link}/> : "PDF Loading" }
+          </Col>
+          <Col style={{ maxWidth: "600px", marginRight: "auto" }} xs={4}>
+            <ChatPage inputValue={this.state.id} />
+          </Col>
+        </Row>
+
+        <Container >
+          <Row >
+            <Col xs="12">
+              <Card bg="dark" text="white">
+                <Card.Header as="h5">
+                Lecture Presentation Options
+                </Card.Header>
                 <Card.Body>
-                  <Card.Title>Lecture Presentation Options</Card.Title>
+                  <Card.Title> {this.state.numOfPages ?  this.state.numOfPages : ""}</Card.Title>
                   <Card.Text>
                     <Row>
                       <Col xs={3} style={{ "text-align": "right" }}>
                         <h6>Upload PDF</h6>
                       </Col>
-                      <Col>
+
                         <PDFUpload parentCallback={this.callbackFunction} />
-                      </Col>
+  
                     </Row>
-                    <br />
+                    <br/>
                     <Row>
                       <Col xs={3} style={{ "text-align": "right" }}>
                         <h6>Slide Number</h6>
@@ -132,6 +188,7 @@ class Lecture extends Component {
                           onChange={this.handlePageChange}
                         />
                       </Col>
+      
                       <Col xs={3}>
                         <Button
                           variant="primary"
@@ -152,30 +209,6 @@ class Lecture extends Component {
             </Col>
           </Row>
         </Container>
-        <br />
-        <Row
-          style={{
-            backgroundColor: "#EDEDED",
-            paddingTop: "20px",
-            paddingBottom: "20px",
-          }}
-        >
-          <br />
-          <br />
-          <Col
-            style={{
-              maxWidth: "800px",
-              float: "right",
-              margin: "auto",
-              marginRight: "0px",
-            }}
-          >
-            <PDF page={this.state.page} link={this.state.pdf_link} />
-          </Col>
-          <Col style={{ maxWidth: "600px", marginRight: "auto" }} xs={4}>
-            <ChatPage inputValue={this.state.id} />
-          </Col>
-        </Row>
       </Fragment>
     );
   }

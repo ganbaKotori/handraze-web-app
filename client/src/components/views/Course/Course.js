@@ -12,23 +12,18 @@ import {
   Spinner,
   Row,
   Container,
-  Card,
   Jumbotron,
   Badge
 } from "react-bootstrap";
 
 const Course = ({
-  getLectures,
   getCourse,
   course: { course, loading },
-  lectures: { lectures, loading2 },
   match,
 }) => {
   useEffect(() => {
     getCourse(match.params.id);
-    getLectures();
-  }, [getCourse, getLectures]);
-  console.log(course);
+  }, [getCourse]);
   var dayOfWeek;
   if (course !== null) {
     dayOfWeek = course.dayOfWeek.map((day) => (
@@ -103,7 +98,7 @@ const Course = ({
             <LectureList lecture={course.lecture ? course.lecture : []} />
           </Col>
           <Col md="4" xs="12">
-            <ClassRoster students={course.students ? course.students : []} />
+            <ClassRoster students={course.students ? course.students : []} instructor={course.instructor ? course.instructor : null}/>
           </Col>
         </Row>
         <Row>
@@ -113,7 +108,7 @@ const Course = ({
             />
             <Link
               to={`/new-question/${course._id}`}
-              class="btn btn-danger btn-lg btn-block btn-margin"
+              className="btn btn-danger btn-lg btn-block btn-margin"
             >
               Ask Question
             </Link>

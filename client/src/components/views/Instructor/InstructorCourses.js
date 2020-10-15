@@ -7,11 +7,10 @@ import {Link} from "react-router-dom"
 
 const InstructorCourses = ({ course }) => {
 
-  console.log(course)
   const courses = course.map(
     course => (
       
-      (<Col><InstructorCourseCard inputValue={course} /></Col>)
+      (<Col key={course._id}><InstructorCourseCard inputValue={course} /></Col>)
     )
   );
 

@@ -14,7 +14,6 @@ const Dashboard = ({
   useEffect(() => {
     getCurrentStudentProfile();
   }, []);
-  console.log(studentProfile);
   {
     document.title = "Student Dashboard";
   }

@@ -25,12 +25,12 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
               >
                 Lecture Demo
               </Link>
-      <Nav.Link className="navbar-link" to="/student">
+              <span style={{"margin":"10px"}}></span>    
       <Link to="/student" className="navbar-link"><b>Student</b></Link>
-      </Nav.Link>{" "}
-      <Nav.Link to="/instructor">
+      {"   "}
+      <span style={{"margin":"10px"}}></span>
       <Link to="/instructor" className="navbar-link"><b>Instructor</b></Link>
-      </Nav.Link>{" "}
+      {" "}
       <Nav.Link to="/" onClick={logout} className="navbar-link">
       <b> Logout</b>
       </Nav.Link  >

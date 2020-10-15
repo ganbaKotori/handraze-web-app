@@ -2,6 +2,7 @@ const router = require("express").Router();
 let Course = require("../models/course.model");
 let Student = require("../models/student.model");
 let Instructor = require("../models/instructor.model");
+const auth = require("../middleware/auth");
 
 //Load Input Validation
 const validateCourseInput = require("../validation/course-validation");
@@ -9,7 +10,7 @@ const validateCourseInput = require("../validation/course-validation");
 // @route   POST api/courses
 // @desc    Create a course
 // @access  Public
-router.route("/").post(async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const instructor = req.body.instructor;
   const title = req.body.title;
   const description = req.body.description;
@@ -52,11 +53,8 @@ router.route("/").post(async (req, res) => {
         });
         instructorProfile.course.unshift(newCourse._id);
         await instructorProfile.save().then((result) => {
-          console.log(result);
-          console.log("course added to instructor profile");
-          console.log("course added!");
+          console.log("[routes/course:router.post('/')] course created and added to instructor profile");
         });
-        //res.json(instructorProfile);
         res.json(result);
       } catch (error) {
         res.json(error.message);
@@ -143,17 +141,21 @@ async function getCourse(req, res, next) {
           model: "User",
         },
       })
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "user",
+          model: "User",
+        },
+      })
       .populate("lecture", ["topic", "sessionStart"]);
     if (course == null) {
       return res.status(404).json({ message: "Cannot find course." });
     }
-
-    console.log(course.students);
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ message: err.message });
   }
-
   res.course = course;
   next();
 }

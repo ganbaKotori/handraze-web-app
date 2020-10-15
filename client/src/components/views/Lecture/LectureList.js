@@ -5,7 +5,6 @@ import { Button, ListGroup, Alert } from "react-bootstrap";
 
 const LectureList = ({ lecture }) => {
   var lectures;
-  console.log(lecture);
   if (lecture.length != 0) {
     lectures = lecture.map((lecture) => <LectureCard inputValue={lecture} />); //create a CourseCard for every course id in the Course array in Student P
     return (
