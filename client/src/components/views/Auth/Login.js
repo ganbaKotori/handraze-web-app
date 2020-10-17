@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../../actions/auth";
 import { Link, Redirect } from "react-router-dom";
+import { Container, Col, Row, Button, Card} from "react-bootstrap";
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -28,23 +29,24 @@ const Login = ({ login, isAuthenticated }) => {
   }
   return (
     <Fragment>
-      <div className="container">
-        <div className="login-card">
-          <div className="container">
-            <h2> Welcome back</h2>
-            <p>
-              {" "}
-              Enter your account information below to sign into your profile.
-            </p>
-            <form className="form" onSubmit={e => onSubmit(e)}>
+      <Container>
+      <Row className="justify-content-md-center">
+<h2></h2>
+      </Row>
+      <Row className="justify-content-md-center">
+      <Col xs lg="4">
+      <Card>
+
+<Card.Header as="h5" style={{"textAlign": "center"}}>Log in to handraze</Card.Header>
+<Card.Body>
+<form className="form" onSubmit={e => onSubmit(e)}>
               <div className="form-group">
-                <label htmlFor="email">Email address</label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   className="form-control"
                   id="email"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
                   name="email"
                   value={email}
                   onChange={e => onChange(e)}
@@ -56,30 +58,27 @@ const Login = ({ login, isAuthenticated }) => {
                   type="password"
                   className="form-control"
                   id="password"
-                  placeholder="Password"
                   name="password"
                   value={password}
                   onChange={e => onChange(e)}
                 />
               </div>
-
-              <div className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="tosCheck"
-                />
-                <label className="form-check-label" htmlFor="tosCheck">
-                  Remember me
-                </label>
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
+              <Button  type="submit" variant="primary" size="lg" block>
+              Log in
+              </Button>
             </form>
-          </div>
-        </div>
-      </div>
+</Card.Body>
+</Card>
+      
+     
+
+      </Col>
+      
+  </Row>
+           
+            
+
+      </Container>
     </Fragment>
   );
 };

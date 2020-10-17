@@ -25,21 +25,24 @@ const Navigationbar = ({ auth: { isAuthenticated, loading }, logout }) => {
               >
                 Lecture Demo
               </Link>
-              <span style={{"margin":"10px"}}></span>    
-      <Link to="/student" className="navbar-link"><b>Student</b></Link>
+              <span style={{"margin":"10px"}}></span>
+              <Link to="/login"><Button variant="outline-light"><b>Student</b></Button></Link>
       {"   "}
       <span style={{"margin":"10px"}}></span>
-      <Link to="/instructor" className="navbar-link"><b>Instructor</b></Link>
+      <Link to="/instructor"><Button variant="outline-light"><b>Instructor</b></Button></Link>
       {" "}
       <Nav.Link to="/" onClick={logout} className="navbar-link">
-      <b> Logout</b>
+      <b> Log out</b>
       </Nav.Link  >
     </Fragment>
   );
 
   const guestLinks = (
     <Fragment>
-      <Nav.Link to="/login"><Link className="navbar-link" to="/login"><b>Login</b></Link></Nav.Link> <Nav.Link to="/register"><Link className="navbar-link" to="/register"><b>Register</b></Link></Nav.Link>
+      <Link to="/login"><Button variant="outline-light"><b>Login</b></Button></Link>
+      {"   "}
+      <span style={{"margin":"10px"}}></span>
+      <Link to="/register"><Button variant="outline-light"><b>Register</b></Button></Link>
     </Fragment>
   );
   return (

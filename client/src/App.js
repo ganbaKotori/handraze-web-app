@@ -45,7 +45,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Fragment >
+        <Fragment  >
           <Navbar />
           <Switch>
           <Route exact path="/" component={Landing} />

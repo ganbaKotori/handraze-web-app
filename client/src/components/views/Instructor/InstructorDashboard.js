@@ -26,10 +26,10 @@ const Dashboard = ({
         </Spinner>
       </Container>
   ) : (
-    <Fragment>
+    <Fragment >
       <div>
         {instructorProfile !== null ? (
-          <Container>
+          <Container >
             
             <Row>
               <Col xs={7}>
