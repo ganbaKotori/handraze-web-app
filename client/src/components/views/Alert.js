@@ -12,7 +12,7 @@ const Alert = ({ alerts }) =>{
     </div>
   ));
     } else {
-        console.log("fuck shit up")
+        
         return (<div></div>)
     }
 }

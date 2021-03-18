@@ -3,6 +3,7 @@
   box-sizing: border-box;
 }
 
+
 .whatIsHandraze {
   background-color: #2e2e2e;
   color: #ffffff;
@@ -24,64 +25,19 @@
   height: 200px;
 }
 
-.whatIsHandraze span {
-}
-
 .whatIsHandraze p {
   text-align: center;
 }
 
-/* Float four columns side by side */
-.card-column {
-  float: left;
-  width: 25%;
-  padding: 0 10px;
-}
-
-/* Remove extra left and right margins, due to padding in columns */
-.card-row {
-  margin: 0 -5px;
-}
-
-/* Clear floats after the columns */
-.card-row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Style the counter cards */
-.course-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
-  padding: 16px;
-  text-align: center;
-  background-color: #f1f1f1;
-}
-
-/* Responsive columns - one column layout (vertical) on small screens */
-@media screen and (max-width: 600px) {
-  .card-column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
-
-/*CSS For Student and Instructor Course Cards END */
-
 .App {
   text-align: center;
 }
-body {
-  margin: 0%;
-}
+
 .profpic {
   height: auto;
   width: 100%;
 }
-.modal {
-  display: block;
-}
+
 .App-logo {
   height: 40vmin;
 }
@@ -125,13 +81,6 @@ body {
   padding: 0;
 }
 
-body {
-  font-family: "Raleway", sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  background-color: #fff;
-  color: #333;
-}
 
 a {
   color: var(--primary-color);
@@ -228,18 +177,7 @@ img {
   margin: 3rem 0;
 }
 
-.btn {
-  display: inline-block;
-  background: var(--light-color);
-  color: #333;
-  padding: 0.4rem 1.3rem;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  transition: opacity 0.2s ease-in;
-  outline: none;
-}
+
 #pdf-container {
   border: 5px solid red;
 
@@ -287,13 +225,7 @@ img {
   background-color: #eee;
   padding: 2%;
 }
-.alert {
-  padding: 0.8rem;
-  margin: 1rem 0;
-  opacity: 0.9;
-  background: var(--light-color);
-  color: #333;
-}
+z
 
 .btn-primary,
 .bg-primary,
@@ -330,6 +262,7 @@ img {
 bg-orange {
   background: #ff7e4b;
 }
+
 
 .btn-orange,
 .bg-orange,
@@ -869,11 +802,7 @@ footer {
 *:after {
   box-sizing: border-box;
 }
-html,
-body {
-  height: 100%;
-  position: relative;
-}
+
 .main-container {
   min-height: 100vh; /* will cover the 100% of viewport */
   overflow: hidden;
@@ -909,3 +838,4 @@ footer {
     margin: 1em;
   }
 }
+

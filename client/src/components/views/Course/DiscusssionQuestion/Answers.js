@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { DiscussionQuestionCard } from "./DiscussionQuestionCard";
-import { Button } from "react-bootstrap";
+import { Button, Jumbotron } from "react-bootstrap";
 import {AnswerCard} from "./AnswerCard";
 
 const Answers = ({ answer }) => {
@@ -16,10 +16,8 @@ const Answers = ({ answer }) => {
   return (
     <Fragment>
       <h4>Answers</h4>
-          <div class="jumbotron lectureq">
-            {answers}
-  
-          </div>
+      <hr/>
+      {answers}
     </Fragment>
   );
 };

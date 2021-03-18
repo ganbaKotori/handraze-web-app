@@ -83,10 +83,10 @@ export class ChatPage extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{"height": "400px"}}>
           <Row>
             <Col>
-            <ListGroup>{this.renderCards()}</ListGroup>
+            <ListGroup style={{"max-height":"400px","overflow": "auto", "overflow-x":"hidden","width":"100%","height": "400px", "backgroundColor": "#909090"}}>{this.renderCards()}</ListGroup>
         <InputGroup className="mb-3">
           <FormControl
             placeholder="Enter a message."

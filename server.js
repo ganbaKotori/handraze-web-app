@@ -4,26 +4,25 @@ const { Chat } = require("./models/chat.model");
 const app = express();
 const cors = require("cors");
 const path = require("path");
-mongoose.Promise  = require("bluebird");
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
-
-require("dotenv").config();
 const cookieParser = require("cookie-parser");
+mongoose.Promise = require("bluebird");
+require("dotenv").config();
 
 app.use(cors());
 
 // DEFINE ROUTES HERE
 const authRouter = require("./routes/auth");
-const chatRouter = require("./routes/Chat");
-const courseRouter = require("./routes/Course");
-const discussionQuestionRouter = require("./routes/DiscussionQuestion");
+const chatRouter = require("./routes/chat");
+const courseRouter = require("./routes/course");
+const discussionQuestionRouter = require("./routes/discussionQuestion");
 const fileRouter = require("./routes/FileUpload");
-const instructorRouter = require("./routes/Instructor");
-const lectureRouter = require("./routes/Lecture");
-const peerNoteRouter = require("./routes/PeerNote");
-const studentRouter = require("./routes/Student");
-const userRouter = require("./routes/User");
+const instructorRouter = require("./routes/instructor");
+const lectureRouter = require("./routes/lecture");
+const peerNoteRouter = require("./routes/peerNote");
+const studentRouter = require("./routes/student");
+const userRouter = require("./routes/user");
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:5000"); // update to match the domain you will make the request from
@@ -56,9 +55,9 @@ app.use(express.json());
 let rooms = {};
 
 // CONNECT TO MONGODB
-const uri = "mongodb://alex:alex123@ds235378.mlab.com:35378/handraze-beta";
+const uri = process.env.ATLAS;
 
-const  connect  =  mongoose.connect(uri, {
+const connect = mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -83,8 +82,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
-
-
 
 io.on("connection", (socket) => {
   socket.on("room", function (room) {
@@ -117,7 +114,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("Input Chat Message", (msg) => {
-    connect.then(db => {
+    connect.then((db) => {
       try {
         let chat = new Chat({
           message: msg.chatMessage,

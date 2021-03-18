@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, {  useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile } from "../../../actions/profile";
-import { Link, withRouter } from "react-router-dom";
+import {  withRouter } from "react-router-dom";
 import { FileUpload } from "../FileUpload";
 
 const EditInstructor = ({ createProfile, history}) => {
@@ -72,12 +72,6 @@ EditInstructor.propTypes = {
   profile: PropTypes.object.isRequired,
   createProfile: PropTypes.func.isRequired
 };
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  profile: state.profile
-});
-
 
 export default connect(null, { createProfile })(
   withRouter(EditInstructor)

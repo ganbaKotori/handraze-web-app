@@ -118,6 +118,12 @@ router.put("/courses", auth, async (req, res) => {
           .status(400)
           .json("You cannot enroll in a course that you created!");
       }
+      //check if student is already enrolled into class
+      if (studentProfile.course.includes(course._id)) {
+        return res
+          .status(400)
+          .json("You are already enrolled in this course!");
+      }
       studentProfile.course.unshift(course._id);
       await studentProfile.save();
       course.students.unshift(studentProfile._id);

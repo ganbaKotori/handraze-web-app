@@ -124,6 +124,7 @@ export const getCurrentInstructorProfile = () => async (dispatch) => {
   dispatch({ type: CLEAR_STUDENT_PROFILE });
   try {
     const res = await axios.get("/api/instructors/me");
+    console.log(res);
 
     dispatch({
       type: GET_INSTRUCTOR_PROFILE,

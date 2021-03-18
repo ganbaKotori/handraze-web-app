@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { register } from "../../../actions/auth";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
+import { Container, Col, Row, Button, Card} from "react-bootstrap";
 
 const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -35,14 +36,16 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <div className="container">
-        <h2> Create Account </h2>
-        <p>
-          {" "}
-          Enter your information below to make an account and get started with
-          Handraze.
-        </p>
-        <form className="form" onSubmit={e => onSubmit(e)}>
+    <Container>
+    <Row className="justify-content-md-center">
+    <h2>  </h2>
+    </Row>
+    <Row className="justify-content-md-center">
+    <Col xs lg="4">
+    <Card>
+
+    <Card.Header as="h5" style={{"textAlign": "center"}}>Create your account</Card.Header>
+  <Card.Body><form className="form" onSubmit={e => onSubmit(e)}>
           <div className="form-group">
             <label for="email">First Name</label>
             <input
@@ -53,7 +56,6 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
               name="firstName"
               value={firstName}
               onChange={e => onChange(e)}
-              placeholder="Enter first name"
               required
             />
           </div>
@@ -67,12 +69,11 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
               name="lastName"
               value={lastName}
               onChange={e => onChange(e)}
-              placeholder="Enter last name"
               required
             />
           </div>
           <div className="form-group">
-            <label for="email">Email address</label>
+            <label for="email">Email</label>
             <input
               type="email"
               className="form-control"
@@ -81,7 +82,6 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
               name="email"
               value={email}
               onChange={e => onChange(e)}
-              placeholder="Enter email"
               required
             />
           </div>
@@ -91,24 +91,28 @@ const CreateAccount = ({ setAlert, register, isAuthenticated }) => {
               type="password"
               className="form-control"
               id="password"
-              placeholder="Password"
               name="password"
               value={password}
               onChange={e => onChange(e)}
             />
           </div>
-          <div className="form-check">
-            <input type="checkbox" className="form-check-input" id="tosCheck" />
-            <label className="form-check-label" for="tosCheck">
-              Agree to T.O.S / Privacy Policy
-            </label>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
-      </div>
-    </Fragment>
+          <Button  type="submit" variant="primary" size="lg" block>
+          Sign Up
+              </Button>
+        </form></Card.Body>
+</Card>
+    
+   
+
+    </Col>
+    
+</Row>
+         
+          
+
+    </Container>
+  </Fragment>
+
   );
 };
 

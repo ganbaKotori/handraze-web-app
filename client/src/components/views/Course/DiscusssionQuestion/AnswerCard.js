@@ -6,18 +6,18 @@ export class AnswerCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: []
+      inputValue: [],
     };
   }
 
   render() {
     return (
-      <div class="card lecture-card">
-              <div class="card-body">
-                <b>{this.props.inputValue.name} Replied: </b>
-                {this.props.inputValue.text}
-              </div>
-            </div>
+      <Card>
+        <Card.Header as="h5">Reply by {this.props.inputValue.name}</Card.Header>
+        <Card.Body>
+          <Card.Text>{this.props.inputValue.text}</Card.Text>
+        </Card.Body>
+      </Card>
     );
   }
 }

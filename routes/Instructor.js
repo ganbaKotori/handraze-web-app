@@ -36,10 +36,13 @@ router.route("/").post([auth], async (req, res) => {
 router.route("/me").get(auth, async (req, res) => {
   try {
     const profile = await InstructorProfile.findOne({
-      user: req.user.id
+      user: req.user.id,
     })
-      .populate("user", ["firstName", "lastName"])
-      .populate("course", ["title", "description", "code",  "classStart", "classEnd","dayOfWeek"]);
+      .populate({
+        path: "course",
+        options: { retainNullValues: true },
+      })
+      .populate("user", ["firstName", "lastName"]);
 
     if (!profile) {
       return res
@@ -48,7 +51,7 @@ router.route("/me").get(auth, async (req, res) => {
     }
     res.json(profile);
   } catch (error) {
-    console.log(error.message);
+    console.log("[routes/instructor:router.route('/me')] " + error.message);
     res.status(500).send(error);
   }
 });
@@ -59,8 +62,8 @@ router.route("/me").get(auth, async (req, res) => {
 router.route("/").get((req, res) => {
   InstructorProfile.find()
     .populate("user", ["firstName", "lastName"])
-    .then(instructors => res.json(instructors))
-    .catch(err => res.status(400).json("Error: " + err));
+    .then((instructors) => res.json(instructors))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // @route   GET api/instructors/:id
@@ -76,10 +79,16 @@ router.get("/:id", getInstructor, (req, res) => {
 router.route("/user/:user_id").get(async (req, res) => {
   try {
     const instructorProfiles = await InstructorProfile.findOne({
-      user: req.params.user_id
+      user: req.params.user_id,
     })
       .populate("user", ["firstName", "lastName", "avatar"])
-      .populate("course", ["title", "description",  "classStart", "classEnd","dayOfWeek"]);
+      .populate("course", [
+        "title",
+        "description",
+        "classStart",
+        "classEnd",
+        "dayOfWeek",
+      ]);
     console.log(instructorProfiles);
     res.json(instructorProfiles);
   } catch (error) {
