@@ -1,7 +1,6 @@
 import React, { Fragment, Component } from "react";
 import PDFUpload from "../PDFUpload";
 import { PDF } from "./PDFviewer";
-import htmlpdf from "html2pdf.js";
 import { connect } from "react-redux";
 import ChatPage from "./ChatPage";
 import { Row, Col, Jumbotron, Container, Button, Card } from "react-bootstrap";
