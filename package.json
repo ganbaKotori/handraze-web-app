@@ -23,6 +23,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
+    "cli-table3": "^0.6.0",
     "client": "file:client",
     "config": "^3.2.5",
     "cookie-parser": "^1.4.5",
@@ -34,13 +35,13 @@
     "jsonwebtoken": "^8.5.1",
     "mgr-pdf-viewer-react": "^1.0.3",
     "mongodb": "^3.5.5",
-    "mongoose": "^5.8.11",
+    "mongoose": "^5.12.1",
     "mongoose-schema-extend": "^0.2.2",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
     "nodemon": "^2.0.2",
     "save": "^2.4.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.1",
     "validator": "^12.2.0"
   },
   "devDependencies": {
