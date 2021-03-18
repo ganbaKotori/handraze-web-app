@@ -55,7 +55,7 @@ app.use(express.json());
 let rooms = {};
 
 // CONNECT TO MONGODB
-const uri = "mongodb://alex:alex123@ds235378.mlab.com:35378/handraze-beta";
+const uri = process.env.ATLAS;
 
 const connect = mongoose.connect(uri, {
   useNewUrlParser: true,

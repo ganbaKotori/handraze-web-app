@@ -44,8 +44,8 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
+    "concurrently": "^3.5.1",
     "http-proxy-middleware": "^0.21.0",
-    "nodemon": "^2.0.2",
-    "concurrently": "^3.5.1"
+    "nodemon": "^2.0.2"
   }
 }

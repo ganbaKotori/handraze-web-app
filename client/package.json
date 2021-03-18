@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
     "bootstrap-css-only": "^4.4.1",
+    "craete-react-app": "^1.0.4",
     "html2pdf.js": "^0.9.2",
     "install": "^0.13.0",
     "mdbreact": "^4.27.0",
