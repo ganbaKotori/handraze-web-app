@@ -33,7 +33,7 @@
     "express-session": "^1.17.0",
     "git": "^0.1.5",
     "jsonwebtoken": "^8.5.1",
-    "mgr-pdf-viewer-react": "^1.0.3",
+
     "mongodb": "^3.5.5",
     "mongoose": "^5.12.1",
     "mongoose-schema-extend": "^0.2.2",
