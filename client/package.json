@@ -12,6 +12,7 @@
     "bootstrap-css-only": "^4.4.1",
     "create-react-app": "^4.0.3",
     "install": "^0.13.0",
+    "mgr-pdf-viewer-react": "^1.0.3",
     "moment": "^2.27.0",
     "npm": "^6.14.7",
     "pdf-lib": "^1.11.2",
