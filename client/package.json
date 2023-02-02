@@ -17,7 +17,7 @@
     "mdbreact": "^4.27.0",
     "mgr-pdf-viewer-react": "^1.0.3",
     "moment": "^2.27.0",
-    "npm": "^6.14.7",
+    "npm": "^9.4.1",
     "pdf-lib": "^1.11.2",
     "pdfjs-dist": "^2.5.207",
     "prop-types": "^15.7.2",
